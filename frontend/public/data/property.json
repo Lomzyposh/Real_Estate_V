@@ -1,0 +1,382 @@
+[
+    {
+        "basic": {
+            "id": 1,
+            "propertyType": "House",
+            "homeType": "SingleFamily",
+            "status": "For Sale",
+            "yearBuilt": 1918,
+            "price": 925000,
+            "sqrFt": 3338,
+            "acres": 0.32,
+            "floorCount": 3,
+            "floorLevel": 0,
+            "bedroom": 3,
+            "bathroom": 4,
+            "parkingSpaces": 2
+        },
+        "location": {
+            "latitude": 41.9023,
+            "longitude": -87.8185,
+            "ZipCode": "IL 60305",
+            "street": "735 Clinton Pl, River Forest"
+        },
+        "media": {
+            "mainImage": "https://photos.zillowstatic.com/fp/e6d215b7d690e40d0abcc67612efb1bf-cc_ft_1536.webp",
+            "galleryImages": [
+                "https://photos.zillowstatic.com/fp/1f1c4b173ceef4a842ffcf429063ca5d-cc_ft_768.webp",
+                "https://photos.zillowstatic.com/fp/32d3244d912622127a44fcdf0e93cf08-cc_ft_1536.webp",
+                "https://photos.zillowstatic.com/fp/6dcedcc12a61f77a766da880167875b6-cc_ft_576.webp",
+                "https://photos.zillowstatic.com/fp/570c7551f543bf4b62dac704a429d83a-cc_ft_576.webp",
+                "https://photos.zillowstatic.com/fp/d1841d012ff76133db4f79a1fbe46716-cc_ft_1152.webp",
+                "https://photos.zillowstatic.com/fp/b263926dd31fb9d8c2e5ce2706d718bc-cc_ft_576.webp",
+                "https://photos.zillowstatic.com/fp/e509c8127a0cd66e3e54e0f2484c1b1d-cc_ft_1152.webp",
+                "https://photos.zillowstatic.com/fp/dfb9c78e1d62d0238fbd4aaab78889ef-cc_ft_576.webp",
+                "https://photos.zillowstatic.com/fp/82f0ec0feb1448eb1a8ad121e76b61ce-cc_ft_576.webp",
+                "https://photos.zillowstatic.com/fp/55a7b482a14b15ecee2eb262020e36ea-cc_ft_1152.webp",
+                "https://photos.zillowstatic.com/fp/cb816f6ecff7650d28c9c6cc9e59b562-cc_ft_576.webp",
+                "https://photos.zillowstatic.com/fp/3880ded976c15e1d01eb40a55b86d4d9-cc_ft_576.webp",
+                "https://photos.zillowstatic.com/fp/f1dd4af76d3180f068c6d4caac618267-cc_ft_576.webp",
+                "https://photos.zillowstatic.com/fp/e58c6c79590cb6aeeaf54565e5373d0b-cc_ft_576.webp",
+                "https://photos.zillowstatic.com/fp/7b1ba254d7f50d4d352efa8f51672c93-cc_ft_1152.webp",
+                "https://photos.zillowstatic.com/fp/99cccaad820cb2856590e86a445f8a04-cc_ft_1152.webp",
+                "https://photos.zillowstatic.com/fp/d9b35fa85ea2b2b981c0a5fdeaf86925-cc_ft_576.webp",
+                "https://photos.zillowstatic.com/fp/b9011e62ca3fd4abd82657cc8464c86d-cc_ft_1152.webp",
+                "https://photos.zillowstatic.com/fp/9d0dc8ea3b78a1b721b703aa3c652218-cc_ft_1152.webp",
+                "https://photos.zillowstatic.com/fp/91070284372d78ddd07b3706d5dcc2d5-cc_ft_1152.webp",
+                "https://photos.zillowstatic.com/fp/129e45b7eff1c00d8915b5f6eac9dc0b-cc_ft_576.webp",
+                "https://photos.zillowstatic.com/fp/44abafaa9d21e406e6b7bad0a576abbc-cc_ft_1152.webp"
+            ],
+            "moreTextAboutThePlace": "Welcome Home! Nestled on the picturesque street of Clinton Place, this American Foursquare exudes elegance and charm in prime central River Forest. With 3 bedrooms and 3.1 bathrooms, plus a bonus office space just off the garage, this one is truly a beauty you won't want to miss."
+        },
+        "company": {
+            "name": "MRED",
+            "logoImg": "https://photos.zillowstatic.com/fp/1b0fc53ffc89ea17e1e382976aca4421-zillow_web_95_35.jpg",
+            "address": "2443 Warrenville Rd #600, Lisle, IL 60532, United States"
+        },
+        "features": {
+            "hasGarage": true,
+            "parkFeatures": [
+                "Concrete",
+                "Garage Door Opener",
+                "On Site",
+                "Garage Owned",
+                "Detached",
+                "Garage"
+            ],
+            "hasPool": false,
+            "hasGarden": true
+        },
+        "special": [
+            "Gas fireplace",
+            "Chic modern design",
+            "Picturesque street",
+            "High ceilings",
+            "Original built-ins",
+            "Butcher block island top",
+            "Fully renovated second bathroom"
+        ],
+        "interior": {
+            "furnished": true,
+            "rooms": [
+                "Bonus Room",
+                "Recreation Room",
+                "Workshop",
+                "Foyer",
+                "Mud Room",
+                "Walk In Closet"
+            ],
+            "fireplace": true,
+            "kitchen": {
+                "features": [
+                    "Eating Area-Breakfast Bar",
+                    "Island",
+                    "Custom Cabinetry",
+                    "Solid Surface Counter",
+                    "Updated Kitchen"
+                ]
+            }
+        },
+        "community": {
+            "hoa": {
+                "hasHOA": false,
+                "fee": 0
+            },
+            "features": [
+                "Park",
+                "Tennis Court(s)",
+                "Curbs",
+                "Sidewalks",
+                "Street Lights",
+                "Street Paved"
+            ]
+        },
+        "climateFactors": {
+            "floodFactor": 4,
+            "fireFactor": 1,
+            "windFactor": 2,
+            "airFactor": 5,
+            "heatFactor": 3
+        },
+        "nearbySchools": [
+            {
+                "name": "Roosevelt School",
+                "distance": "0.4",
+                "rating": 8
+            },
+            {
+                "name": "Lincoln Elementary School",
+                "distance": "1.6",
+                "rating": 10
+            },
+            {
+                "name": "Oak Park River Forest High School",
+                "distance": "0.7",
+                "rating": 8
+            }
+        ],
+        "utility": {
+            "electric": "Circuit Breakers",
+            "sewer": "Public Sewer",
+            "water": "Lake Michigan, Public"
+        }
+    },
+    {
+        "basic": {
+            "id": 2,
+            "propertyType": "Townhouse",
+            "homeType": "Townhouse",
+            "status": "For Sale",
+            "yearBuilt": 1925,
+            "price": 675000,
+            "sqrFt": 2450,
+            "acres": 0.08,
+            "floorCount": 3,
+            "floorLevel": 0,
+            "bedroom": 4,
+            "bathroom": 3,
+            "parkingSpaces": 1
+        },
+        "location": {
+            "latitude": 41.8932,
+            "longitude": -87.7886,
+            "ZipCode": "IL 60302",
+            "street": "1021 Wesley Ave, Oak Park"
+        },
+        "media": {
+            "mainImage": "https://photos.zillowstatic.com/fp/e8cfcc7010c472d6751abc0fb47be62f-cc_ft_1152.webp",
+            "galleryImages": [
+                "https://photos.zillowstatic.com/fp/23e070cfc83093628887aa1ec0cc29e0-cc_ft_576.webp",
+                "https://photos.zillowstatic.com/fp/57c25728a792047bdf8e09b848af578d-cc_ft_576.webp",
+                "https://photos.zillowstatic.com/fp/5023cd4ec429b47195f276b638a70067-cc_ft_1152.webp",
+                "https://photos.zillowstatic.com/fp/2bb66613579c2c32c4c86f4e48aad936-cc_ft_576.webp",
+                "https://photos.zillowstatic.com/fp/1c761236bed6dc3ac3f4b39b13bb920f-cc_ft_1152.webp",
+                "https://photos.zillowstatic.com/fp/e7bb054c6a75ec1f23671a16693a9234-cc_ft_576.webp",
+                "https://photos.zillowstatic.com/fp/67544cbf5d2a911ef4180e8ed6e77f52-cc_ft_576.webp"
+            ],
+            "moreTextAboutThePlace": "Sunny, brick Oak Park townhouse on a tree-lined street, steps from parks and shops. Thoughtful updates retain vintage charm—coved ceilings, original trim—paired with a modern eat-in kitchen and finished lower level."
+        },
+        "company": {
+            "name": "MRED",
+            "logoImg": "https://photos.zillowstatic.com/fp/1b0fc53ffc89ea17e1e382976aca4421-zillow_web_95_35.jpg",
+            "address": "2443 Warrenville Rd #600, Lisle, IL 60532, United States"
+        },
+        "features": {
+            "hasGarage": true,
+            "parkFeatures": [
+                "Concrete",
+                "Detached",
+                "On Site",
+                "Garage"
+            ],
+            "hasPool": false,
+            "hasGarden": true
+        },
+        "special": [
+            "Skylit stairwell",
+            "Original oak built-ins",
+            "Heated bathroom floors",
+            "Private brick patio",
+            "Finished recreation room"
+        ],
+        "interior": {
+            "furnished": false,
+            "rooms": [
+                "Living Room",
+                "Dining Room",
+                "Recreation Room",
+                "Laundry",
+                "Foyer"
+            ],
+            "fireplace": true,
+            "kitchen": {
+                "features": [
+                    "Island",
+                    "Quartz Countertops",
+                    "Custom Cabinetry",
+                    "Updated Kitchen",
+                    "Walk-In Pantry"
+                ]
+            }
+        },
+        "community": {
+            "hoa": {
+                "hasHOA": false,
+                "fee": 0
+            },
+            "features": [
+                "Curbs",
+                "Sidewalks",
+                "Street Lights",
+                "Near Public Transit",
+                "Street Paved"
+            ]
+        },
+        "climateFactors": {
+            "floodFactor": 2,
+            "fireFactor": 1,
+            "windFactor": 2,
+            "airFactor": 4,
+            "heatFactor": 3
+        },
+        "nearbySchools": [
+            {
+                "name": "Horace Mann Elementary School",
+                "distance": "0.5",
+                "rating": 9
+            },
+            {
+                "name": "Gwendolyn Brooks Middle School",
+                "distance": "0.9",
+                "rating": 8
+            },
+            {
+                "name": "Oak Park & River Forest High School",
+                "distance": "1.2",
+                "rating": 8
+            }
+        ],
+        "utility": {
+            "electric": "Circuit Breakers",
+            "sewer": "Public Sewer",
+            "water": "Lake Michigan, Public"
+        }
+    },
+    {
+        "basic": {
+            "id": 3,
+            "propertyType": "Condo",
+            "homeType": "Condominium",
+            "status": "For Sale",
+            "yearBuilt": 2008,
+            "price": 415000,
+            "sqrFt": 1380,
+            "acres": 0.00,
+            "floorCount": 1,
+            "floorLevel": 5,
+            "bedroom": 2,
+            "bathroom": 2,
+            "parkingSpaces": 1
+        },
+        "location": {
+            "latitude": 41.8859,
+            "longitude": -87.8324,
+            "ZipCode": "IL 60130",
+            "street": "824 Circle Ave Unit 5B, Forest Park"
+        },
+        "media": {
+            "mainImage": "https://photos.zillowstatic.com/fp/f21753bc21acb625b0118cdb0d634943-cc_ft_576.webp",
+            "galleryImages": [
+                "https://photos.zillowstatic.com/fp/3fdf7d55a49785f7575f8fae548e18a5-cc_ft_1152.webp",
+                "https://photos.zillowstatic.com/fp/e18b67f996275852cc44e7eccbf4708f-cc_ft_1152.webp",
+                "https://photos.zillowstatic.com/fp/fe62cb85b84043902a77e24fc1f86455-cc_ft_576.webp",
+                "https://photos.zillowstatic.com/fp/fbfee9c72197b2e3f50fb8b26c6810f9-cc_ft_576.webp",
+                "https://photos.zillowstatic.com/fp/2dea55edc349e4562153832e83fce52e-cc_ft_1152.webp"
+            ],
+            "moreTextAboutThePlace": "Bright corner-unit condo with elevator access, split-bedroom layout, and a private balcony facing west for sunset views. Open-concept living, heated garage parking, and secure building amenities."
+        },
+        "company": {
+            "name": "MRED",
+            "logoImg": "https://photos.zillowstatic.com/fp/1b0fc53ffc89ea17e1e382976aca4421-zillow_web_95_35.jpg",
+            "address": "2443 Warrenville Rd #600, Lisle, IL 60532, United States"
+        },
+        "features": {
+            "hasGarage": true,
+            "parkFeatures": [
+                "Heated Garage",
+                "Assigned",
+                "Garage Door Opener",
+                "Concrete"
+            ],
+            "hasPool": false,
+            "hasGarden": false
+        },
+        "special": [
+            "Corner unit with city views",
+            "Private balcony",
+            "Ensuite primary bath",
+            "In-unit laundry",
+            "Elevator building"
+        ],
+        "interior": {
+            "furnished": false,
+            "rooms": [
+                "Living Room",
+                "Dining Room",
+                "Laundry",
+                "Walk In Closet"
+            ],
+            "fireplace": false,
+            "kitchen": {
+                "features": [
+                    "Eating Area-Breakfast Bar",
+                    "Quartz Countertops",
+                    "Stainless Appliances",
+                    "Updated Kitchen"
+                ]
+            }
+        },
+        "community": {
+            "hoa": {
+                "hasHOA": true,
+                "fee": 325
+            },
+            "features": [
+                "Elevator",
+                "Fitness Center",
+                "Party Room",
+                "Bike Room",
+                "Street Lights"
+            ]
+        },
+        "climateFactors": {
+            "floodFactor": 3,
+            "fireFactor": 1,
+            "windFactor": 2,
+            "airFactor": 5,
+            "heatFactor": 3
+        },
+        "nearbySchools": [
+            {
+                "name": "Field-Stevenson Elementary School",
+                "distance": "0.6",
+                "rating": 7
+            },
+            {
+                "name": "Forest Park Middle School",
+                "distance": "1.3",
+                "rating": 7
+            },
+            {
+                "name": "Proviso East High School",
+                "distance": "1.9",
+                "rating": 6
+            }
+        ],
+        "utility": {
+            "electric": "Circuit Breakers",
+            "sewer": "Public Sewer",
+            "water": "Lake Michigan, Public"
+        }
+    }
+]

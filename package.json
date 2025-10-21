@@ -1,0 +1,14 @@
+{
+  "name": "real-estate",
+  "private": true,
+  "scripts": {
+    "dev": "concurrently \"npm run dev --prefix frontend\" \"npm run dev --prefix backend\""
+  },
+  "devDependencies": {
+    "concurrently": "^9.2.1"
+  },
+  "dependencies": {
+    "framer-motion": "^12.23.24",
+    "react-toastify": "^11.0.5"
+  }
+}

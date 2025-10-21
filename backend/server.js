@@ -1,0 +1,576 @@
+import { fileURLToPath } from 'url';
+
+import express from 'express';
+import cookieParser from 'cookie-parser';
+import multer from 'multer';
+import nodemailer from 'nodemailer';
+import fs from 'fs';
+import cloudinary from './cloudinary.js';
+import path from 'path';
+import cors from 'cors';
+import dotenv from 'dotenv';
+
+import {
+    sql,
+    getPool,
+
+    getOrCreateCompany,
+    upsertProperty,
+    replaceChildArrays,
+    insertMany,
+    insertNearbySchools,
+
+    addUserToDB,
+    getUserByEmail,
+    findUserId,
+    checkPassword,
+    setCode,
+    compareCode,
+    changePassword,
+    findPropertyById,
+    getSavedProperties,
+} from './db.js';
+import { uploadImage } from './uploadImage.js';
+
+dotenv.config();
+const app = express();
+const port = process.env.PORT || 3000;
+const upload = multer({
+    storage: multer.memoryStorage(),
+    limits: { fileSize: 5 * 1024 * 1024 },
+    fileFilter: (req, file, cb) => {
+        const ok = /^image\/(png|jpe?g|webp|gif|bmp|svg\+xml)$/i.test(file.mimetype);
+        cb(ok ? null : new Error("Only image files are allowed"), ok);
+    },
+});
+
+app.use(cors({
+    origin: process.env.CLIENT_ORIGIN || 'http://localhost:5174',
+    credentials: true
+}));
+
+app.use(express.json({ limit: '5mb' }));
+
+app.use(cookieParser());
+
+
+async function processMail(to, subject, message) {
+    try {
+        const transporter = nodemailer.createTransport({
+            host: 'smtp.gmail.com',
+            port: 465,
+            secure: true,
+            auth: {
+                user: process.env.EMAIL_USER,
+                pass: process.env.EMAIL_PASSWORD,
+            },
+        });
+
+        const mailOptions = {
+            from: `NestNova <${process.env.EMAIL_USER}>`,
+            to,
+            subject,
+            html: message,
+        };
+
+        await transporter.sendMail(mailOptions);
+        return { success: true, message: 'Reset code sent.' };
+    } catch (err) {
+        console.error('Email sending error:', err?.response || err);
+        return {
+            success: false,
+            message: 'Email failed to send. Please try again.',
+            error: err?.message,
+        };
+    }
+}
+
+
+app.get("/", (req, res) => {
+    res.send("Backend is running 🚀 | Try GET /api/healthz");
+});
+
+// ✅ Health check route
+app.get("/api/healthz", (req, res) => res.json({ ok: true }));
+
+
+app.post('/api/forgot-password', async (req, res) => {
+    try {
+        const { email } = req.body;
+        if (!email) return res.status(400).json({ message: 'Email is required.' });
+
+        const pool = await getPool();
+        const result = await pool.request()
+            .input('email', sql.VarChar, email)
+            .query('SELECT * FROM Users WHERE email = @email');
+
+        if (result.recordset.length === 0) {
+            console.log("Email found")
+            return res.status(404).json({ message: 'Email Not Registered.' });
+        }
+        console.log("Passed Email exists");
+
+        const code = Math.floor(100000 + Math.random() * 900000).toString();
+
+        const forgotPass = await setCode(email, code, 'forgot', 15);
+
+        if (!forgotPass || !forgotPass.success) {
+
+            return res.status(500).json({ message: 'Failed to generate reset code.' });
+        }
+
+        const subject = "Your Password Reset Code";
+
+        const message = `
+        <h2>Password Reset Request</h2>
+        <p>Your password reset code is:</p>
+        <h1 style="color:#1a73e8;">${code}</h1>
+        <p>This code will expire in 15 minutes. If you didn’t request this, please ignore it.</p>
+        <p>— NestNova Team</p>
+        `;
+
+        const mailSent = await processMail(email, subject, message);
+        if (!mailSent.success) {
+            return res.status(500).json({ message: "Failed to send. " })
+        }
+
+        res.status(200).json({ message: 'Reset code sent successfully.' });
+    }
+    catch (err) {
+        console.error(err);
+        res.status(500).json({ message: 'Something went wrong. Please try again later.' });
+    }
+});
+
+app.post('/api/verify-otp', async (req, res) => {
+    try {
+        const { email, otp } = req.body;
+        if (!email || !otp) return res.status(400).json({ message: 'Email and OTP are required.' });
+
+        const pool = await getPool();
+        const result = await pool.request()
+            .input('email', sql.VarChar, email)
+            .query('SELECT otpCode, otpExpiry FROM Users WHERE email = @email');
+
+        if (result.recordset.length === 0) {
+            return res.status(404).json({ message: 'Email not found.' });
+        }
+
+        const user = result.recordset[0];
+        if (!user.otpCode || !user.otpExpiry) {
+            return res.status(400).json({ message: 'No reset code found. Please request a new one.' });
+        }
+
+        const now = new Date();
+        const expiry = new Date(user.reset_code_expiry);
+        const compare = await compareCode(otp, user.otpCode);
+
+        if (!compare.success) {
+            return res.status(400).json({ message: compare.message || 'Invalid Message' })
+        }
+
+        if (now > expiry) {
+            return res.status(400).json({ message: 'OTP has expired.' });
+        }
+
+        res.status(200).json({ message: 'OTP verified successfully.' });
+    } catch (err) {
+        console.log(err);
+        res.status(500).json({ message: 'Something went wrong. Please try again later.' });
+    }
+});
+
+
+app.post('/api/setPassword', async (req, res) => {
+    try {
+        const { email, password } = req.body;
+        console.log("Changing Password for :", email);
+
+        if (!email || !password) {
+            return res.status(400).json({ message: 'Email and password are required' });
+        }
+
+        const result = await changePassword(email, password);
+        if (!result?.success) {
+            return res.status(500).json({ message: result?.message || 'Failed to change password' });
+        }
+
+        const userResult = await getUserByEmail(email, password);
+        if (!userResult?.success || !userResult?.user) {
+            return res.status(401).json({ message: userResult?.message || 'Invalid email or password' });
+        }
+
+        const userDet = userResult.user;
+
+        res.cookie("userSession", JSON.stringify(userDet), {
+            httpOnly: true,
+            maxAge: 24 * 60 * 60 * 1000,
+            secure: process.env.NODE_ENV === 'production',
+            sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
+        });
+
+        return res.status(200).json({ message: 'Password changed successfully' });
+    } catch (err) {
+        console.error('setPassword error:', err);
+        if (!res.headersSent) {
+            return res.status(500).json({ message: 'Server error' });
+        }
+    }
+});
+
+
+// app.post('/api/', async (req, res) => {
+//     try {
+//         const { email } = req.body;
+
+//         const pool = await poolPromise;
+
+//     } catch (err) {
+//         console.error(err);
+//         res.status(500).json({ messagee: "Somethign wen wrong" })
+//     }
+// })
+
+app.post('/api/upload-profile', upload.single('profileImage'), async (req, res) => {
+    try {
+        if (!req.file) return res.status(400).json({ error: 'No file uploaded.' });
+
+        const result = await cloudinary.uploader.upload(req.file.path, {
+            folder: 'profile_pictures',
+            public_id: `user_${Date.now()}`,
+        });
+
+        fs.unlinkSync(req.file.path);
+        res.status(200).json({ imageUrl: result.secure_url });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+app.post('/api/register', async (req, res) => {
+    const { email, password } = req.body;
+    console.log("Checking registration data:", email);
+
+    if (!email || !password) {
+        return res.status(400).json({ message: 'Email and password are required' });
+    }
+
+    const result = await addUserToDB(email, password);
+
+
+    const userResult = await getUserByEmail(email, password);
+
+    if (result.success) {
+        res.status(201).json({ message: 'User registered successfully', });
+    } else {
+        res.status(500).json({ message: result.message || 'Failed to register user' });
+    }
+
+    if (!userResult || !userResult.success) {
+        return res.status(401).json({ message: userResult.message || 'Invalid email or password' });
+    }
+    const userDet = userResult.user;
+
+    res.cookie("userSession", JSON.stringify(userDet), {
+        httpOnly: true,
+        maxAge: 24 * 60 * 60 * 1000,
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax'
+    });
+
+
+});
+
+app.post('/api/login', async (req, res) => {
+    const { email, password } = req.body;
+
+    console.log("Checking login data:", email);
+    if (!email || !password) {
+        return res.status(400).json({ message: 'Email and password are required' });
+    }
+
+    try {
+        const userResult = await getUserByEmail(email, password);
+        if (!userResult || !userResult.success) {
+            return res.status(401).json({ message: userResult.message || 'Invalid email or password' });
+        }
+        const userDet = userResult.user;
+
+        console.log("User found:", userDet);
+
+        res.cookie("userSession", JSON.stringify(userDet), {
+            httpOnly: true,
+            maxAge: 24 * 60 * 60 * 1000,
+            secure: process.env.NODE_ENV === 'production',
+            sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax'
+        });
+
+        res.status(200).json({
+            message: 'Login successful',
+            role: userDet.role,
+        });
+
+    } catch (err) {
+        console.error('Login error:', err);
+        res.status(500).json({ message: 'Server error during login' });
+    }
+});
+
+function requireAuth() {
+    return (req, res, next) => {
+        const userSession = req.cookies.userSession;
+        if (!userSession) {
+            console.log("No user session found");
+            return res.status(401).json({ message: 'Not logged in' });
+        }
+
+        try {
+            const parsed = JSON.parse(userSession);
+            // console.log("✅ Cookie parsed:", parsed);
+            req.session = parsed;
+            next();
+        }
+        catch (err) {
+            console.error("❌ Error parsing cookie:", err.message);
+            return res.status(400).json({ message: 'Invalid session data' });
+        }
+
+    }
+}
+
+app.get('/api/checkStatus', requireAuth(), async (req, res) => {
+    try {
+        console.log("Session from cookie:", req.session);
+
+        const userResult = await findUserId(req.session.id);
+
+        const { email } = req.session;
+
+
+        if (!userResult) {
+            return res.status(404).json({ message: "User not found" });
+        }
+
+        res.json({
+            user: userResult
+        })
+        // res.sendFile(path.join(__dirname, 'public', 'dashboard.html'));
+    }
+    catch (err) {
+        console.error("Error in dashboard route:", err);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
+
+
+app.get('/api/user/setting', requireAuth(), async (req, res) => {
+    try {
+        const user = await findUserId(req.session.id);
+        if (!user) {
+            return res.status(401).json({ message: 'Error Retrieving' });
+        }
+        res.json({
+            emailInput: user.email,
+            userNameInput: user.name,
+            phoneInput: user.phone,
+            profilePic: user.profile_pic,
+            companyNameInput: user.company_name,
+            orgTypeInput: user.institution_type,
+            addressInput: user.address,
+            cityInput: user.city,
+            stateInput: user.state,
+            bioInput: user.description
+        });
+    } catch (err) {
+        console.error("Error in dashboard route:", err);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
+app.post('/api/checkPassword', requireAuth(), async (req, res) => {
+    try {
+        const { password } = req.body;
+        const user = await findUserId(req.session.id);
+
+        if (!user) {
+            return res.status(401).json({ message: 'Error Retrieving' });
+        }
+
+        const email = user.email;
+        const checkResult = await checkPassword(user.email, password);
+
+        if (!checkResult.success) {
+            return res.status(400).json({ success: false, message: checkResult.message });
+        }
+        res.status(200).json({ success: true, message: 'Password is correct' });
+    } catch (err) {
+        console.error('Error checking password:', err);
+        res.status(500).json({ message: 'Internal server error' });
+    }
+});
+
+
+app.post('/api/logout-dashboard', async (req, res) => {
+    res.clearCookie('userSession');
+    res.redirect('/');
+})
+
+function safeParseJson(maybeJson) {
+    try {
+        const first = typeof maybeJson === "string" ? JSON.parse(maybeJson) : maybeJson;
+        if (typeof first === "string") return JSON.parse(first);
+        return first;
+    } catch {
+        return null;
+    }
+}
+
+
+app.get("/api/properties/:id", async (req, res) => {
+    try {
+        const rawId = String(req.params.id || "").trim();
+        if (!/^\d+$/.test(rawId)) {
+            return res.status(400).json({ message: "Invalid property id." });
+        }
+        const id = parseInt(rawId, 10);
+        const home = await findPropertyById(id);
+
+        let images = safeParseJson(home.ImagesJson);
+        if (!Array.isArray(images)) images = [];
+
+        const { ImagesJson, ...rest } = home;
+        const property = { ...rest, images };
+
+        return res.json({ property });
+    } catch (err) {
+        console.error("Error in /api/properties/:id:", err);
+        return res.status(500).json({ message: "Internal server error." });
+    }
+});
+
+app.get('/api/getSaved', requireAuth(), async (req, res) => {
+    console.log("Fetching saved properties for user:", req.session);
+    try {
+        const userId = req.session?.id;
+        if (!userId) return res.status(401).json({ message: 'Not authenticated.' });
+
+        const savedProperties = await getSavedProperties(userId);
+        res.status(200).json({ saved: savedProperties });
+    } catch (err) {
+        console.error('Error fetching saved properties:', err);
+        res.status(500).json({ message: 'Internal server error.' });
+    }
+});
+
+app.post('/api/saved', requireAuth(), async (req, res) => {
+    try {
+        const raw = req.body?.propertyId;
+        if (!raw || !/^\d+$/.test(String(raw))) {
+            return res.status(400).json({ message: 'Valid propertyId is required.' });
+        }
+        const propertyId = parseInt(raw, 10);
+
+        const userId = req.session?.id;
+        if (!userId) return res.status(401).json({ message: 'Not authenticated.' });
+
+        const toggle = await toggleSaved(userId, propertyId);
+        if (!toggle.success) {
+            return res.status(500).json({ message: toggle.message || 'Failed to toggle saved property.' });
+        }
+
+        return res.status(200).json({ success: true, action: toggle.action });
+    } catch (err) {
+        console.error('Error saving property:', err);
+        return res.status(500).json({ message: 'Internal server error.' });
+    }
+});
+
+app.post("/api/profile/upload", upload.single("file"), async (req, res) => {
+    console.log("LO")
+    try {
+        if (!req.file) return res.status(400).json({ message: "No file uploaded" });
+
+        const imageUrl = await uploadImage(req.file.buffer, "profile_pictures");
+        return res.json({ url: imageUrl });
+    } catch (err) {
+        console.error("Cloudinary upload error:", err);
+        return res.status(500).json({ message: "Upload failed" });
+    }
+});
+
+app.patch("/api/me", async (req, res) => {
+    const { id, name, phone_number, location, profileUrl } = req.body;
+    const pool = await getPool();
+    try {
+        const request = pool.request()
+            .input("userId", sql.VarChar, String(id))
+            .input("name", sql.VarChar(200), name || null)
+            .input("phone_number", sql.VarChar(50), phone_number || null)
+            .input("location", sql.VarChar(200), location || null)
+            .input("profileUrl", sql.VarChar(400), profileUrl || null);
+
+        const result = await request.query(`
+      UPDATE dbo.Users
+      SET
+        name = ISNULL(@name, name),
+        phone_number = ISNULL(@phone_number, phone_number),
+        location = ISNULL(@location, location),
+        profileUrl = ISNULL(@profileUrl, profileUrl)
+      WHERE userId = @userId;
+
+      SELECT TOP 1 userId, email, name, phone_number, location, profileUrl
+      FROM dbo.Users
+      WHERE userId = @userId;
+    `);
+
+        if (!result.recordset.length)
+            return res.status(404).json({ message: "User not found" });
+
+        res.json({
+            message: "Profile updated successfully",
+            user: result.recordset[0],
+        });
+    } catch (err) {
+        console.error("PATCH /api/me error:", err);
+        res.status(500).json({ message: "Internal server error" });
+    }
+});
+
+
+
+app.post('/api/import/properties', async (req, res) => {
+    const data = Array.isArray(req.body) ? req.body : [];
+    if (data.length === 0) return res.status(400).json({ error: 'Body must be a non-empty array.' });
+
+    const pool = await getPool();
+
+    const results = [];
+    for (const item of data) {
+        const tx = new sql.Transaction(pool);
+        try {
+            await tx.begin();
+
+            const companyId = await getOrCreateCompany(tx, item.company);
+            const propertyId = await upsertProperty(tx, item, companyId, true /* isDemo */);
+
+            await replaceChildArrays(tx, propertyId, item);
+
+            await tx.commit();
+            results.push({ external_id: item.basic?.id, property_id: propertyId, status: 'upserted' });
+        } catch (err) {
+            try { await tx.rollback(); } catch { }
+            results.push({ external_id: item.basic?.id, error: err.message });
+        }
+    }
+
+    return res.json({ count: results.length, results });
+});
+
+
+
+app.listen(port, () => {
+    console.log(`Server is running on http://localhost:${port}`);
+});
+
+

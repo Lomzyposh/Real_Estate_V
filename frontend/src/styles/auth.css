@@ -1,0 +1,133 @@
+.logForm {
+    width: 50%;
+    padding: 50px 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: var(--background);
+    /* box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); */
+    border-radius: 8px;
+    transition: background-color 0.4s ease-in-out;
+}
+
+#loginForm,
+#forgotPassForm {
+    animation: fadeLeft .5s ease-in-out;
+}
+
+#signUpForm {
+    animation: fadeRight .5s ease-in-out;
+}
+
+@keyframes fadeLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-120px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes fadeRight {
+    from {
+        opacity: 0;
+        transform: translateX(120px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.logForm h1 {
+    text-align: center;
+    font-family: "Montserrat", sans-serif;
+    color: var(--text);
+}
+
+/* .signDiv input {
+    width: 100%;
+    padding: 15px;
+    margin-top: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    outline: none;
+    font-size: 16px;
+}
+
+.signDiv {
+    margin: 20px 0;
+    width: 100%;
+    position: relative;
+}
+
+.signDiv label {
+    position: absolute;
+    bottom: 11px;
+    left: 13px;
+    color: grey;
+    transition: 0.4s ease all;
+    pointer-events: none;
+} */
+
+.signDiv input:focus+label,
+.signDiv input:not(:placeholder-shown)+label {
+    left: 8px;
+    bottom: 37px;
+    padding: 0 4px;
+    font-size: 12px;
+    color: #4CAF50;
+}
+
+.signDiv input:focus {
+    border: 2px solid #4CAF50;
+    outline: none;
+}
+
+/* 
+#loginSubFormBtn,
+#signUpFormBtn {
+    margin-top: 20px;
+    width: 100%;
+    padding: 12px 0;
+    background-color: var(--dark-primary);
+    color: white;
+    font-size: 18px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+} */
+
+/* #loginSubFormBtn:hover,
+#signUpFormBtn:hover {
+    background-color: var(--primary);
+} */
+
+
+.loginForgotPassword {
+    width: fit-content;
+    display: inline-block;
+    margin-top: 10px;
+    font-size: 14px;
+    color: var(--primary);
+    cursor: pointer;
+    user-select: none;
+}
+
+.loginForgotPassword span:hover {
+    text-decoration: underline;
+}
+
+@media only screen and (max-width: 900px) {
+    .right-image {
+        display: none;
+    }
+
+    .logForm {
+        width: 100%;
+    }
+}
