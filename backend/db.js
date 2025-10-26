@@ -69,11 +69,9 @@ export async function upsertProperty(tx, item, companyId, isDemo = false) {
   const climate = item.climateFactors || {};
 
   const req = tx.request()
-    // keys/flags
     .input('external_id', sql.Int, b.id)
     .input('is_demo', sql.Bit, isDemo ? 1 : 0)
 
-    // basics
     .input('property_type', sql.NVarChar(50), b.propertyType || null)
     .input('home_type', sql.NVarChar(50), b.homeType || null)
     .input('status', sql.NVarChar(50), b.status || null)
@@ -87,34 +85,27 @@ export async function upsertProperty(tx, item, companyId, isDemo = false) {
     .input('bathrooms', sql.Int, b.bathroom || null)
     .input('parking_spaces', sql.Int, b.parkingSpaces || null)
 
-    // location
     .input('latitude', sql.Decimal(9, 6), loc.latitude ?? null)
     .input('longitude', sql.Decimal(9, 6), loc.longitude ?? null)
     .input('zip_code', sql.NVarChar(20), loc.ZipCode || null)
     .input('street', sql.NVarChar(200), loc.street || null)
 
-    // media
     .input('main_image', sql.NVarChar(600), media.mainImage || null)
     .input('more_text', sql.NVarChar(sql.MAX), media.moreTextAboutThePlace || null)
 
-    // company
     .input('company_id', sql.Int, companyId || null)
 
-    // features
     .input('has_garage', sql.Bit, feat.hasGarage ?? null)
     .input('has_pool', sql.Bit, feat.hasPool ?? null)
     .input('has_garden', sql.Bit, feat.hasGarden ?? null)
 
-    // utilities
     .input('electric', sql.NVarChar(100), util.electric || null)
     .input('sewer', sql.NVarChar(100), util.sewer || null)
     .input('water', sql.NVarChar(100), util.water || null)
 
-    // HOA
     .input('hoa_has', sql.Bit, hoa.hasHOA ?? null)
     .input('hoa_fee', sql.Decimal(10, 2), hoa.fee ?? null)
 
-    // climate
     .input('flood_factor', sql.TinyInt, climate.floodFactor ?? null)
     .input('fire_factor', sql.TinyInt, climate.fireFactor ?? null)
     .input('wind_factor', sql.TinyInt, climate.windFactor ?? null)
@@ -385,24 +376,78 @@ export async function changePassword(email, password) {
     : { success: false, message: 'Error changing Password' };
 }
 
+export async function findAllProperties() {
+  const pool = await getPool();
+  const result = await pool.request().query(`
+    SELECT
+      p.*,
+
+      ISNULL((
+        SELECT
+          i.id,
+          i.url
+        FROM dbo.PropertyGalleryImages AS i
+        WHERE i.property_id = p.property_id
+        FOR JSON PATH
+      ), '[]') AS images,
+
+      (
+        SELECT
+          u.userId,
+          u.name,
+          u.email,
+          u.profileUrl
+        FROM dbo.Users AS u
+        WHERE u.userId = p.agentId
+        FOR JSON PATH, WITHOUT_ARRAY_WRAPPER
+      ) AS agent
+
+    FROM dbo.Properties AS p
+  `);
+
+  const rows = (result.recordset || []).map(row => ({
+    ...row,
+    images: safeParseJson(row.images, []),
+    agent: safeParseJson(row.agent, null),
+  }));
+
+  return rows;
+}
+
+function safeParseJson(s, fallback) {
+  try { return s ? JSON.parse(s) : fallback; } catch { return fallback; }
+}
+
 export async function findPropertyById(id) {
   const pool = await getPool();
   const result = await pool
     .request()
     .input("id", sql.Int, id)
     .query(`
-        SELECT
-          p.*,
-          (
-            SELECT
-              i.*
-            FROM dbo.PropertyGalleryImages AS i
-            WHERE i.property_id = p.property_id
-            FOR JSON PATH
-          ) AS ImagesJson
-        FROM dbo.Properties AS p
-        WHERE p.property_id = @id;
-      `);
+      SELECT
+        p.*,
+
+        ISNULL((
+          SELECT i.id, i.url
+          FROM dbo.PropertyGalleryImages AS i
+          WHERE i.property_id = p.property_id
+          FOR JSON PATH
+        ), '[]') AS images,
+
+        (
+          SELECT
+            u.userId,
+            u.name,
+            u.email,
+            u.profileUrl
+          FROM dbo.Users AS u
+          WHERE u.userId = p.agentId
+          FOR JSON PATH, WITHOUT_ARRAY_WRAPPER
+        ) AS agent
+
+      FROM dbo.Properties AS p
+      WHERE p.property_id = @id;
+    `);
 
   return result.recordset[0] || null;
 }
@@ -415,8 +460,7 @@ export async function getSavedProperties(userId) {
     .query(`
       SELECT sp.property_id
       FROM dbo.SavedProperties AS sp
-      WHERE sp.user_id = @userId
-      ORDER BY sp.created_at DESC
+      WHERE sp.userId = @userId
     `);
 
   return (result.recordset || []).map(r => r.property_id);
@@ -430,18 +474,18 @@ export async function toggleSaved(userId, propertyId) {
     .query(`
     IF EXISTS (
         SELECT 1 FROM dbo.SavedProperties
-        WHERE user_id = @userId AND property_id = @propertyId
+        WHERE userId = @userId AND property_id = @propertyId
       )
       BEGIN
         DELETE FROM dbo.SavedProperties
-        WHERE user_id = @userId AND property_id = @propertyId;
+        WHERE userId = @userId AND property_id = @propertyId;
 
         SELECT 'removed' AS status;
       END
       ELSE
       BEGIN
-        INSERT INTO dbo.SavedProperties(user_id, property_id, created_at)
-        VALUES(@userId, @propertyId, GETDATE());
+        INSERT INTO dbo.SavedProperties(userId, property_id)
+        VALUES(@userId, @propertyId);
 
         SELECT 'added' AS status;
       END
@@ -457,10 +501,35 @@ export async function addSaved(userId, propertyId) {
     .input('userId', sql.VarChar, userId)
     .input('propertyId', sql.Int, propertyId)
     .query(`
-      INSERT INTO dbo.SavedProperties(user_id, property_id, created_at)
-      VALUES(@userId, @propertyId, GETDATE())
+      INSERT INTO dbo.SavedProperties(userId, property_id)
+      VALUES(@userId, @propertyId)
     `);
   return { success: true };
+}
+
+
+export async function getAgentProperties(userId) {
+  const pool = await getPool();
+
+  const q = `
+    SELECT
+      p.property_id,
+      p.home_type,
+      p.price,
+      p.sqft,
+      p.street,
+      p.zip_code,
+      comp.name            AS companyName
+    FROM dbo.Properties AS p
+    INNER JOIN dbo.Companies AS comp ON comp.company_id = p.company_id
+    WHERE p.agentId = @userId
+    ;
+  `;
+  const result = await pool.request()
+    .input('userId', sql.VarChar, userId)
+    .query(q)
+
+  return result.recordset || [];
 }
 
 

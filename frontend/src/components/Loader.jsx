@@ -1,7 +1,7 @@
 import React from "react";
 import { useLoader } from "../contexts/LoaderContext";
 
-export default function Loader({ logo = "/logo.png" }) {
+export default function Loader({ logo = "/images/homeLogo.png" }) {
     const { showLoader, loaderText } = useLoader();
     if (!showLoader) return null;
 

@@ -55,7 +55,7 @@ const AuthLayout = () => {
                 <button className="p-2 z-10 border-none rounded-2xl text-sm text-white cursor-pointer" id="loginSwitch" onClick={() => setIsSignUpActive(false)}>Login</button>
                 <button className="p-2 z-10 border-none rounded-2xl text-sm text-white cursor-pointer" id="signUpSwitch" onClick={() => setIsSignUpActive(true)}>Sign Up</button>
             </div>
-            <main className='w-[50%] ml-0 md:ml-20'>
+            <main className='md:w-[50%] ml-0 md:ml-20'>
                 {isSignUpActive ?
                     <SignUp setIsSignUpActive={setIsSignUpActive} /> :
                     <Login setIsSignUpActive={setIsSignUpActive} />

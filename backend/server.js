@@ -29,6 +29,9 @@ import {
     changePassword,
     findPropertyById,
     getSavedProperties,
+    findAllProperties,
+    toggleSaved,
+    getAgentProperties,
 } from './db.js';
 import { uploadImage } from './uploadImage.js';
 
@@ -218,6 +221,41 @@ app.post('/api/setPassword', async (req, res) => {
     }
 });
 
+app.post("/api/compareAndSetPassword", async (req, res) => {
+    try {
+        const { email, currentPassword, newPassword } = req.body;
+
+        if (!email || !currentPassword || !newPassword) {
+            return res.status(400).json({ message: "Email, current, and new password are required" });
+        }
+
+        const userResult = await getUserByEmail(email, currentPassword);
+        if (!userResult?.success || !userResult?.user) {
+            return res.status(404).json({ message: "Incorrect Password" });
+        }
+
+        const updateResult = await changePassword(email, newPassword);
+
+        if (!updateResult?.success) {
+            return res.status(500).json({ message: "Failed to update password" });
+        }
+        const userDet = userResult.user;
+        res.cookie("userSession", JSON.stringify(userDet), {
+            httpOnly: true,
+            maxAge: 24 * 60 * 60 * 1000,
+            secure: process.env.NODE_ENV === "production",
+            sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+        });
+
+        return res.status(200).json({ message: "Password changed successfully" });
+    } catch (err) {
+        console.error("compareAndSetPassword error:", err);
+        if (!res.headersSent) {
+            res.status(500).json({ message: "Server error" });
+        }
+    }
+});
+
 
 // app.post('/api/', async (req, res) => {
 //     try {
@@ -296,7 +334,7 @@ app.post('/api/login', async (req, res) => {
         }
         const userDet = userResult.user;
 
-        console.log("User found:", userDet);
+        // console.log("User found:", userDet);
 
         res.cookie("userSession", JSON.stringify(userDet), {
             httpOnly: true,
@@ -340,7 +378,7 @@ function requireAuth() {
 
 app.get('/api/checkStatus', requireAuth(), async (req, res) => {
     try {
-        console.log("Session from cookie:", req.session);
+        // console.log("Session from cookie:", req.session);
 
         const userResult = await findUserId(req.session.id);
 
@@ -411,7 +449,7 @@ app.post('/api/checkPassword', requireAuth(), async (req, res) => {
 });
 
 
-app.post('/api/logout-dashboard', async (req, res) => {
+app.post('/api/logout', async (req, res) => {
     res.clearCookie('userSession');
     res.redirect('/');
 })
@@ -427,6 +465,34 @@ function safeParseJson(maybeJson) {
 }
 
 
+app.get("/api/properties", async (req, res) => {
+    try {
+        const allProp = await findAllProperties();
+
+        const properties = allProp.map((home) => {
+            let images = [];
+            try {
+                images = JSON.parse(home.ImagesJson || "[]");
+                if (!Array.isArray(images)) images = [];
+            } catch {
+                images = [];
+            }
+
+            const { ImagesJson, ...rest } = home;
+            return { ...rest, images };
+        });
+
+        return res.json({ properties });
+    } catch (err) {
+        console.error("Error in /api/properties:", err);
+        return res.status(500).json({ message: "Internal server error." });
+    }
+});
+
+
+
+
+
 app.get("/api/properties/:id", async (req, res) => {
     try {
         const rawId = String(req.params.id || "").trim();
@@ -434,13 +500,17 @@ app.get("/api/properties/:id", async (req, res) => {
             return res.status(400).json({ message: "Invalid property id." });
         }
         const id = parseInt(rawId, 10);
+
         const home = await findPropertyById(id);
+        if (!home) return res.status(404).json({ message: "Property not found." });
 
-        let images = safeParseJson(home.ImagesJson);
-        if (!Array.isArray(images)) images = [];
+        const images = safeParseJson(home.images, []);
+        const agent = safeParseJson(home.agent, null);
 
-        const { ImagesJson, ...rest } = home;
-        const property = { ...rest, images };
+        const { images: _img, agent: _ag, ...rest } = home;
+        const property = { ...rest, images, agent };
+        
+        console.log("CLO",property);
 
         return res.json({ property });
     } catch (err) {
@@ -448,7 +518,6 @@ app.get("/api/properties/:id", async (req, res) => {
         return res.status(500).json({ message: "Internal server error." });
     }
 });
-
 app.get('/api/getSaved', requireAuth(), async (req, res) => {
     console.log("Fetching saved properties for user:", req.session);
     try {
@@ -538,6 +607,24 @@ app.patch("/api/me", async (req, res) => {
 });
 
 
+app.get('/api/agentDetails', requireAuth(), async (req, res) => {
+    try {
+        const user = await findUserId(req.session.id);
+        const userId = user.userId;
+
+        if (!userId) return res.status(401).json({ message: 'Not authenticated.' });
+
+        const data = await getAgentProperties(userId);
+        // console.log('Agent Data:', data);
+        res.status(200).json(data);
+
+    } catch (err) {
+        console.error('AgentDetails error:', err);
+        res.status(500).json({ error: 'Failed to load agent details' });
+    }
+});
+
+
 
 app.post('/api/import/properties', async (req, res) => {
     const data = Array.isArray(req.body) ? req.body : [];
@@ -552,7 +639,7 @@ app.post('/api/import/properties', async (req, res) => {
             await tx.begin();
 
             const companyId = await getOrCreateCompany(tx, item.company);
-            const propertyId = await upsertProperty(tx, item, companyId, true /* isDemo */);
+            const propertyId = await upsertProperty(tx, item, companyId, true);
 
             await replaceChildArrays(tx, propertyId, item);
 

@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { useAuth } from "../contexts/AuthContext";
 import UnauthorizedOverlay from "../components/unAuth";
 import { toast } from "react-toastify";
+import { useLoader } from "../contexts/LoaderContext";
 
 async function uploadImageToServer(file, endpoint = "/api/profile/upload") {
     const fd = new FormData();
@@ -13,7 +14,8 @@ async function uploadImageToServer(file, endpoint = "/api/profile/upload") {
 }
 
 export default function CustomerSettings() {
-    const { user } = useAuth();
+    const { user, setUser } = useAuth();
+    const { showLoader, loaderText } = useLoader();
 
     const [active, setActive] = useState("Profile");
     const [avatarUrl, setAvatarUrl] = useState("/images/blank-profileImg.webp");
@@ -49,7 +51,7 @@ export default function CustomerSettings() {
 
     const tabs = ["Profile", "Security"];
 
-    const handleSave = async () => {
+    const handleSaveDetails = async () => {
         try {
             if (!fullName?.trim()) {
                 toast.error("Please enter your full name");
@@ -90,9 +92,18 @@ export default function CustomerSettings() {
                 method: "PATCH",
                 headers,
                 body: JSON.stringify(payload),
+                credentials: "include",
             });
 
             const data = await res.json();
+
+            setUser(prev => ({
+                ...prev,
+                name: payload.name,
+                phone_number: payload.phone_number,
+                location: payload.location,
+                profileUrl: payload.profileUrl,
+            }));
 
             if (!res.ok) {
                 toast.error(`Error: ${data?.message || "Failed to save changes"}`);
@@ -107,6 +118,50 @@ export default function CustomerSettings() {
             setSaving(false);
         }
     };
+
+    const handleChangePassword = async () => {
+        try {
+            if (!pwd.current) {
+                toast.error("Password Required");
+                return;
+            }
+            if (pwd.next !== pwd.confirm) {
+                toast.error("Passwords don't match");
+                return;
+            }
+
+            setSaving(true);
+
+            const payload = {
+                email: user.email,
+                currentPassword: pwd.current,
+                newPassword: pwd.next
+            };
+
+            const headers = { "Content-Type": "application/json" };
+            if (user?.token) headers.Authorization = `Bearer ${user.token}`;
+
+            const res = await fetch("/api/compareAndSetPassword", {
+                method: "POST",
+                headers,
+                body: JSON.stringify(payload),
+            });
+
+            const data = await res.json();
+
+            if (!res.ok) {
+                toast.error(`Error: ${data?.message || "Failed to save changes"}`);
+                return;
+            }
+
+            setDirty(false);
+            toast.success("Password updated successfully 🎉");
+        } catch (err) {
+            toast.error(err.message || "Failed to save changes");
+        } finally {
+            setSaving(false);
+        }
+    }
 
 
     return (
@@ -155,44 +210,56 @@ export default function CustomerSettings() {
 
                     <section className="p-6">
                         {active === "Profile" && (
-                            <ProfileSection
-                                avatarUrl={avatarUrl}
-                                setAvatarUrl={setAvatarUrl}
-                                selectedFile={selectedFile}
-                                setSelectedFile={setSelectedFile}
-                                preview={preview}
-                                setPreview={setPreview}
-                                fullName={fullName}
-                                setFullName={setFullName}
-                                phone={phone}
-                                setPhone={setPhone}
-                                city={city}
-                                setCity={setCity}
-                            />
+                            <>
+                                <ProfileSection
+                                    avatarUrl={avatarUrl}
+                                    setAvatarUrl={setAvatarUrl}
+                                    selectedFile={selectedFile}
+                                    setSelectedFile={setSelectedFile}
+                                    preview={preview}
+                                    setPreview={setPreview}
+                                    fullName={fullName}
+                                    setFullName={setFullName}
+                                    phone={phone}
+                                    setPhone={setPhone}
+                                    city={city}
+                                    setCity={setCity}
+                                />
+                                <div className="mt-6 flex justify-end gap-3 border-t border-gray-200 dark:border-neutral-800 pt-4">
+                                    <button
+                                        disabled={!dirty || saving}
+                                        className={`h-10 rounded-xl px-5 text-sm font-semibold text-white shadow-sm transition ${!dirty || saving ? "bg-blue-400 opacity-70" : "bg-blue-600 hover:bg-blue-700"
+                                            }`}
+                                        onClick={handleSaveDetails}
+                                    >
+                                        {saving ? "Saving..." : "Save changes"}
+                                    </button>
+                                </div>
+                            </>
+
                         )}
 
-                        {active === "Security" && <SecuritySection pwd={pwd} setPwd={setPwd} />}
+                        {active === "Security" &&
+                            <>
+                                <SecuritySection pwd={pwd} setPwd={setPwd} />
+                                <div className="mt-6 flex justify-end gap-3 border-t border-gray-200 dark:border-neutral-800 pt-4">
+                                    <button
+                                        disabled={!dirty || saving}
+                                        className={`h-10 rounded-xl px-5 text-sm font-semibold text-white shadow-sm transition ${!dirty || saving ? "bg-blue-400 opacity-70" : "bg-blue-600 hover:bg-blue-700"
+                                            }`}
+                                        onClick={handleChangePassword}
+                                    >
+                                        {saving ? "Saving..." : "Save changes"}
+                                    </button>
+                                </div>
+                            </>
+                        }
 
-                        <div className="mt-6 flex justify-end gap-3 border-t border-gray-200 dark:border-neutral-800 pt-4">
-                            <button
-                                onClick={() => window.history.back()}
-                                className="h-10 rounded-xl border border-gray-300 dark:border-neutral-700 px-4 text-sm font-medium text-gray-700 dark:text-neutral-200 hover:bg-gray-50 dark:hover:bg-neutral-800"
-                            >
-                                Back
-                            </button>
-                            <button
-                                disabled={!dirty || saving}
-                                className={`h-10 rounded-xl px-5 text-sm font-semibold text-white shadow-sm transition ${!dirty || saving ? "bg-blue-400 opacity-70" : "bg-blue-600 hover:bg-blue-700"
-                                    }`}
-                                onClick={handleSave}
-                            >
-                                {saving ? "Saving..." : "Save changes"}
-                            </button>
-                        </div>
+
                     </section>
                 </div>
-            </div>
-        </main>
+            </div >
+        </main >
     );
 }
 

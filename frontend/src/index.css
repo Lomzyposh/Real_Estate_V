@@ -13,4 +13,61 @@
   --dark-text: #5a5555;
   --on-primary: #0b0b0f;
   --surface: #0b0b0f;
+  /* --color: ' */
+}
+
+.tw-price-badge .leaflet-popup-content-wrapper {
+  background: transparent;
+  box-shadow: none;
+  border: 0;
+  padding: 0;
+}
+
+.tw-price-badge .leaflet-popup-content {
+  margin: 0;
+}
+
+.tw-price-badge .leaflet-popup-tip {
+  display: none;
+}
+
+.tw-detail-popup .leaflet-popup-tip {
+  display: none;
+}
+
+
+.tw-detail-popup .leaflet-popup-content-wrapper {
+  background: transparent;
+  box-shadow: none;
+  border: 0;
+  padding: 0;
+}
+
+.tw-detail-popup .leaflet-popup-close-button {
+  position: absolute;
+  top: -10px;
+  /* right: 8px; */
+  z-index: 10;
+
+  width: 22px;
+  height: 22px;
+  line-height: 18px;
+  text-align: center;
+  border-radius: 9999px;
+  font-weight: 600;
+  font-size: 16px;
+  color: #fff;
+  background: rgba(16, 185, 129, 0.9);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+  transition: all 0.2s ease;
+}
+
+.tw-detail-popup .leaflet-popup-close-button:hover {
+  background: #10b981;
+  transform: scale(1.05);
+}
+
+main {
+  overflow-y: auto;
+  height: 100vh;
 }

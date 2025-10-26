@@ -14,6 +14,9 @@ import SettingsPanel from './pages/Profile';
 import { ToastContainer } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
 import 'bootstrap-icons/font/bootstrap-icons.css';
+import Map from './pages/Map';
+import AllProperties from './pages/AllProperties';
+import AgentDashboard from './pages/Agents/AgentDashboard';
 
 const App = () => {
   const [loading, setLoading] = useState(false);
@@ -33,8 +36,11 @@ const App = () => {
           <Route path="/lenders" element={<LendersDashboard />} />
         </Route>
 
-        <Route path="/home/:id" element={<HomeDetails />} />
+        <Route path="/details/:id" element={<HomeDetails />} />
+
+        <Route path="/allProperties" element={<AllProperties />} />
         <Route path="/profile" element={<SettingsPanel />} />
+        <Route path="/dashboard" element={<AgentDashboard />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
       <ToastContainer

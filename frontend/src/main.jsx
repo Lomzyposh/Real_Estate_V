@@ -7,6 +7,8 @@ import { ThemeProvider } from './contexts/ThemeContext.jsx'
 import { LoaderProvider } from './contexts/LoaderContext.jsx'
 import { AuthProvider } from './contexts/AuthContext.jsx'
 import { SavedProvider } from './contexts/SavedContext.jsx'
+import { PropertiesProvider } from './contexts/PropertiesContext.jsx'
+import { AgentProvider } from './contexts/AgentContext.jsx'
 
 
 createRoot(document.getElementById('root')).render(
@@ -15,11 +17,15 @@ createRoot(document.getElementById('root')).render(
       <AuthProvider>
         <LoaderProvider>
           <ThemeProvider>
-            <SavedProvider>
+            <PropertiesProvider>
+              <AgentProvider>
+                <SavedProvider>
 
-              <App />
+                  <App />
 
-            </SavedProvider>
+                </SavedProvider>
+              </AgentProvider>
+            </PropertiesProvider>
           </ThemeProvider>
         </LoaderProvider>
       </AuthProvider>
