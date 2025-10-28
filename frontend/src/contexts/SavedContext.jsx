@@ -33,11 +33,10 @@ export function SavedProvider({ children }) {
             if (!res.ok) throw new Error(`fetchSaved ${res.status}`);
             const data = await res.json();
             const list = Array.isArray(data?.saved) ? data.saved : [];
-            // normalize to string
+            
             setSavedSet(new Set(list.map(toIdStr)));
         } catch (err) {
             console.error("Error fetching saved:", err);
-            // fall back to localStorage for guests
             if (!user?.userId) {
                 const raw = localStorage.getItem("savedProperties") || "[]";
                 try {

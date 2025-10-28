@@ -40,7 +40,6 @@ const OtpForm = ({ setShowOtpForm, email }) => {
         setError(data.message);
         return;
       }
-      alert("Code Correct");
       setChangePassword(true);
     } catch (err) {
       setError(err?.message || "Verification failed. Try again.");

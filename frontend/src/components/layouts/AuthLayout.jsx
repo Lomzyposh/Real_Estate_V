@@ -22,7 +22,8 @@ const AuthLayout = () => {
         <>
             <header className='w-full p-6 flex justify-between align-items-center'>
                 {/* <button className='bg-amber-300 p-2 rounded-2xl text-gray-600 cursor-pointer' onClick={addJSON}>Add Data</button> */}
-                <div className="flex items-center justify-center gap-2 cursor-pointer">
+                <div className="flex items-center justify-center gap-2 cursor-pointer"
+                    onClick={() => navigate("/")}>
                     <img src="/images/homeLogo.png" alt="Logo" className='w-12 h-12' />
                     <h2 className="text-xl text-[var(--text)] dark:text-[var(--primary)] font-bold font-[Montserrat] tracking-wide">NestNova</h2>
                 </div>

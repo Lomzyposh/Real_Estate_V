@@ -9,6 +9,7 @@ import { AuthProvider } from './contexts/AuthContext.jsx'
 import { SavedProvider } from './contexts/SavedContext.jsx'
 import { PropertiesProvider } from './contexts/PropertiesContext.jsx'
 import { AgentProvider } from './contexts/AgentContext.jsx'
+import { AdminProvider } from './contexts/AdminContext.jsx'
 
 
 createRoot(document.getElementById('root')).render(
@@ -20,9 +21,11 @@ createRoot(document.getElementById('root')).render(
             <PropertiesProvider>
               <AgentProvider>
                 <SavedProvider>
+                  <AdminProvider>
 
-                  <App />
+                    <App />
 
+                  </AdminProvider>
                 </SavedProvider>
               </AgentProvider>
             </PropertiesProvider>

@@ -249,15 +249,12 @@ export default function AllProperties() {
                 </div>
             </div>
 
-            {/* Content area */}
             <div className="mx-auto max-w-7xl px-4 sm:px-6">
                 <div className="grid grid-cols-1 gap-6 py-5 lg:grid-cols-12">
-                    {/* LEFT: list */}
                     <section className={clsx(showMap ? "lg:col-span-6" : "lg:col-span-12")}>
                         <PropertyList properties={filtered} />
                     </section>
 
-                    {/* RIGHT: sticky half-screen map */}
                     {showMap && (
                         <aside
                             className="relative lg:col-span-6"

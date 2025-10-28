@@ -9,8 +9,8 @@ import ImportPropertiesButton from "./ImportPropertiesButton";
 
 const navLinks = [
   { to: "/", label: "Home" },
-  { to: "/about", label: "About us" },
   { to: "/allProperties", label: "Property List" },
+  { to: "/sell", label: "Sell" },
   { to: "/contact", label: "Contact" },
 ];
 
@@ -22,7 +22,7 @@ export default function Navbar() {
   const [expandMenu, setExpandMenu] = useState(false);
   const { user, logout, statusLoading } = useAuth();
   const { setShowLoader } = useLoader();
-  const hideNav = location.pathname === "/signIn" || location.pathname === "/signUp" || location.pathname === "/dashboard";
+  const hideNav = location.pathname === "/signIn" || location.pathname === "/signUp" || location.pathname === "/agentDashboard" || location.pathname === "/adminDashboard";
 
   useEffect(() => setShowLoader(Boolean(statusLoading)), [statusLoading, setShowLoader]);
 
@@ -38,6 +38,36 @@ export default function Navbar() {
   const isActive = (to) => location.pathname === to || location.pathname.startsWith(to + "/");
 
   if (hideNav) return null;
+
+  const DashLink = () => {
+    const { user } = useAuth();
+
+    if (!user) return null;
+
+    let link = null;
+
+    switch (user.role) {
+      case "admin":
+        link = "/adminDashboard";
+        break;
+      case "agent":
+        link = "/agentDashboard";
+        break;
+      default:
+        return null;
+    }
+
+    return (
+      <Link
+        to={link}
+        role="menuitem"
+        className="block px-4 py-2 text-black dark:text-white hover:bg-black/5 dark:hover:bg-white/10 rounded-xl"
+      >
+        Dashboard
+      </Link>
+    );
+  }
+
 
   return (
     <nav
@@ -57,14 +87,11 @@ export default function Navbar() {
 
       <div className="mx-auto max-w-7xl px-3 sm:px-4 lg:px-8">
         <div className="flex h-14 sm:h-16 items-center justify-between gap-3">
-          <button
-            onClick={() => navigate("/")}
-            className="flex items-center gap-2 p-2 -ml-1 sm:ml-0 rounded-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--primary)]"
-          >
-            <img src="/images/homeLogo.png" alt="NestNova logo" className="w-9 h-9 sm:w-11 sm:h-11" />
-
-            <h1 className="text-xl font-[unbounded] font-bold text-green-400">NestNova</h1>
-          </button>
+          <div className="flex items-center justify-center gap-2 cursor-pointer"
+            onClick={() => navigate("/")}>
+            <img src="/images/homeLogo.png" alt="Logo" className='w-12 h-12' />
+            <h2 className="text-xl text-[var(--text)] dark:text-[var(--primary)] font-bold font-[Montserrat] tracking-wide">NestNova</h2>
+          </div>
           {/* <ImportPropertiesButton fileUrl="/data/property.json" batchSize={100} /> */}
 
           <ul className="hidden md:flex items-center gap-6 lg:gap-10 font-semibold">
@@ -146,14 +173,7 @@ export default function Navbar() {
                   role="menu"
                   className={`absolute right-0 mt-2 w-48 select-none rounded-xl border bg-white dark:bg-[#252525] border-black/5 dark:border-white/10 backdrop-blur shadow-lg py-1 ${expandMenu ? 'opacity-100 translate-y-0 pointer-events-auto' : 'translate-y-1 opacity-0 pointer-events-none'}  transition-all duration-200 z-50`}
                 >
-
-                  <Link
-                    to="/dashboard"
-                    role="menuitem"
-                    className="block px-4 py-2 text-black dark:text-white hover:bg-black/5 dark:hover:bg-white/10 rounded-xl"
-                  >
-                    Dashboard
-                  </Link>
+                  <DashLink />
 
                   <Link
                     to="/profile"
@@ -203,10 +223,9 @@ export default function Navbar() {
         onClick={() => setOpen(false)}
       />
 
-      {/* Mobile drawer (raise z to be above overlay) */}
       <aside
         className={clsx(
-          "fixed top-0 right-0 h-full w-[84%] max-w-sm z-50", // z-50 > overlay
+          "fixed top-0 right-0 h-full w-[84%] max-w-sm z-50",
           "bg-[var(--background)] dark:bg-[var(--dark-background)] shadow-lg",
           "flex flex-col gap-6 pt-20 sm:pt-24 px-6 sm:px-8 transition-transform duration-300 md:hidden",
           open ? "translate-x-0" : "translate-x-full"

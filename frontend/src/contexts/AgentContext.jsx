@@ -1,56 +1,71 @@
-import React, { createContext, useContext, useEffect, useState } from 'react'
+// src/contexts/AgentContext.jsx
+import React, { createContext, useContext, useEffect, useState } from 'react';
 import { useAuth } from './AuthContext';
 
 export const AgentContext = createContext();
 
 export const AgentProvider = ({ children }) => {
-    const { user, setUser } = useAuth();
-    const [agentInfo, setAgentInfo] = useState([]);
-    const [agentInfoLoading, setAgentInfoLoading] = useState(true);
-    const [agentInfoError, setAgentInfoError] = useState(null);
+  const { user, statusLoading } = useAuth();
+  const [agentInfo, setAgentInfo] = useState([]);
+  const [agentInfoLoading, setAgentInfoLoading] = useState(true);
+  const [agentInfoError, setAgentInfoError] = useState(null);
 
-    useEffect(() => {
-        let alive = true;
+  useEffect(() => {
+    const ac = new AbortController();
 
-        (async () => {
-            setAgentInfoLoading(true);
-            setAgentInfoError(null);
-            try {
-                const res = await fetch('/api/agentDetails', {
-                    method: 'GET',
-                    credentials: 'include'
-                });
+    if (statusLoading) return;
 
-                if (!res.ok) {
-                    const msg = await res.text().catch(() => '');
-                    throw new Error(msg || `Request failed with ${res.status}`);
-                }
+    if (!user) {
+      setAgentInfo([]);
+      setAgentInfoError(null);
+      setAgentInfoLoading(false);
+      return;
+    }
 
-                const data = await res.json();
+    (async () => {
+      setAgentInfoLoading(true);
+      setAgentInfoError(null);
+      try {
+        const res = await fetch('/api/agentDetails', {
+          method: 'GET',
+          credentials: 'include',
+          signal: ac.signal,
+        });
 
-                if (alive) setAgentInfo(data);
-            } catch (err) {
-                if (alive) setAgentInfoError('Failed to load AgentInfo');
-                console.error(err);
-            } finally {
-                if (alive) setAgentInfoLoading(false);
-            }
-        })();
+        if (res.status === 401) {
+          setAgentInfo([]);
+          setAgentInfoError(null);
+          return;
+        }
 
-        return () => { alive = false; };
-    }, []);
+        if (!res.ok) {
+          const msg = await res.text().catch(() => '');
+          throw new Error(msg || `Request failed with ${res.status}`);
+        }
 
+        const data = await res.json();
+        setAgentInfo(Array.isArray(data) ? data : (data.items ?? []));
+      } catch (err) {
+        if (err.name === 'AbortError') return;
+        console.error(err);
+        setAgentInfoError('Failed to load AgentInfo');
+      } finally {
+        setAgentInfoLoading(false);
+      }
+    })();
 
-    return (
-        <AgentContext.Provider value={{ agentInfo, setAgentInfo, agentInfoLoading }}>
-            {children}
-        </AgentContext.Provider>
-    )
-}
+    return () => ac.abort();
+  }, [statusLoading, user?.userId]);
+
+  return (
+    <AgentContext.Provider value={{ agentInfo, setAgentInfo, agentInfoLoading, agentInfoError }}>
+      {children}
+    </AgentContext.Provider>
+  );
+};
 
 export const useAgent = () => {
-    const ctx = useContext(AgentContext);
-    if (!ctx) throw new Error("AgentContext has to be in a Provider");
-
-    return ctx;
+  const ctx = useContext(AgentContext);
+  if (!ctx) throw new Error('AgentContext has to be in a Provider');
+  return ctx;
 };

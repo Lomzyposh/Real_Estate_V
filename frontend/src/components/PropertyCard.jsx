@@ -66,7 +66,7 @@ export default function PropertyCard({
     const navigate = useNavigate();
 
     const fallbackImg =
-        "https://images.unsplash.com/photo-1505691938895-1758d7feb511?q=80&w=1600&auto=format&fit=crop";
+        "https://images.pexels.com/photos/28216688/pexels-photo-28216688.png";
 
     return (
         <m.article
@@ -206,7 +206,6 @@ export function PropertyList({ properties = [], className = "" }) {
     return (
         <LazyMotion features={domAnimation}>
             <MotionConfig
-                // Respect OS reduced motion and set a sane default transition
                 reducedMotion="user"
                 transition={{ type: "spring", stiffness: 360, damping: 30, mass: 0.8 }}
             >

@@ -35,7 +35,6 @@ const ForgotPassComp = ({ setShowForgotForm }) => {
         setErrorMsg(data.message)
         return;
       }
-      alert("Sent innit🕳🕳");
       setShowOtpForm(true);
     } catch (err) {
       console.log('ERR: ', err)

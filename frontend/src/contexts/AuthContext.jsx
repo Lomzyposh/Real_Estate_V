@@ -1,36 +1,38 @@
 import React, { createContext, useState, useEffect, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
     const [statusLoading, setStatusLoading] = useState(true);
+    const navigate = useNavigate();
 
+    const checkStatus = async () => {
 
-    useEffect(() => {
-        const checkStatus = async () => {
-
-            try {
-                const response = await fetch('/api/checkStatus', {
-                    credentials: 'include',
-                });
-                if (response.ok) {
-                    const data = await response.json();
-                    if (data.user) {
-                        setUser(data.user);
-                    } else {
-                        setUser(null);
-                    }
+        try {
+            const response = await fetch('/api/checkStatus', {
+                credentials: 'include',
+            });
+            if (response.ok) {
+                const data = await response.json();
+                if (data.user) {
+                    setUser(data.user);
                 } else {
                     setUser(null);
                 }
-            } catch (error) {
-                console.error('Error checking auth status:', error);
+            } else {
                 setUser(null);
             }
+        } catch (error) {
+            console.error('Error checking auth status:', error);
+            setUser(null);
+        }
 
-            setStatusLoading(false);
-        };
+        setStatusLoading(false);
+    };
+
+    useEffect(() => {
         checkStatus();
     }, []);
 
@@ -71,10 +73,12 @@ export const AuthProvider = ({ children }) => {
     const logout = async () => {
         await fetch('/api/logout', { method: 'POST', credentials: 'include' });
         setUser(null);
+        navigate('/signIn')
+
     };
 
     return (
-        <AuthContext.Provider value={{ user, setUser, statusLoading, login, signup, logout }}>
+        <AuthContext.Provider value={{ checkStatus, user, setUser, statusLoading, login, signup, logout }}>
             {children}
         </AuthContext.Provider>
     );

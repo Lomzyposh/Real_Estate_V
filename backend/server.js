@@ -17,8 +17,8 @@ import {
     getOrCreateCompany,
     upsertProperty,
     replaceChildArrays,
-    insertMany,
-    insertNearbySchools,
+    // insertMany,
+    // insertNearbySchools,
 
     addUserToDB,
     getUserByEmail,
@@ -32,6 +32,12 @@ import {
     findAllProperties,
     toggleSaved,
     getAgentProperties,
+    getAllUsers,
+    getAllAgents,
+    getAllProperties,
+    updatePropertyPublished,
+    // insertProperty,
+    insertPropertyWithImages,
 } from './db.js';
 import { uploadImage } from './uploadImage.js';
 
@@ -46,6 +52,23 @@ const upload = multer({
         cb(ok ? null : new Error("Only image files are allowed"), ok);
     },
 });
+
+function uploadBufferToCloudinary(buffer, filename, folder = "nestnova/properties") {
+    return new Promise((resolve, reject) => {
+        const stream = cloudinary.uploader.upload_stream(
+            {
+                folder,
+                resource_type: "image",
+                use_filename: true,
+                filename_override: filename?.replace(/\.[^/.]+$/, "")?.slice(0, 100) || undefined,
+                // Optional transform to limit huge files:
+                // transformation: [{ width: 2000, height: 2000, crop: "limit" }],
+            },
+            (err, res) => (err ? reject(err) : resolve(res))
+        );
+        stream.end(buffer);
+    });
+}
 
 app.use(cors({
     origin: process.env.CLIENT_ORIGIN || 'http://localhost:5174',
@@ -269,21 +292,6 @@ app.post("/api/compareAndSetPassword", async (req, res) => {
 //     }
 // })
 
-app.post('/api/upload-profile', upload.single('profileImage'), async (req, res) => {
-    try {
-        if (!req.file) return res.status(400).json({ error: 'No file uploaded.' });
-
-        const result = await cloudinary.uploader.upload(req.file.path, {
-            folder: 'profile_pictures',
-            public_id: `user_${Date.now()}`,
-        });
-
-        fs.unlinkSync(req.file.path);
-        res.status(200).json({ imageUrl: result.secure_url });
-    } catch (err) {
-        res.status(500).json({ error: err.message });
-    }
-});
 
 app.post('/api/register', async (req, res) => {
     const { email, password } = req.body;
@@ -378,25 +386,19 @@ function requireAuth() {
 
 app.get('/api/checkStatus', requireAuth(), async (req, res) => {
     try {
-        // console.log("Session from cookie:", req.session);
-
-        const userResult = await findUserId(req.session.id);
-
-        const { email } = req.session;
-
-
-        if (!userResult) {
-            return res.status(404).json({ message: "User not found" });
+        if (!req.session || !req.session.id) {
+            return res.json({ user: null });
         }
 
-        res.json({
-            user: userResult
-        })
-        // res.sendFile(path.join(__dirname, 'public', 'dashboard.html'));
-    }
-    catch (err) {
-        console.error("Error in dashboard route:", err);
-        res.status(500).send('Internal Server Error');
+        const userResult = await findUserId(req.session.id);
+        if (!userResult) {
+            return res.json({ user: null });
+        }
+
+        res.json({ user: userResult });
+    } catch (err) {
+        console.error("Error in checkStatus route:", err);
+        res.json({ user: null });
     }
 });
 
@@ -493,31 +495,45 @@ app.get("/api/properties", async (req, res) => {
 
 
 
+// GET /api/properties/:id
 app.get("/api/properties/:id", async (req, res) => {
     try {
         const rawId = String(req.params.id || "").trim();
         if (!/^\d+$/.test(rawId)) {
             return res.status(400).json({ message: "Invalid property id." });
         }
-        const id = parseInt(rawId, 10);
+
+        const id = Number(rawId);
+        if (!Number.isSafeInteger(id) || id <= 0) {
+            return res.status(400).json({ message: "Invalid property id." });
+        }
 
         const home = await findPropertyById(id);
         if (!home) return res.status(404).json({ message: "Property not found." });
 
-        const images = safeParseJson(home.images, []);
-        const agent = safeParseJson(home.agent, null);
+        // Parse JSON fields coming from FOR JSON
+        const images = safeParseJson(home.images, []);   // [{ id, url }, ...]
+        const agent = safeParseJson(home.agent, null);  // { agentId, agentName, agentCompany, userId, email, profileUrl }
 
+        // Reassemble clean payload
         const { images: _img, agent: _ag, ...rest } = home;
-        const property = { ...rest, images, agent };
-        
-        console.log("CLO",property);
+
+        const property = {
+            ...rest,
+            images: Array.isArray(images) ? images : [],
+            agent: agent && typeof agent === "object" ? agent : null,
+        };
+
+        // Optional: cache lightly (private since agent info is embedded)
+        res.set("Cache-Control", "private, max-age=60");
 
         return res.json({ property });
     } catch (err) {
-        console.error("Error in /api/properties/:id:", err);
+        console.error("Error in GET /api/properties/:id:", err);
         return res.status(500).json({ message: "Internal server error." });
     }
 });
+
 app.get('/api/getSaved', requireAuth(), async (req, res) => {
     console.log("Fetching saved properties for user:", req.session);
     try {
@@ -565,6 +581,32 @@ app.post("/api/profile/upload", upload.single("file"), async (req, res) => {
     } catch (err) {
         console.error("Cloudinary upload error:", err);
         return res.status(500).json({ message: "Upload failed" });
+    }
+});
+
+app.post("/api/uploads/images", upload.array("files", 15), async (req, res) => {
+    try {
+        if (!req.files?.length) {
+            return res.status(400).json({ message: "No files uploaded" });
+        }
+
+        const results = await Promise.all(
+            req.files.map((f) =>
+                uploadBufferToCloudinary(f.buffer, f.originalname).then((r) => ({
+                    url: r.secure_url,
+                    public_id: r.public_id,
+                    width: r.width,
+                    height: r.height,
+                    bytes: r.bytes,
+                    format: r.format,
+                }))
+            )
+        );
+
+        res.json({ files: results, message: "Uploaded successfully" });
+    } catch (err) {
+        console.error("Cloudinary upload error:", err);
+        res.status(500).json({ message: "Upload failed" });
     }
 });
 
@@ -624,6 +666,40 @@ app.get('/api/agentDetails', requireAuth(), async (req, res) => {
     }
 });
 
+app.patch("/api/properties/:id/approve", requireAuth(), async (req, res) => {
+    try {
+        const rawId = String(req.params.id || "").trim();
+        if (!/^\d+$/.test(rawId)) return res.status(400).json({ message: "Invalid property id." });
+        const id = parseInt(rawId, 10);
+
+        const approved = req.body?.approved === true || req.body?.approved === 1 ? 1 : 0;
+
+        const pool = await getPool();
+        await pool.request()
+            .input("pid", sql.Int, id)
+            .input("approved", sql.Bit, approved)
+            .query(`
+        IF EXISTS (SELECT 1 FROM dbo.Approvals WHERE property_id = @pid)
+        BEGIN
+          UPDATE dbo.Approvals
+          SET agentApproved = @approved
+          WHERE property_id = @pid;
+        END
+        ELSE
+        BEGIN
+          INSERT INTO dbo.Approvals (property_id, agentApproved)
+          VALUES (@pid, @approved);
+        END
+      `);
+
+        return res.json({ ok: true, property_id: id, agentApproved: approved });
+    } catch (err) {
+        console.error("PATCH /api/properties/:id/approve error:", err);
+        return res.status(500).json({ message: "Internal server error." });
+    }
+});
+
+
 
 
 app.post('/api/import/properties', async (req, res) => {
@@ -653,6 +729,143 @@ app.post('/api/import/properties', async (req, res) => {
 
     return res.json({ count: results.length, results });
 });
+
+
+app.get("/api/admin/users", async (req, res) => {
+    try {
+        const users = await getAllUsers();
+        res.json(users);
+    } catch (err) {
+        console.error("Admin users error:", err);
+        res.status(500).json({ message: "Failed to fetch users" });
+    }
+});
+
+app.get("/api/admin/agents", async (req, res) => {
+    try {
+        const agents = await getAllAgents();
+        res.json(agents);
+    } catch (err) {
+        console.error("Admin agents error:", err);
+        res.status(500).json({ message: "Failed to fetch agents" });
+    }
+});
+
+app.post("/api/add/properties", requireAuth(), async (req, res) => {
+    const {
+        agentId,
+        property_type,
+        home_type,
+        status,
+        price,
+        bedrooms,
+        bathrooms,
+        sqft,
+
+        street,
+        zip_code,
+        latitude,
+        longitude,
+
+        year_built,
+        acres,
+        parking_spaces,
+
+        main_image,
+        hoa_has,
+        hoa_fee,
+        electric,
+        sewer,
+        water,
+
+        is_demo,
+
+        // NEW: array of { url, public_id? } from the client
+        images = [],
+    } = req.body || {};
+
+    if (!agentId) return res.status(400).json({ error: "agentId is required" });
+    if (!property_type || !home_type || !status) {
+        return res.status(400).json({ error: "property_type, home_type, status are required" });
+    }
+    if (price == null || bedrooms == null || bathrooms == null || sqft == null) {
+        return res.status(400).json({ error: "price, bedrooms, bathrooms, sqft are required" });
+    }
+    if (!street || !zip_code) {
+        return res.status(400).json({ error: "street, zip_code are required" });
+    }
+
+    const payload = {
+        agentId,
+        property_type, home_type, status,
+        price, bedrooms, bathrooms, sqft,
+        street, zip_code,
+        latitude, longitude,
+        year_built, acres, parking_spaces,
+        // fallback: if no main_image sent, use first image url (if any)
+        main_image: main_image || (Array.isArray(images) && images[0]?.url) || null,
+        hoa_has: !!hoa_has,
+        hoa_fee,
+        electric, sewer, water,
+        is_demo: !!is_demo,
+    };
+
+    // just URLs for DB insert
+    const galleryUrls = (Array.isArray(images) ? images : [])
+        .map((x) => (typeof x === "string" ? x : x?.url))
+        .filter(Boolean);
+
+    try {
+        const created = await insertPropertyWithImages(payload, galleryUrls);
+        res.status(201).json(created);
+    } catch (err) {
+        console.error("Create property error:", err);
+        res.status(500).json({ error: "Failed to create property" });
+    }
+});
+
+
+app.get('/api/admin/properties', async (req, res) => {
+    try {
+        const properties = await getAllProperties();
+        res.json(properties);
+    } catch (err) {
+        console.error("Properties error:", err);
+        res.status(500).json({ message: "Failed to fetch Properties" });
+    }
+
+});
+
+app.patch(
+    "/api/admin/properties/:propertyId/published",
+    requireAuth(),
+    async (req, res) => {
+        try {
+            const propertyId = Number(req.params.propertyId);
+            const { published } = req.body;
+
+            if (!Number.isFinite(propertyId)) {
+                return res.status(400).json({ error: "Invalid propertyId" });
+            }
+
+            if (typeof published !== "boolean") {
+                return res.status(400).json({ error: "published must be boolean" });
+            }
+
+            const updated = await updatePropertyPublished(propertyId, published);
+            if (!updated) {
+                return res.status(404).json({ error: "Property not found" });
+            }
+
+            return res.json(updated);
+        } catch (err) {
+            console.error("❌ Error toggling property published:", err);
+            res.status(500).json({ error: "Failed to update property publish state" });
+        }
+    }
+);
+
+
 
 
 

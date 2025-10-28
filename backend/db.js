@@ -403,6 +403,7 @@ export async function findAllProperties() {
       ) AS agent
 
     FROM dbo.Properties AS p
+    WHERE p.published = 1
   `);
 
   const rows = (result.recordset || []).map(row => ({
@@ -426,7 +427,9 @@ export async function findPropertyById(id) {
     .query(`
       SELECT
         p.*,
+        ap.agentApproved,   -- from Approvals table
 
+        -- Gallery as JSON array
         ISNULL((
           SELECT i.id, i.url
           FROM dbo.PropertyGalleryImages AS i
@@ -434,23 +437,31 @@ export async function findPropertyById(id) {
           FOR JSON PATH
         ), '[]') AS images,
 
+        -- Agent info via Agents -> Users
         (
           SELECT
-            u.userId,
-            u.name,
-            u.email,
-            u.profileUrl
-          FROM dbo.Users AS u
-          WHERE u.userId = p.agentId
+            a.agentId,
+            a.name        AS agentName,
+            a.companyName AS agentCompany,
+            u.userId      AS userId,
+            u.email       AS email,
+            a.profileImage AS profileUrl
+          FROM dbo.Agents AS a
+          LEFT JOIN dbo.Users AS u
+            ON u.userId = a.userId
+          WHERE a.agentId = p.agentId
           FOR JSON PATH, WITHOUT_ARRAY_WRAPPER
         ) AS agent
 
       FROM dbo.Properties AS p
+      LEFT JOIN dbo.Approvals AS ap
+        ON ap.property_id = p.property_id
       WHERE p.property_id = @id;
     `);
 
-  return result.recordset[0] || null;
+  return result.recordset?.[0] || null;
 }
+
 
 export async function getSavedProperties(userId) {
   const pool = await getPool();
@@ -511,28 +522,279 @@ export async function addSaved(userId, propertyId) {
 export async function getAgentProperties(userId) {
   const pool = await getPool();
 
+  // 1) Find agentId for this user
+  const agentRes = await pool.request()
+    .input("uid", sql.VarChar(32), userId)
+    .query(`
+      SELECT TOP 1 agentId
+      FROM dbo.Agents
+      WHERE userId = @uid;
+    `);
+
+  const agentId = agentRes.recordset?.[0]?.agentId;
+  if (!agentId) return [];
+
   const q = `
     SELECT
-      p.property_id,
-      p.home_type,
-      p.price,
-      p.sqft,
-      p.street,
-      p.zip_code,
-      comp.name            AS companyName
+      p.*,
+      comp.name              AS companyName,
+      ap.agentApproved       AS agentApproved
     FROM dbo.Properties AS p
-    INNER JOIN dbo.Companies AS comp ON comp.company_id = p.company_id
-    WHERE p.agentId = @userId
-    ;
+    LEFT JOIN dbo.Companies AS comp ON comp.company_id = p.company_id
+    LEFT JOIN dbo.Approvals AS ap   ON ap.property_id  = p.property_id
+    WHERE p.agentId = @agentId
   `;
+
   const result = await pool.request()
-    .input('userId', sql.VarChar, userId)
-    .query(q)
+    .input("agentId", sql.VarChar(32), agentId)
+    .query(q);
 
   return result.recordset || [];
 }
 
 
+export async function getAllUsers() {
+  const pool = await getPool();
+  const result = await pool.request().query(
+    `
+    SELECT userId,email,role,
+    isActive,LastLogin,createdAt,
+    profileUrl,name,location,phone_number
+    FROM Users
+    `
+  )
+
+  return result.recordset || []
+
+}
+
+
+export async function getAllAgents() {
+  const pool = await getPool();
+  const result = await pool.request().query(`
+    SELECT 
+      u.userId,
+      a.*,
+      u.email,
+      u.role,
+      u.profileUrl,
+      u.phone_number,
+      u.isActive,
+      u.createdAt
+    FROM Users u
+    LEFT JOIN Agents a ON u.userId = a.userId
+    WHERE u.role = 'agent'
+    ORDER BY u.createdAt DESC;
+  `);
+
+  return result.recordset || [];
+}
+
+export async function getAllProperties() {
+  const pool = await getPool();
+
+  const result = await pool.request().query(`
+    SELECT 
+      p.*,
+      a.name        AS agentName,
+      a.companyName AS agentCompany,
+      u.email       AS agentEmail
+    FROM dbo.Properties AS p
+    LEFT JOIN dbo.Agents AS a ON p.agentId = a.agentId
+    LEFT JOIN dbo.Users  AS u ON a.userId  = u.userId
+  `);
+
+  return result.recordset || [];
+}
+
+
+const toNum = (v) => {
+  if (v === null || v === undefined || v === "") return null;
+  const n = Number(v);
+  return Number.isFinite(n) ? n : null;
+};
+const toStrOrNull = (v) => {
+  const s = (v ?? "").toString().trim();
+  return s === "" ? null : s;
+};
+const toBit = (v) => (v ? 1 : 0);
+
+export async function insertPropertyWithImages(obj = {}, galleryUrls = [], approval = { agentApproved: 0 }) {
+  const {
+    agentId,
+    property_type,
+    home_type,
+    status,
+
+    price,
+    bedrooms,
+    bathrooms,
+    sqft,
+
+    street,
+    zip_code,
+    latitude,
+    longitude,
+
+    year_built,
+    acres,
+    parking_spaces,
+
+    main_image,
+    hoa_has,
+    hoa_fee,
+    electric,
+    sewer,
+    water,
+
+    is_demo,
+  } = obj;
+
+  const pool = await getPool();
+  const tx = new sql.Transaction(pool);
+
+  await tx.begin();
+  try {
+    const req = new sql.Request(tx);
+
+    // strings
+    req.input("agentId", sql.VarChar(32), toStrOrNull(agentId));
+    req.input("property_type", sql.VarChar(50), toStrOrNull(property_type));
+    req.input("home_type", sql.VarChar(50), toStrOrNull(home_type));
+    req.input("status", sql.VarChar(20), toStrOrNull(status));
+    req.input("street", sql.NVarChar(255), toStrOrNull(street));
+    req.input("zip_code", sql.NVarChar(20), toStrOrNull(zip_code));
+    req.input("main_image", sql.NVarChar(512), toStrOrNull(main_image));
+    req.input("electric", sql.NVarChar(100), toStrOrNull(electric));
+    req.input("sewer", sql.NVarChar(100), toStrOrNull(sewer));
+    req.input("water", sql.NVarChar(100), toStrOrNull(water));
+
+    // numbers
+    req.input("price", sql.Decimal(18, 2), toNum(price));
+    req.input("bedrooms", sql.Int, toNum(bedrooms));
+    req.input("bathrooms", sql.Int, toNum(bathrooms));
+    req.input("sqft", sql.Int, toNum(sqft));
+    req.input("latitude", sql.Decimal(9, 6), toNum(latitude));
+    req.input("longitude", sql.Decimal(9, 6), toNum(longitude));
+    req.input("year_built", sql.Int, toNum(year_built));
+    req.input("acres", sql.Decimal(10, 2), toNum(acres));
+    req.input("parking_spaces", sql.Int, toNum(parking_spaces));
+
+    // bits
+    const hoaHasBit = toBit(!!hoa_has);
+    req.input("hoa_has", sql.Bit, hoaHasBit);
+    req.input("hoa_fee", sql.Decimal(10, 2), hoaHasBit ? toNum(hoa_fee) : null);
+    req.input("is_demo", sql.Bit, toBit(!!is_demo));
+
+    // 1) Insert property
+    const insertProp = await req.query(`
+      INSERT INTO dbo.Properties
+      (
+        agentId,
+        property_type, home_type, status,
+        price, bedrooms, bathrooms, sqft,
+        street, zip_code,
+        latitude, longitude,
+        year_built, acres, parking_spaces,
+        main_image,
+        hoa_has, hoa_fee,
+        electric, sewer, water,
+        is_demo
+      )
+      OUTPUT INSERTED.*
+      VALUES
+      (
+        @agentId,
+        @property_type, @home_type, @status,
+        @price, @bedrooms, @bathrooms, @sqft,
+        @street, @zip_code,
+        @latitude, @longitude,
+        @year_built, @acres, @parking_spaces,
+        @main_image,
+        @hoa_has, @hoa_fee,
+        @electric, @sewer, @water,
+        @is_demo,
+        GETDATE()
+      );
+    `);
+
+    const createdProp = insertProp.recordset?.[0] || null;
+    if (!createdProp) throw new Error("Property insert failed");
+
+    const propertyId = createdProp.property_id || createdProp.id;
+
+    // 2) Insert gallery images
+    if (propertyId && Array.isArray(galleryUrls) && galleryUrls.length > 0) {
+      for (const url of galleryUrls) {
+        if (!url) continue;
+        const reqImg = new sql.Request(tx);
+        reqImg.input("pid", sql.Int, propertyId);
+        reqImg.input("url", sql.NVarChar(512), toStrOrNull(url));
+        await reqImg.query(`
+          INSERT INTO dbo.PropertyGalleryImages (property_id, url, created_at)
+          VALUES (@pid, @url, GETDATE());
+        `);
+      }
+    }
+
+    // 3) Insert/Upsert Approvals (optional)
+    if (propertyId && approval) {
+      const reqAp = new sql.Request(tx);
+      reqAp.input("pid", sql.Int, propertyId);
+      reqAp.input("agentApproved", sql.Bit, toBit(!!approval.agentApproved));
+
+      await reqAp.query(`
+        IF EXISTS (SELECT 1 FROM dbo.Approvals WHERE property_id = @pid)
+        BEGIN
+          UPDATE dbo.Approvals
+          SET agentApproved = @agentApproved
+          WHERE property_id = @pid;
+        END
+        ELSE
+        BEGIN
+          INSERT INTO dbo.Approvals (property_id, agentApproved, created_at)
+          VALUES (@pid, @agentApproved, GETDATE());
+        END
+      `);
+    }
+
+    await tx.commit();
+
+    return {
+      ...createdProp,
+      images: galleryUrls.map((u) => ({ url: u })),
+      agentApproved: approval ? (approval.agentApproved ? 1 : 0) : null,
+    };
+  } catch (e) {
+    await tx.rollback();
+    throw e;
+  }
+}
+
+
+export async function updatePropertyPublished(propertyId, published) {
+  const pool = await getPool();
+
+  const pubBit = published ? 1 : 0;
+
+  const q = `
+    UPDATE dbo.Properties
+    SET published = @published
+    WHERE property_id = @propertyId;
+
+    SELECT TOP 1 *
+    FROM dbo.Properties
+    WHERE property_id = @propertyId;
+  `;
+
+  const result = await pool.request()
+    .input("propertyId", sql.Int, propertyId)
+    .input("published", sql.Bit, pubBit)
+    .query(q);
+
+  const row = result.recordset?.[0];
+  return row || null;
+}
 export {
   sql
 };

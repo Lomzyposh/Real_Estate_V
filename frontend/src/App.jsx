@@ -17,6 +17,9 @@ import 'bootstrap-icons/font/bootstrap-icons.css';
 import Map from './pages/Map';
 import AllProperties from './pages/AllProperties';
 import AgentDashboard from './pages/Agents/AgentDashboard';
+import AdminDashboard from './pages/Admin/AdminDashboard';
+import Sell from './pages/Sell';
+import { Toaster } from "react-hot-toast";
 
 const App = () => {
   const [loading, setLoading] = useState(false);
@@ -27,6 +30,7 @@ const App = () => {
         logo="/images/homeLogo.png"
       />
       <Navbar />
+      <Toaster position="top-center" reverseOrder={false} />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route element={<AuthLayout />}>
@@ -37,10 +41,13 @@ const App = () => {
         </Route>
 
         <Route path="/details/:id" element={<HomeDetails />} />
+        <Route path="/sell" element={<Sell />} />
+
 
         <Route path="/allProperties" element={<AllProperties />} />
         <Route path="/profile" element={<SettingsPanel />} />
-        <Route path="/dashboard" element={<AgentDashboard />} />
+        <Route path="/adminDashboard" element={<AdminDashboard />} />
+        <Route path="/agentDashboard" element={<AgentDashboard />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
       <ToastContainer

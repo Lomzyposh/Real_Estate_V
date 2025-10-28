@@ -12,7 +12,7 @@ const Login = ({ setIsSignUpActive }) => {
   const { setShowLoader, setLoaderText } = useLoader();
   const [showForgotForm, setShowForgotForm] = useState(false);
   const [email, setEmail] = useState('');
-  const { login } = useAuth();
+  const { checkStatus, login, setUser } = useAuth();
   const [password, setPassword] = useState('');
   const [errorMsg, setErrorMsg] = useState('');
   const [showOtpForm, setShowOtpForm] = useState(false);
@@ -33,6 +33,7 @@ const Login = ({ setIsSignUpActive }) => {
         setErrorMsg('Invalid email or password');
         return;
       }
+      await checkStatus();
       navigate('/');
     } catch (err) {
       setErrorMsg('An error occurred. Please try again.');

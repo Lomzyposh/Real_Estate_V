@@ -17,6 +17,10 @@ export default function UnauthorizedOverlay({
         return () => clearInterval(id);
     }, [timeLeft]);
 
+    const goToLogin = () => {
+        navigate('/signIn');
+    }
+
     return (
         <div
             className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/60 backdrop-blur-sm"
@@ -37,10 +41,10 @@ export default function UnauthorizedOverlay({
 
                 <div className="mt-4 flex items-center justify-center gap-3">
                     <button
-                        onClick={() => setTimeLeft(0)}
+                        onClick={goToLogin}
                         className="rounded-lg px-4 py-2 text-sm font-medium text-white bg-neutral-800 hover:bg-neutral-700 active:scale-95 dark:bg-neutral-200 dark:text-neutral-900 dark:hover:bg-white"
                     >
-                        Continue
+                        Login As Admin
                     </button>
                     <button
                         onClick={() => window.history.back()}
