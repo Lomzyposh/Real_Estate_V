@@ -16,6 +16,19 @@
   /* --color: ' */
 }
 
+/* hide scrollbar but keep scrollable behavior */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;
+  /* IE and Edge */
+  scrollbar-width: none;
+  /* Firefox */
+}
+
+
 html {
   scroll-behavior: smooth;
 }

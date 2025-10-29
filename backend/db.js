@@ -60,6 +60,7 @@ export async function getOrCreateCompany(tx, company) {
 }
 
 export async function upsertProperty(tx, item, companyId, isDemo = false) {
+  const { agentId } = item;
   const b = item.basic || {};
   const loc = item.location || {};
   const media = item.media || {};
@@ -74,26 +75,28 @@ export async function upsertProperty(tx, item, companyId, isDemo = false) {
 
     .input('property_type', sql.NVarChar(50), b.propertyType || null)
     .input('home_type', sql.NVarChar(50), b.homeType || null)
+    .input('agentId', sql.VarChar(50), agentId)
     .input('status', sql.NVarChar(50), b.status || null)
-    .input('year_built', sql.Int, b.yearBuilt || null)
+    .input('year_built', sql.Int, b.yearBuilt ?? null)
     .input('price', sql.Decimal(18, 2), b.price ?? null)
-    .input('sqft', sql.Int, b.sqrFt || null)
+    .input('sqft', sql.Int, b.sqrFt ?? null)
     .input('acres', sql.Decimal(9, 2), b.acres ?? null)
-    .input('floor_count', sql.Int, b.floorCount || null)
-    .input('floor_level', sql.Int, b.floorLevel || null)
-    .input('bedrooms', sql.Int, b.bedroom || null)
-    .input('bathrooms', sql.Int, b.bathroom || null)
-    .input('parking_spaces', sql.Int, b.parkingSpaces || null)
+    .input('floor_count', sql.Int, b.floorCount ?? null)
+    .input('floor_level', sql.Int, b.floorLevel ?? null)
+    .input('bedrooms', sql.Int, b.bedroom ?? null)
+    .input('bathrooms', sql.Int, b.bathroom ?? null)
+    .input('parking_spaces', sql.Int, b.parkingSpaces ?? null)
 
     .input('latitude', sql.Decimal(9, 6), loc.latitude ?? null)
     .input('longitude', sql.Decimal(9, 6), loc.longitude ?? null)
+    .input('city', sql.NVarChar(100), loc.city || null)
     .input('zip_code', sql.NVarChar(20), loc.ZipCode || null)
     .input('street', sql.NVarChar(200), loc.street || null)
 
     .input('main_image', sql.NVarChar(600), media.mainImage || null)
     .input('more_text', sql.NVarChar(sql.MAX), media.moreTextAboutThePlace || null)
 
-    .input('company_id', sql.Int, companyId || null)
+    .input('company_id', sql.Int, companyId ?? null)
 
     .input('has_garage', sql.Bit, feat.hasGarage ?? null)
     .input('has_pool', sql.Bit, feat.hasPool ?? null)
@@ -118,44 +121,46 @@ export async function upsertProperty(tx, item, companyId, isDemo = false) {
       ON T.external_id = S.external_id
     WHEN MATCHED THEN
       UPDATE SET
-        property_type = @property_type,
-        home_type = @home_type,
-        status = @status,
-        year_built = @year_built,
-        price = @price,
-        sqft = @sqft,
-        acres = @acres,
-        floor_count = @floor_count,
-        floor_level = @floor_level,
-        bedrooms = @bedrooms,
-        bathrooms = @bathrooms,
-        parking_spaces = @parking_spaces,
-        latitude = @latitude,
-        longitude = @longitude,
-        zip_code = @zip_code,
-        street = @street,
-        main_image = @main_image,
-        more_text = @more_text,
-        company_id = @company_id,
-        has_garage = @has_garage,
-        has_pool = @has_pool,
-        has_garden = @has_garden,
-        electric = @electric,
-        sewer = @sewer,
-        water = @water,
-        hoa_has = @hoa_has,
-        hoa_fee = @hoa_fee,
-        flood_factor = @flood_factor,
-        fire_factor = @fire_factor,
-        wind_factor = @wind_factor,
-        air_factor = @air_factor,
-        heat_factor = @heat_factor,
-        is_demo = @is_demo
+        property_type   = @property_type,
+        home_type       = @home_type,
+        agentId         = @agentId,
+        status          = @status,
+        year_built      = @year_built,
+        price           = @price,
+        sqft            = @sqft,
+        acres           = @acres,
+        floor_count     = @floor_count,
+        floor_level     = @floor_level,
+        bedrooms        = @bedrooms,
+        bathrooms       = @bathrooms,
+        parking_spaces  = @parking_spaces,
+        latitude        = @latitude,
+        longitude       = @longitude,
+        city            = @city,
+        zip_code        = @zip_code,
+        street          = @street,
+        main_image      = @main_image,
+        more_text       = @more_text,
+        company_id      = @company_id,
+        has_garage      = @has_garage,
+        has_pool        = @has_pool,
+        has_garden      = @has_garden,
+        electric        = @electric,
+        sewer           = @sewer,
+        water           = @water,
+        hoa_has         = @hoa_has,
+        hoa_fee         = @hoa_fee,
+        flood_factor    = @flood_factor,
+        fire_factor     = @fire_factor,
+        wind_factor     = @wind_factor,
+        air_factor      = @air_factor,
+        heat_factor     = @heat_factor,
+        is_demo         = @is_demo
     WHEN NOT MATCHED THEN
       INSERT (
-        external_id, property_type, home_type, status, year_built, price, sqft, acres,
+        external_id,agentId, property_type, home_type, status, year_built, price, sqft, acres,
         floor_count, floor_level, bedrooms, bathrooms, parking_spaces,
-        latitude, longitude, zip_code, street,
+        latitude, longitude, city, zip_code, street,
         main_image, more_text, company_id,
         has_garage, has_pool, has_garden,
         electric, sewer, water,
@@ -164,9 +169,9 @@ export async function upsertProperty(tx, item, companyId, isDemo = false) {
         is_demo
       )
       VALUES (
-        @external_id, @property_type, @home_type, @status, @year_built, @price, @sqft, @acres,
+        @external_id, @agentId, @property_type, @home_type, @status, @year_built, @price, @sqft, @acres,
         @floor_count, @floor_level, @bedrooms, @bathrooms, @parking_spaces,
-        @latitude, @longitude, @zip_code, @street,
+        @latitude, @longitude, @city, @zip_code, @street,
         @main_image, @more_text, @company_id,
         @has_garage, @has_pool, @has_garden,
         @electric, @sewer, @water,
@@ -182,34 +187,48 @@ export async function upsertProperty(tx, item, companyId, isDemo = false) {
 
 
 export async function replaceChildArrays(tx, propertyId, item) {
-  // wipe old rows
+  // 1) Clear child tables (leave Approvals alone)
   await tx.request().input('pid', sql.Int, propertyId).query(`
-    DELETE FROM dbo.PropertyGalleryImages   WHERE property_id = @pid;
-    DELETE FROM dbo.PropertyParkFeatures    WHERE property_id = @pid;
-    DELETE FROM dbo.PropertySpecials        WHERE property_id = @pid;
-    DELETE FROM dbo.PropertyRooms           WHERE property_id = @pid;
-    DELETE FROM dbo.PropertyKitchenFeatures WHERE property_id = @pid;
+    DELETE FROM dbo.PropertyGalleryImages     WHERE property_id = @pid;
+    DELETE FROM dbo.PropertyParkFeatures      WHERE property_id = @pid;
+    DELETE FROM dbo.PropertySpecials          WHERE property_id = @pid;
+    DELETE FROM dbo.PropertyRooms             WHERE property_id = @pid;
+    DELETE FROM dbo.PropertyKitchenFeatures   WHERE property_id = @pid;
     DELETE FROM dbo.PropertyCommunityFeatures WHERE property_id = @pid;
-    DELETE FROM dbo.NearbySchools           WHERE property_id = @pid;
+    DELETE FROM dbo.NearbySchools             WHERE property_id = @pid;
   `);
 
-  const images = item.media?.galleryImages || [];
-  const parks = item.features?.parkFeatures || [];
-  const specials = item.special || [];
-  const rooms = item.interior?.rooms || [];
-  const kitchen = item.interior?.kitchen?.features || [];
-  const comm = item.community?.features || [];
-  const schools = item.nearbySchools || [];
+  // 2) Ensure an Approvals row exists (insert if missing)
+  const agentApproved =
+    (item?.approvals?.adminApproved ?? item?.adminApproved ?? 0) ? 1 : 0;
 
-  await insertMany(tx, 'dbo.PropertyGalleryImages', 'url', images, propertyId);
-  await insertMany(tx, 'dbo.PropertyParkFeatures', 'feature', parks, propertyId);
-  await insertMany(tx, 'dbo.PropertySpecials', 'item', specials, propertyId);
-  await insertMany(tx, 'dbo.PropertyRooms', 'room_name', rooms, propertyId);
-  await insertMany(tx, 'dbo.PropertyKitchenFeatures', 'feature', kitchen, propertyId);
-  await insertMany(tx, 'dbo.PropertyCommunityFeatures', 'feature', comm, propertyId);
+  await tx
+    .request()
+    .input('pid', sql.Int, propertyId)
+    .input('adm', sql.Bit, agentApproved)
+    .query(`
+      IF NOT EXISTS (SELECT 1 FROM dbo.Approvals WHERE property_id = @pid)
+        INSERT dbo.Approvals (property_id, agentApproved)
+        VALUES (@pid, @adm);
+    `);
+
+  // 3) Re-insert children
+  const images   = item.media?.galleryImages || [];
+  const parks    = item.features?.parkFeatures || [];
+  const specials = item.special || [];
+  const rooms    = item.interior?.rooms || [];
+  const kitchen  = item.interior?.kitchen?.features || [];
+  const comm     = item.community?.features || [];
+  const schools  = item.nearbySchools || [];
+
+  await insertMany(tx, 'dbo.PropertyGalleryImages',      'url',       images,   propertyId);
+  await insertMany(tx, 'dbo.PropertyParkFeatures',       'feature',   parks,    propertyId);
+  await insertMany(tx, 'dbo.PropertySpecials',           'item',      specials, propertyId);
+  await insertMany(tx, 'dbo.PropertyRooms',              'room_name', rooms,    propertyId);
+  await insertMany(tx, 'dbo.PropertyKitchenFeatures',    'feature',   kitchen,  propertyId);
+  await insertMany(tx, 'dbo.PropertyCommunityFeatures',  'feature',   comm,     propertyId);
   await insertNearbySchools(tx, schools, propertyId);
 }
-
 
 
 
@@ -437,14 +456,22 @@ export async function findPropertyById(id) {
           FOR JSON PATH
         ), '[]') AS images,
 
+        -- 🔥 Specials as JSON array
+        ISNULL((
+          SELECT s.id, s.item
+          FROM dbo.PropertySpecials AS s
+          WHERE s.property_id = p.property_id
+          FOR JSON PATH
+        ), '[]') AS specials,
+
         -- Agent info via Agents -> Users
         (
           SELECT
             a.agentId,
-            a.name        AS agentName,
-            a.companyName AS agentCompany,
-            u.userId      AS userId,
-            u.email       AS email,
+            a.name         AS agentName,
+            a.companyName  AS agentCompany,
+            u.userId       AS userId,
+            u.email        AS email,
             a.profileImage AS profileUrl
           FROM dbo.Agents AS a
           LEFT JOIN dbo.Users AS u
@@ -461,6 +488,7 @@ export async function findPropertyById(id) {
 
   return result.recordset?.[0] || null;
 }
+
 
 
 export async function getSavedProperties(userId) {
@@ -631,6 +659,7 @@ export async function insertPropertyWithImages(obj = {}, galleryUrls = [], appro
     bathrooms,
     sqft,
 
+    city,
     street,
     zip_code,
     latitude,
@@ -657,11 +686,11 @@ export async function insertPropertyWithImages(obj = {}, galleryUrls = [], appro
   try {
     const req = new sql.Request(tx);
 
-    // strings
     req.input("agentId", sql.VarChar(32), toStrOrNull(agentId));
     req.input("property_type", sql.VarChar(50), toStrOrNull(property_type));
     req.input("home_type", sql.VarChar(50), toStrOrNull(home_type));
     req.input("status", sql.VarChar(20), toStrOrNull(status));
+    req.input("city", sql.NVarChar(255), toStrOrNull(city));
     req.input("street", sql.NVarChar(255), toStrOrNull(street));
     req.input("zip_code", sql.NVarChar(20), toStrOrNull(zip_code));
     req.input("main_image", sql.NVarChar(512), toStrOrNull(main_image));
@@ -689,33 +718,33 @@ export async function insertPropertyWithImages(obj = {}, galleryUrls = [], appro
     // 1) Insert property
     const insertProp = await req.query(`
       INSERT INTO dbo.Properties
-      (
-        agentId,
-        property_type, home_type, status,
-        price, bedrooms, bathrooms, sqft,
-        street, zip_code,
-        latitude, longitude,
-        year_built, acres, parking_spaces,
-        main_image,
-        hoa_has, hoa_fee,
-        electric, sewer, water,
-        is_demo
-      )
-      OUTPUT INSERTED.*
-      VALUES
-      (
-        @agentId,
-        @property_type, @home_type, @status,
-        @price, @bedrooms, @bathrooms, @sqft,
-        @street, @zip_code,
-        @latitude, @longitude,
-        @year_built, @acres, @parking_spaces,
-        @main_image,
-        @hoa_has, @hoa_fee,
-        @electric, @sewer, @water,
-        @is_demo,
-        GETDATE()
-      );
+(
+  agentId,
+  property_type, home_type, status,
+  price, bedrooms, bathrooms, sqft, city,
+  street, zip_code,
+  latitude, longitude,
+  year_built, acres, parking_spaces,
+  main_image,
+  hoa_has, hoa_fee,
+  electric, sewer, water,
+  is_demo
+)
+OUTPUT INSERTED.*
+VALUES
+(
+  @agentId,
+  @property_type, @home_type, @status,
+  @price, @bedrooms, @bathrooms, @sqft, @city,
+  @street, @zip_code,
+  @latitude, @longitude,
+  @year_built, @acres, @parking_spaces,
+  @main_image,
+  @hoa_has, @hoa_fee,
+  @electric, @sewer, @water,
+  @is_demo
+);
+
     `);
 
     const createdProp = insertProp.recordset?.[0] || null;
@@ -731,8 +760,8 @@ export async function insertPropertyWithImages(obj = {}, galleryUrls = [], appro
         reqImg.input("pid", sql.Int, propertyId);
         reqImg.input("url", sql.NVarChar(512), toStrOrNull(url));
         await reqImg.query(`
-          INSERT INTO dbo.PropertyGalleryImages (property_id, url, created_at)
-          VALUES (@pid, @url, GETDATE());
+          INSERT INTO dbo.PropertyGalleryImages (property_id, url)
+          VALUES (@pid, @url);
         `);
       }
     }
@@ -752,8 +781,8 @@ export async function insertPropertyWithImages(obj = {}, galleryUrls = [], appro
         END
         ELSE
         BEGIN
-          INSERT INTO dbo.Approvals (property_id, agentApproved, created_at)
-          VALUES (@pid, @agentApproved, GETDATE());
+          INSERT INTO dbo.Approvals (property_id, agentApproved)
+          VALUES (@pid, @agentApproved);
         END
       `);
     }
@@ -774,7 +803,7 @@ export async function insertPropertyWithImages(obj = {}, galleryUrls = [], appro
 
 export async function updatePropertyPublished(propertyId, published) {
   const pool = await getPool();
-
+  1
   const pubBit = published ? 1 : 0;
 
   const q = `

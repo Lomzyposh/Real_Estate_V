@@ -1,221 +1,75 @@
 [
     {
+        "agentId": "agent001",
         "basic": {
-            "id": 1,
+            "id": 10,
             "propertyType": "House",
             "homeType": "SingleFamily",
             "status": "For Sale",
-            "yearBuilt": 1918,
-            "price": 925000,
-            "sqrFt": 3338,
-            "acres": 0.32,
-            "floorCount": 3,
-            "floorLevel": 0,
-            "bedroom": 3,
-            "bathroom": 4,
-            "parkingSpaces": 2
-        },
-        "location": {
-            "latitude": 41.9023,
-            "longitude": -87.8185,
-            "ZipCode": "IL 60305",
-            "street": "735 Clinton Pl, River Forest"
-        },
-        "media": {
-            "mainImage": "https://photos.zillowstatic.com/fp/e6d215b7d690e40d0abcc67612efb1bf-cc_ft_1536.webp",
-            "galleryImages": [
-                "https://photos.zillowstatic.com/fp/1f1c4b173ceef4a842ffcf429063ca5d-cc_ft_768.webp",
-                "https://photos.zillowstatic.com/fp/32d3244d912622127a44fcdf0e93cf08-cc_ft_1536.webp",
-                "https://photos.zillowstatic.com/fp/6dcedcc12a61f77a766da880167875b6-cc_ft_576.webp",
-                "https://photos.zillowstatic.com/fp/570c7551f543bf4b62dac704a429d83a-cc_ft_576.webp",
-                "https://photos.zillowstatic.com/fp/d1841d012ff76133db4f79a1fbe46716-cc_ft_1152.webp",
-                "https://photos.zillowstatic.com/fp/b263926dd31fb9d8c2e5ce2706d718bc-cc_ft_576.webp",
-                "https://photos.zillowstatic.com/fp/e509c8127a0cd66e3e54e0f2484c1b1d-cc_ft_1152.webp",
-                "https://photos.zillowstatic.com/fp/dfb9c78e1d62d0238fbd4aaab78889ef-cc_ft_576.webp",
-                "https://photos.zillowstatic.com/fp/82f0ec0feb1448eb1a8ad121e76b61ce-cc_ft_576.webp",
-                "https://photos.zillowstatic.com/fp/55a7b482a14b15ecee2eb262020e36ea-cc_ft_1152.webp",
-                "https://photos.zillowstatic.com/fp/cb816f6ecff7650d28c9c6cc9e59b562-cc_ft_576.webp",
-                "https://photos.zillowstatic.com/fp/3880ded976c15e1d01eb40a55b86d4d9-cc_ft_576.webp",
-                "https://photos.zillowstatic.com/fp/f1dd4af76d3180f068c6d4caac618267-cc_ft_576.webp",
-                "https://photos.zillowstatic.com/fp/e58c6c79590cb6aeeaf54565e5373d0b-cc_ft_576.webp",
-                "https://photos.zillowstatic.com/fp/7b1ba254d7f50d4d352efa8f51672c93-cc_ft_1152.webp",
-                "https://photos.zillowstatic.com/fp/99cccaad820cb2856590e86a445f8a04-cc_ft_1152.webp",
-                "https://photos.zillowstatic.com/fp/d9b35fa85ea2b2b981c0a5fdeaf86925-cc_ft_576.webp",
-                "https://photos.zillowstatic.com/fp/b9011e62ca3fd4abd82657cc8464c86d-cc_ft_1152.webp",
-                "https://photos.zillowstatic.com/fp/9d0dc8ea3b78a1b721b703aa3c652218-cc_ft_1152.webp",
-                "https://photos.zillowstatic.com/fp/91070284372d78ddd07b3706d5dcc2d5-cc_ft_1152.webp",
-                "https://photos.zillowstatic.com/fp/129e45b7eff1c00d8915b5f6eac9dc0b-cc_ft_576.webp",
-                "https://photos.zillowstatic.com/fp/44abafaa9d21e406e6b7bad0a576abbc-cc_ft_1152.webp"
-            ],
-            "moreTextAboutThePlace": "Welcome Home! Nestled on the picturesque street of Clinton Place, this American Foursquare exudes elegance and charm in prime central River Forest. With 3 bedrooms and 3.1 bathrooms, plus a bonus office space just off the garage, this one is truly a beauty you won't want to miss."
-        },
-        "company": {
-            "name": "MRED",
-            "logoImg": "https://photos.zillowstatic.com/fp/1b0fc53ffc89ea17e1e382976aca4421-zillow_web_95_35.jpg",
-            "address": "2443 Warrenville Rd #600, Lisle, IL 60532, United States"
-        },
-        "features": {
-            "hasGarage": true,
-            "parkFeatures": [
-                "Concrete",
-                "Garage Door Opener",
-                "On Site",
-                "Garage Owned",
-                "Detached",
-                "Garage"
-            ],
-            "hasPool": false,
-            "hasGarden": true
-        },
-        "special": [
-            "Gas fireplace",
-            "Chic modern design",
-            "Picturesque street",
-            "High ceilings",
-            "Original built-ins",
-            "Butcher block island top",
-            "Fully renovated second bathroom"
-        ],
-        "interior": {
-            "furnished": true,
-            "rooms": [
-                "Bonus Room",
-                "Recreation Room",
-                "Workshop",
-                "Foyer",
-                "Mud Room",
-                "Walk In Closet"
-            ],
-            "fireplace": true,
-            "kitchen": {
-                "features": [
-                    "Eating Area-Breakfast Bar",
-                    "Island",
-                    "Custom Cabinetry",
-                    "Solid Surface Counter",
-                    "Updated Kitchen"
-                ]
-            }
-        },
-        "community": {
-            "hoa": {
-                "hasHOA": false,
-                "fee": 0
-            },
-            "features": [
-                "Park",
-                "Tennis Court(s)",
-                "Curbs",
-                "Sidewalks",
-                "Street Lights",
-                "Street Paved"
-            ]
-        },
-        "climateFactors": {
-            "floodFactor": 4,
-            "fireFactor": 1,
-            "windFactor": 2,
-            "airFactor": 5,
-            "heatFactor": 3
-        },
-        "nearbySchools": [
-            {
-                "name": "Roosevelt School",
-                "distance": "0.4",
-                "rating": 8
-            },
-            {
-                "name": "Lincoln Elementary School",
-                "distance": "1.6",
-                "rating": 10
-            },
-            {
-                "name": "Oak Park River Forest High School",
-                "distance": "0.7",
-                "rating": 8
-            }
-        ],
-        "utility": {
-            "electric": "Circuit Breakers",
-            "sewer": "Public Sewer",
-            "water": "Lake Michigan, Public"
-        }
-    },
-    {
-        "basic": {
-            "id": 2,
-            "propertyType": "Townhouse",
-            "homeType": "Townhouse",
-            "status": "For Sale",
-            "yearBuilt": 1925,
-            "price": 675000,
-            "sqrFt": 2450,
-            "acres": 0.08,
-            "floorCount": 3,
+            "yearBuilt": 2005,
+            "price": 580000,
+            "sqrFt": 2950,
+            "acres": 0.28,
+            "floorCount": 2,
             "floorLevel": 0,
             "bedroom": 4,
             "bathroom": 3,
-            "parkingSpaces": 1
+            "parkingSpaces": 2
         },
         "location": {
-            "latitude": 41.8932,
-            "longitude": -87.7886,
-            "ZipCode": "IL 60302",
-            "street": "1021 Wesley Ave, Oak Park"
+            "latitude": 41.8073,
+            "longitude": -87.6298,
+            "city": "Oak Lawn",
+            "state": "IL",
+            "ZipCode": "60453",
+            "street": "10320 S Kenton Ave"
         },
         "media": {
-            "mainImage": "https://photos.zillowstatic.com/fp/e8cfcc7010c472d6751abc0fb47be62f-cc_ft_1152.webp",
+            "mainImage": "https://photos.zillowstatic.com/fp/8e1590d1d04900844a7c9d0033ee1419-cc_ft_1152.webp",
             "galleryImages": [
-                "https://photos.zillowstatic.com/fp/23e070cfc83093628887aa1ec0cc29e0-cc_ft_576.webp",
-                "https://photos.zillowstatic.com/fp/57c25728a792047bdf8e09b848af578d-cc_ft_576.webp",
-                "https://photos.zillowstatic.com/fp/5023cd4ec429b47195f276b638a70067-cc_ft_1152.webp",
-                "https://photos.zillowstatic.com/fp/2bb66613579c2c32c4c86f4e48aad936-cc_ft_576.webp",
-                "https://photos.zillowstatic.com/fp/1c761236bed6dc3ac3f4b39b13bb920f-cc_ft_1152.webp",
-                "https://photos.zillowstatic.com/fp/e7bb054c6a75ec1f23671a16693a9234-cc_ft_576.webp",
-                "https://photos.zillowstatic.com/fp/67544cbf5d2a911ef4180e8ed6e77f52-cc_ft_576.webp"
+                "https://photos.zillowstatic.com/fp/a348543174af9f53f50d96af93deda2b-cc_ft_576.webp",
+                "https://photos.zillowstatic.com/fp/582d5823c99123be9391425845dfe9be-cc_ft_576.webp",
+                "https://photos.zillowstatic.com/fp/64165e16b25a222b3c75e0134b5adc46-cc_ft_576.webp",
+                "https://photos.zillowstatic.com/fp/4a426d60e2e1b506d7820d3c0f2376d6-cc_ft_1152.webp",
+                "https://photos.zillowstatic.com/fp/5afc1f763eb15cb050de8641a082f347-cc_ft_576.webp",
+                "https://photos.zillowstatic.com/fp/a66bcffe65ec374ff3745da197e76b7c-cc_ft_1152.webp"
             ],
-            "moreTextAboutThePlace": "Sunny, brick Oak Park townhouse on a tree-lined street, steps from parks and shops. Thoughtful updates retain vintage charm—coved ceilings, original trim—paired with a modern eat-in kitchen and finished lower level."
+            "moreTextAboutThePlace": "Spacious two-story family home with hardwood floors, modern kitchen, and a large backyard for entertaining."
         },
         "company": {
-            "name": "MRED",
-            "logoImg": "https://photos.zillowstatic.com/fp/1b0fc53ffc89ea17e1e382976aca4421-zillow_web_95_35.jpg",
-            "address": "2443 Warrenville Rd #600, Lisle, IL 60532, United States"
+            "name": "Midwest Homes Realty",
+            "logoImg": null,
+            "address": "Oak Lawn, IL"
         },
         "features": {
             "hasGarage": true,
             "parkFeatures": [
-                "Concrete",
-                "Detached",
-                "On Site",
-                "Garage"
+                "Attached",
+                "Heated",
+                "Concrete"
             ],
             "hasPool": false,
             "hasGarden": true
         },
         "special": [
-            "Skylit stairwell",
-            "Original oak built-ins",
-            "Heated bathroom floors",
-            "Private brick patio",
-            "Finished recreation room"
+            "Hardwood flooring",
+            "Granite countertops",
+            "Spacious backyard"
         ],
         "interior": {
             "furnished": false,
             "rooms": [
                 "Living Room",
                 "Dining Room",
-                "Recreation Room",
-                "Laundry",
-                "Foyer"
+                "Family Room",
+                "Office"
             ],
             "fireplace": true,
             "kitchen": {
                 "features": [
                     "Island",
-                    "Quartz Countertops",
-                    "Custom Cabinetry",
-                    "Updated Kitchen",
-                    "Walk-In Pantry"
+                    "Updated Cabinets",
+                    "Tile Flooring"
                 ]
             }
         },
@@ -225,15 +79,118 @@
                 "fee": 0
             },
             "features": [
-                "Curbs",
                 "Sidewalks",
-                "Street Lights",
-                "Near Public Transit",
-                "Street Paved"
+                "Street Lights"
             ]
         },
         "climateFactors": {
             "floodFactor": 2,
+            "fireFactor": 1,
+            "windFactor": 3,
+            "airFactor": 4,
+            "heatFactor": 3
+        },
+        "nearbySchools": [
+            {
+                "name": "Covington Elementary",
+                "distance": "0.5",
+                "rating": 9
+            },
+            {
+                "name": "Oak Lawn High",
+                "distance": "1.2",
+                "rating": 8
+            }
+        ],
+        "utility": {
+            "electric": "Circuit Breakers",
+            "sewer": "Public",
+            "water": "Public"
+        }
+    },
+    {
+        "agentId": "agent001005",
+        "basic": {
+            "id": 11,
+            "propertyType": "Townhouse",
+            "homeType": "Townhouse",
+            "status": "For Sale",
+            "yearBuilt": 2012,
+            "price": 420000,
+            "sqrFt": 1870,
+            "acres": 0.05,
+            "floorCount": 2,
+            "floorLevel": 0,
+            "bedroom": 3,
+            "bathroom": 3,
+            "parkingSpaces": 1
+        },
+        "location": {
+            "latitude": 41.843,
+            "longitude": -87.6534,
+            "city": "Bridgeport",
+            "state": "IL",
+            "ZipCode": "60609",
+            "street": "320 W 35th St"
+        },
+        "media": {
+            "mainImage": "https://photos.zillowstatic.com/fp/4395fd2143758df00ca8987ccb0da709-cc_ft_1152.webp",
+            "galleryImages": [
+                "https://photos.zillowstatic.com/fp/106a1d4dab40bb7709473f937ae426ff-cc_ft_576.webp",
+                "https://photos.zillowstatic.com/fp/5cff135efda11f872e8c17d755e02a9e-cc_ft_576.webp",
+                "https://photos.zillowstatic.com/fp/dd81467c0e59cd8a18ec6761f54a4f85-cc_ft_576.webp",
+                "https://photos.zillowstatic.com/fp/36c5c1a84374111e90f8add4d9e44089-cc_ft_576.webp",
+                "https://photos.zillowstatic.com/fp/a0e583bc8a8b0ca5760783a7d2d29f39-cc_ft_576.webp",
+                "https://photos.zillowstatic.com/fp/e8b4822b9a1d27ab60514c1029396900-cc_ft_1152.webp",
+                "https://photos.zillowstatic.com/fp/5539af38089f1142f4a2841dc8ce56f6-cc_ft_1152.webp"
+            ],
+            "moreTextAboutThePlace": "Contemporary townhouse in Bridgeport with rooftop deck and city skyline views."
+        },
+        "company": {
+            "name": "Urban Edge Realty",
+            "logoImg": null,
+            "address": "Chicago, IL"
+        },
+        "features": {
+            "hasGarage": true,
+            "parkFeatures": [
+                "Attached"
+            ],
+            "hasPool": false,
+            "hasGarden": false
+        },
+        "special": [
+            "Rooftop deck",
+            "Open concept",
+            "City views"
+        ],
+        "interior": {
+            "furnished": false,
+            "rooms": [
+                "Living Room",
+                "Kitchen",
+                "Primary Bedroom"
+            ],
+            "fireplace": false,
+            "kitchen": {
+                "features": [
+                    "Quartz Countertops",
+                    "Breakfast Bar"
+                ]
+            }
+        },
+        "community": {
+            "hoa": {
+                "hasHOA": true,
+                "fee": 180
+            },
+            "features": [
+                "Sidewalks",
+                "Street Paved"
+            ]
+        },
+        "climateFactors": {
+            "floodFactor": 3,
             "fireFactor": 1,
             "windFactor": 2,
             "airFactor": 4,
@@ -241,738 +198,318 @@
         },
         "nearbySchools": [
             {
-                "name": "Horace Mann Elementary School",
-                "distance": "0.5",
-                "rating": 9
-            },
-            {
-                "name": "Gwendolyn Brooks Middle School",
-                "distance": "0.9",
-                "rating": 8
-            },
-            {
-                "name": "Oak Park & River Forest High School",
-                "distance": "1.2",
-                "rating": 8
-            }
-        ],
-        "utility": {
-            "electric": "Circuit Breakers",
-            "sewer": "Public Sewer",
-            "water": "Lake Michigan, Public"
-        }
-    },
-    {
-        "basic": {
-            "id": 3,
-            "propertyType": "Condo",
-            "homeType": "Condominium",
-            "status": "For Sale",
-            "yearBuilt": 2008,
-            "price": 415000,
-            "sqrFt": 1380,
-            "acres": 0.00,
-            "floorCount": 1,
-            "floorLevel": 5,
-            "bedroom": 2,
-            "bathroom": 2,
-            "parkingSpaces": 1
-        },
-        "location": {
-            "latitude": 41.8859,
-            "longitude": -87.8324,
-            "ZipCode": "IL 60130",
-            "street": "824 Circle Ave Unit 5B, Forest Park"
-        },
-        "media": {
-            "mainImage": "https://photos.zillowstatic.com/fp/f21753bc21acb625b0118cdb0d634943-cc_ft_576.webp",
-            "galleryImages": [
-                "https://photos.zillowstatic.com/fp/3fdf7d55a49785f7575f8fae548e18a5-cc_ft_1152.webp",
-                "https://photos.zillowstatic.com/fp/e18b67f996275852cc44e7eccbf4708f-cc_ft_1152.webp",
-                "https://photos.zillowstatic.com/fp/fe62cb85b84043902a77e24fc1f86455-cc_ft_576.webp",
-                "https://photos.zillowstatic.com/fp/fbfee9c72197b2e3f50fb8b26c6810f9-cc_ft_576.webp",
-                "https://photos.zillowstatic.com/fp/2dea55edc349e4562153832e83fce52e-cc_ft_1152.webp"
-            ],
-            "moreTextAboutThePlace": "Bright corner-unit condo with elevator access, split-bedroom layout, and a private balcony facing west for sunset views. Open-concept living, heated garage parking, and secure building amenities."
-        },
-        "company": {
-            "name": "MRED",
-            "logoImg": "https://photos.zillowstatic.com/fp/1b0fc53ffc89ea17e1e382976aca4421-zillow_web_95_35.jpg",
-            "address": "2443 Warrenville Rd #600, Lisle, IL 60532, United States"
-        },
-        "features": {
-            "hasGarage": true,
-            "parkFeatures": [
-                "Heated Garage",
-                "Assigned",
-                "Garage Door Opener",
-                "Concrete"
-            ],
-            "hasPool": false,
-            "hasGarden": false
-        },
-        "special": [
-            "Corner unit with city views",
-            "Private balcony",
-            "Ensuite primary bath",
-            "In-unit laundry",
-            "Elevator building"
-        ],
-        "interior": {
-            "furnished": false,
-            "rooms": [
-                "Living Room",
-                "Dining Room",
-                "Laundry",
-                "Walk In Closet"
-            ],
-            "fireplace": false,
-            "kitchen": {
-                "features": [
-                    "Eating Area-Breakfast Bar",
-                    "Quartz Countertops",
-                    "Stainless Appliances",
-                    "Updated Kitchen"
-                ]
-            }
-        },
-        "community": {
-            "hoa": {
-                "hasHOA": true,
-                "fee": 325
-            },
-            "features": [
-                "Elevator",
-                "Fitness Center",
-                "Party Room",
-                "Bike Room",
-                "Street Lights"
-            ]
-        },
-        "climateFactors": {
-            "floodFactor": 3,
-            "fireFactor": 1,
-            "windFactor": 2,
-            "airFactor": 5,
-            "heatFactor": 3
-        },
-        "nearbySchools": [
-            {
-                "name": "Field-Stevenson Elementary School",
+                "name": "Healy Elementary",
                 "distance": "0.6",
-                "rating": 7
-            },
-            {
-                "name": "Forest Park Middle School",
-                "distance": "1.3",
-                "rating": 7
-            },
-            {
-                "name": "Proviso East High School",
-                "distance": "1.9",
-                "rating": 6
+                "rating": 9
             }
         ],
         "utility": {
             "electric": "Circuit Breakers",
-            "sewer": "Public Sewer",
-            "water": "Lake Michigan, Public"
-        }
-    },
-    {
-        "basic": {
-            "id": 4,
-            "propertyType": "Condo",
-            "homeType": "Condominium",
-            "status": "For Sale",
-            "yearBuilt": 2012,
-            "price": 689000,
-            "sqrFt": 1195,
-            "acres": 0.00,
-            "floorCount": 1,
-            "floorLevel": 18,
-            "bedroom": 2,
-            "bathroom": 2,
-            "parkingSpaces": 1
-        },
-        "location": {
-            "latitude": 47.6135,
-            "longitude": -122.3419,
-            "ZipCode": "WA 98121",
-            "street": "2200 3rd Ave Unit 1805, Seattle"
-        },
-        "media": {
-            "mainImage": "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267",
-            "galleryImages": [
-                "https://images.unsplash.com/photo-1505691938895-1758d7feb511",
-                "https://images.unsplash.com/photo-1501045661006-fcebe0257c3f",
-                "https://images.unsplash.com/photo-1493809842364-78817add7ffb",
-                "https://images.unsplash.com/photo-1501183638710-841dd1904471",
-                "https://images.unsplash.com/photo-1502005097973-6a7082348e28"
-            ],
-            "moreTextAboutThePlace": "Modern Belltown high-rise condo with floor-to-ceiling windows, west-facing city and Elliott Bay views, and a private balcony. Concierge building with secure garage parking and top-tier amenities."
-        },
-        "company": {
-            "name": "NWMLS",
-            "logoImg": "https://upload.wikimedia.org/wikipedia/commons/3/3f/House_silhouette_icon.png",
-            "address": "11430 NE 120th St, Kirkland, WA 98034, United States"
-        },
-        "features": {
-            "hasGarage": true,
-            "parkFeatures": [
-                "Covered",
-                "Assigned",
-                "Underground",
-                "EV Capable"
-            ],
-            "hasPool": true,
-            "hasGarden": false
-        },
-        "special": [
-            "Floor-to-ceiling windows",
-            "Private balcony with bay glimpses",
-            "Concierge & package room",
-            "In-unit laundry",
-            "Walkable to Pike Place & waterfront"
-        ],
-        "interior": {
-            "furnished": false,
-            "rooms": [
-                "Living Room",
-                "Dining Area",
-                "Laundry",
-                "Primary Suite",
-                "Walk In Closet"
-            ],
-            "fireplace": false,
-            "kitchen": {
-                "features": [
-                    "Quartz Countertops",
-                    "Stainless Appliances",
-                    "Under-cabinet Lighting",
-                    "Breakfast Bar"
-                ]
-            }
-        },
-        "community": {
-            "hoa": {
-                "hasHOA": true,
-                "fee": 545
-            },
-            "features": [
-                "Concierge",
-                "Rooftop Deck",
-                "Fitness Center",
-                "Pet Area",
-                "Club Room"
-            ]
-        },
-        "climateFactors": {
-            "floodFactor": 2,
-            "fireFactor": 1,
-            "windFactor": 3,
-            "airFactor": 6,
-            "heatFactor": 2
-        },
-        "nearbySchools": [
-            {
-                "name": "Lowell Elementary School",
-                "distance": "0.9",
-                "rating": 7
-            },
-            {
-                "name": "McClure Middle School",
-                "distance": "2.2",
-                "rating": 7
-            },
-            {
-                "name": "Lincoln High School",
-                "distance": "2.3",
-                "rating": 8
-            }
-        ],
-        "utility": {
-            "electric": "Circuit Breakers",
-            "sewer": "Public Sewer",
+            "sewer": "Public",
             "water": "Public"
         }
     },
     {
+        "agentId": "agent001006",
         "basic": {
-            "id": 5,
+            "id": 12,
             "propertyType": "Condo",
             "homeType": "Condominium",
-            "status": "For Sale",
-            "yearBuilt": 2015,
-            "price": 649000,
-            "sqrFt": 1040,
-            "acres": 0.00,
+            "status": "For Rent",
+            "yearBuilt": 2018,
+            "price": 3200,
+            "sqrFt": 1020,
+            "acres": 0,
             "floorCount": 1,
-            "floorLevel": 28,
+            "floorLevel": 15,
             "bedroom": 2,
             "bathroom": 2,
             "parkingSpaces": 1
         },
         "location": {
-            "latitude": 25.7651,
-            "longitude": -80.1913,
-            "ZipCode": "FL 33131",
-            "street": "1100 S Miami Ave Unit 2807, Miami"
+            "latitude": 41.892,
+            "longitude": -87.6202,
+            "city": "Chicago",
+            "state": "IL",
+            "ZipCode": "60611",
+            "street": "530 N Lake Shore Dr, Apt 1504"
         },
         "media": {
-            "mainImage": "https://images.unsplash.com/photo-1501183638710-841dd1904471",
+            "mainImage": "https://photos.zillowstatic.com/fp/0a56c4ca826f73583da81c18676b1871-cc_ft_1152.webp",
             "galleryImages": [
-                "https://images.unsplash.com/photo-1499951360447-b19be8fe80f5",
-                "https://images.unsplash.com/photo-1505691723518-36a5ac3b2a59",
-                "https://images.unsplash.com/photo-1487014679447-9f8336841d58",
-                "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85",
-                "https://images.unsplash.com/photo-1524758631624-e2822e304c36"
+                "https://photos.zillowstatic.com/fp/4417c5e0a988c1d22a82ef6afbb44af4-cc_ft_576.webp",
+                "https://photos.zillowstatic.com/fp/bd49ebc75439718369dfa73baf226d08-cc_ft_576.webp",
+                "https://photos.zillowstatic.com/fp/7861c794af78c299cf368b9f34981ef2-cc_ft_1152.webp",
+                "https://photos.zillowstatic.com/fp/85fb9df6834613721beda3fa5fcb794d-cc_ft_1152.webp",
+                "https://photos.zillowstatic.com/fp/d9408e709b32c13781d6e93559a3cbd7-cc_ft_1152.webp",
+                "https://photos.zillowstatic.com/fp/277d4d53a0aa927b53c65f3dcc5c4073-cc_ft_1152.webp"
             ],
-            "moreTextAboutThePlace": "Sunny Brickell tower residence with glass balcony, split 2-bed layout, and skyline views. Resort amenities include pool deck, gym, spa, and 24/7 security—steps to cafés and the Metrorail."
+            "moreTextAboutThePlace": "Luxury lakefront condo with balcony and skyline views in the heart of Chicago."
         },
         "company": {
-            "name": "Miami Association of Realtors",
-            "logoImg": "https://upload.wikimedia.org/wikipedia/commons/6/6b/Blue_house_icon.svg",
-            "address": "700 S Royal Poinciana Blvd #400, Miami Springs, FL 33166, United States"
+            "name": "Lakeside Rentals",
+            "logoImg": null,
+            "address": "Chicago, IL"
         },
         "features": {
             "hasGarage": true,
             "parkFeatures": [
-                "Covered",
-                "Assigned",
-                "Valet Available",
-                "Garage Door Opener"
+                "Assigned"
             ],
             "hasPool": true,
             "hasGarden": false
         },
         "special": [
-            "Glass balcony with skyline views",
-            "Resort-style pool & spa",
-            "Walk to Brickell City Centre",
-            "In-unit washer/dryer",
-            "24/7 attended lobby"
-        ],
-        "interior": {
-            "furnished": false,
-            "rooms": [
-                "Living Room",
-                "Dining Area",
-                "Laundry",
-                "Primary Suite",
-                "Walk In Closet"
-            ],
-            "fireplace": false,
-            "kitchen": {
-                "features": [
-                    "Quartz Countertops",
-                    "Stainless Appliances",
-                    "Tile Backsplash",
-                    "Breakfast Bar"
-                ]
-            }
-        },
-        "community": {
-            "hoa": {
-                "hasHOA": true,
-                "fee": 590
-            },
-            "features": [
-                "Pool",
-                "Fitness Center",
-                "Spa/Steam Room",
-                "Clubhouse",
-                "On-site Management"
-            ]
-        },
-        "climateFactors": {
-            "floodFactor": 6,
-            "fireFactor": 1,
-            "windFactor": 5,
-            "airFactor": 7,
-            "heatFactor": 7
-        },
-        "nearbySchools": [
-            {
-                "name": "Southside Elementary Museum Magnet School",
-                "distance": "0.7",
-                "rating": 8
-            },
-            {
-                "name": "Shenandoah Middle School",
-                "distance": "2.4",
-                "rating": 6
-            },
-            {
-                "name": "Miami Senior High School",
-                "distance": "3.3",
-                "rating": 6
-            }
-        ],
-        "utility": {
-            "electric": "Circuit Breakers",
-            "sewer": "Public Sewer",
-            "water": "Municipal Water"
-        }
-    },
-    {
-        "basic": {
-            "id": 6,
-            "propertyType": "Apartment",
-            "homeType": "Loft",
-            "status": "For Rent",
-            "yearBuilt": 2019,
-            "price": 2750,
-            "sqrFt": 950,
-            "acres": 0.00,
-            "floorCount": 1,
-            "floorLevel": 9,
-            "bedroom": 1,
-            "bathroom": 1,
-            "parkingSpaces": 1
-        },
-        "location": {
-            "latitude": 34.0430,
-            "longitude": -118.2529,
-            "ZipCode": "CA 90015",
-            "street": "1120 W 6th St Unit 904, Los Angeles"
-        },
-        "media": {
-            "mainImage": "https://photos.zillowstatic.com/fp/f231c16938022e8e2ba9a185c3a3a4e3-cc_ft_1152.webp",
-            "galleryImages": [
-                "https://photos.zillowstatic.com/fp/0e1565baf2f5e07722ff54035c94531f-cc_ft_576.webp",
-                "https://photos.zillowstatic.com/fp/76008301168395f786b75a6859de9cd6-cc_ft_576.webp",
-                "https://photos.zillowstatic.com/fp/1395dac7a4838c07f12132e6cbe2ea08-cc_ft_1152.webp",
-                "https://photos.zillowstatic.com/fp/b2da24b8eb03c0cbcfd56d27ee6e757f-cc_ft_576.webp",
-                "https://photos.zillowstatic.com/fp/d5541e3baa4b99c535cdf2dae56526fd-cc_ft_576.webp",
-                "https://photos.zillowstatic.com/fp/db51f550cd27d0f1bf1733cd2e79158e-cc_ft_576.webp",
-                "https://photos.zillowstatic.com/fp/d4396be09ac8877408139959bacbba1a-cc_ft_1152.webp",
-                "https://photos.zillowstatic.com/fp/f1f5d35e915d6dd4324f85512c5aadfa-cc_ft_576.webp",
-                "https://photos.zillowstatic.com/fp/27b6c1bd55bf3c6def2774af26620db7-cc_ft_1152.webp",
-                "https://photos.zillowstatic.com/fp/fe93ddc08d6c39711fefc83b4e415a3f-cc_ft_576.webp",
-                "https://photos.zillowstatic.com/fp/ab72b7c5b7b8b31d8338149ca9a92aa7-cc_ft_576.webp",
-                "https://photos.zillowstatic.com/fp/d74f15c1d620cbcc81b0c69d846d3fa4-cc_ft_1152.webp",
-                "https://photos.zillowstatic.com/fp/a7c823706ce149788d2d3ada3cd1b126-cc_ft_576.webp",
-                "https://photos.zillowstatic.com/fp/d5b99795a9655e09ccd0239020305c4b-cc_ft_576.webp",
-                "https://photos.zillowstatic.com/fp/cdef01e14ffe0c901d23eb6e367ce867-cc_ft_576.webp",
-                "https://photos.zillowstatic.com/fp/db7ab3fc20fc5f05e122d2ee527e6199-cc_ft_1152.webp"
-            ],
-            "moreTextAboutThePlace": "Modern downtown loft apartment with panoramic skyline views, floor-to-ceiling windows, and private balcony. Open layout with hardwood floors, smart home lighting, and secure garage parking."
-        },
-        "company": {
-            "name": "The MLS™/CLAW",
-            "logoImg": "https://upload.wikimedia.org/wikipedia/commons/2/2f/Real_estate_logo_sample.png",
-            "address": "6330 San Vicente Blvd Suite 100, Los Angeles, CA 90048, United States"
-        },
-        "features": {
-            "hasGarage": true,
-            "parkFeatures": [
-                "Covered",
-                "Assigned",
-                "Secured Entry"
-            ],
-            "hasPool": true,
-            "hasGarden": false
-        },
-        "special": [
-            "Smart home lighting",
-            "Private balcony with city view",
-            "Pet-friendly building",
-            "Fitness center access",
-            "Washer/dryer in unit"
+            "Balcony with view",
+            "Gym access",
+            "Pet friendly"
         ],
         "interior": {
             "furnished": true,
             "rooms": [
                 "Living Room",
                 "Bedroom",
-                "Kitchen",
-                "Laundry"
+                "Kitchen"
             ],
             "fireplace": false,
             "kitchen": {
                 "features": [
-                    "Quartz Countertops",
                     "Stainless Appliances",
-                    "Tile Backsplash",
-                    "Dishwasher"
+                    "Open Plan"
+                ]
+            }
+        },
+        "community": {
+            "hoa": {
+                "hasHOA": true,
+                "fee": 400
+            },
+            "features": [
+                "Pool",
+                "Gym",
+                "Doorman"
+            ]
+        },
+        "climateFactors": {
+            "floodFactor": 1,
+            "fireFactor": 1,
+            "windFactor": 2,
+            "airFactor": 4,
+            "heatFactor": 3
+        },
+        "nearbySchools": [
+            {
+                "name": "Ogden Elementary",
+                "distance": "0.7",
+                "rating": 9
+            }
+        ],
+        "utility": {
+            "electric": "Breakers",
+            "sewer": "Public",
+            "water": "Public"
+        }
+    },
+    {
+        "agentId": "agent001007",
+        "basic": {
+            "id": 13,
+            "propertyType": "Apartment",
+            "homeType": "Loft",
+            "status": "For Rent",
+            "yearBuilt": 2010,
+            "price": 2400,
+            "sqrFt": 880,
+            "acres": 0,
+            "floorCount": 1,
+            "floorLevel": 5,
+            "bedroom": 1,
+            "bathroom": 1,
+            "parkingSpaces": 0
+        },
+        "location": {
+            "latitude": 41.881,
+            "longitude": -87.644,
+            "city": "West Loop",
+            "state": "IL",
+            "ZipCode": "60607",
+            "street": "939 W Madison St, Apt 503"
+        },
+        "media": {
+            "mainImage": "https://photos.zillowstatic.com/fp/d3f18328fcdc845c43ccbd41ff84bcee-cc_ft_1152.webp",
+            "galleryImages": [
+                "https://photos.zillowstatic.com/fp/05004bf078cb14d22341beebd3aecfd1-cc_ft_576.webp",
+                "https://photos.zillowstatic.com/fp/3561563a5c619291aeaf40f9ce059e7d-cc_ft_576.webp",
+                "https://photos.zillowstatic.com/fp/4662db37bbcb013f65a6c399a1b02dba-cc_ft_1152.webp",
+                "https://photos.zillowstatic.com/fp/d367b2a5726ce9131d2bf8bd6ef4ac38-cc_ft_576.webp",
+                "https://photos.zillowstatic.com/fp/77b22366e0b0182b4b5aa9c84fbf7f19-cc_ft_1152.webp",
+                "https://photos.zillowstatic.com/fp/64cdac438a83be08d282d6c8e30661f0-cc_ft_1152.webp"
+            ],
+            "moreTextAboutThePlace": "Industrial-style loft apartment in trendy West Loop area close to restaurants and nightlife."
+        },
+        "company": {
+            "name": "Metro Leasing",
+            "logoImg": null,
+            "address": "Chicago, IL"
+        },
+        "features": {
+            "hasGarage": false,
+            "parkFeatures": [],
+            "hasPool": false,
+            "hasGarden": false
+        },
+        "special": [
+            "Exposed brick",
+            "Downtown location"
+        ],
+        "interior": {
+            "furnished": true,
+            "rooms": [
+                "Studio",
+                "Kitchen"
+            ],
+            "fireplace": false,
+            "kitchen": {
+                "features": [
+                    "Modern Cabinets"
                 ]
             }
         },
         "community": {
             "hoa": {
                 "hasHOA": false,
-                "fee": null
+                "fee": 0
             },
             "features": [
-                "Pool",
-                "Rooftop Deck",
-                "Fitness Center",
-                "24/7 Concierge",
-                "Dog Park"
+                "Elevator",
+                "Security Access"
             ]
         },
         "climateFactors": {
-            "floodFactor": 1,
-            "fireFactor": 3,
-            "windFactor": 2,
-            "airFactor": 6,
-            "heatFactor": 4
+            "floodFactor": 2,
+            "fireFactor": 1,
+            "windFactor": 3,
+            "airFactor": 4,
+            "heatFactor": 2
         },
         "nearbySchools": [
             {
-                "name": "9th Street Elementary School",
-                "distance": "0.5",
-                "rating": 6
-            },
-            {
-                "name": "John H. Liechty Middle School",
-                "distance": "1.4",
-                "rating": 6
-            },
-            {
-                "name": "Miguel Contreras Learning Complex",
-                "distance": "1.2",
-                "rating": 7
+                "name": "Skinner Elementary",
+                "distance": "0.8",
+                "rating": 9
             }
         ],
         "utility": {
             "electric": "Circuit Breakers",
-            "sewer": "Public Sewer",
-            "water": "Municipal Water"
+            "sewer": "Public",
+            "water": "Public"
         }
     },
     {
+        "agentId": "agent002",
         "basic": {
-            "id": 7,
-            "propertyType": "Townhouse",
-            "homeType": "Attached",
-            "status": "For Rent",
-            "yearBuilt": 2021,
-            "price": 3400,
-            "sqrFt": 1725,
-            "acres": 0.05,
+            "id": 14,
+            "propertyType": "House",
+            "homeType": "SingleFamily",
+            "status": "For Sale",
+            "yearBuilt": 1995,
+            "price": 1750000,
+            "sqrFt": 3250,
+            "acres": 0.35,
             "floorCount": 2,
-            "floorLevel": 1,
-            "bedroom": 3,
-            "bathroom": 3,
+            "floorLevel": 0,
+            "bedroom": 5,
+            "bathroom": 4,
             "parkingSpaces": 2
         },
         "location": {
-            "latitude": 30.2672,
-            "longitude": -97.7431,
-            "ZipCode": "TX 78702",
-            "street": "2107 E 8th St Unit B, Austin"
+            "latitude": 42.011,
+            "longitude": -87.806,
+            "city": "Glenview",
+            "state": "IL",
+            "ZipCode": "60025",
+            "street": "1720 Magnolia Ln"
         },
         "media": {
-            "mainImage": "https://photos.zillowstatic.com/fp/5b105fe7b6b9757fc4b73e54f8dd9ee5-cc_ft_1152.webp",
+            "mainImage": "https://photos.zillowstatic.com/fp/e3e585a7dfd15580e15f3ddb97ea8016-cc_ft_1152.webp",
             "galleryImages": [
-                "https://photos.zillowstatic.com/fp/23e5ab99926b6bd27322e79bbcfe4cf0-cc_ft_576.webp",
-                "https://photos.zillowstatic.com/fp/92f5a46c315757de424f87010f6b2502-cc_ft_576.webp",
-                "https://photos.zillowstatic.com/fp/bb8ce4e35da4b707d96b1f19ac340cad-cc_ft_1152.webp",
-                "https://photos.zillowstatic.com/fp/a8ffbcf3ca30a7de42ecee41e3004377-cc_ft_1152.webp",
-                "https://photos.zillowstatic.com/fp/d68fe484c4f49e69602c6560e312a7bc-cc_ft_576.webp",
-                "https://photos.zillowstatic.com/fp/efa4324deb8bd3f215880b81e69eb52b-cc_ft_576.webp"
+                "https://photos.zillowstatic.com/fp/e983c681c1822b99b436bc793e88e726-cc_ft_576.webp",
+                "https://photos.zillowstatic.com/fp/6682a40ccb42a07b29660eb9e5b6b32a-cc_ft_576.webp",
+                "https://photos.zillowstatic.com/fp/4c37aa7e3d3e8b568fec54ab67cc9194-cc_ft_1152.webp",
+                "https://photos.zillowstatic.com/fp/44f345bad973f1ba706bed4bdbe68a37-cc_ft_576.webp",
+                "https://photos.zillowstatic.com/fp/44f345bad973f1ba706bed4bdbe68a37-cc_ft_576.webp",
+                "https://photos.zillowstatic.com/fp/5a7ed11fa28bf37fa7359020ada200d5-cc_ft_1152.webp",
+                "https://photos.zillowstatic.com/fp/c0a2a0ce63ba952c4ac654b4f5db8a16-cc_ft_1152.webp"
             ],
-            "moreTextAboutThePlace": "Stylish East Austin townhouse with private yard, EV-ready garage, and rooftop terrace. Open-concept main floor, modern kitchen, and walking distance to bars and coffee shops."
+            "moreTextAboutThePlace": "Elegant 5-bedroom home on a quiet cul-de-sac with remodeled interiors and a spacious patio."
         },
         "company": {
-            "name": "Austin Board of Realtors",
-            "logoImg": "https://upload.wikimedia.org/wikipedia/commons/3/3c/Real_estate_building_icon.png",
-            "address": "4800 Spicewood Springs Rd, Austin, TX 78759, United States"
+            "name": "Suburban Estates Realty",
+            "logoImg": null,
+            "address": "Glenview, IL"
         },
         "features": {
             "hasGarage": true,
             "parkFeatures": [
-                "Attached Garage",
-                "EV Charger Ready",
-                "Concrete Driveway"
+                "Detached"
             ],
-            "hasPool": false,
+            "hasPool": true,
             "hasGarden": true
         },
         "special": [
-            "Rooftop terrace",
-            "Private backyard",
-            "EV charging outlet",
-            "Smart thermostat",
-            "Energy-efficient windows"
+            "Fireplace",
+            "Home office",
+            "Finished basement"
         ],
         "interior": {
             "furnished": false,
             "rooms": [
                 "Living Room",
-                "Dining Area",
-                "Kitchen",
+                "Dining Room",
                 "Office",
-                "Laundry Room"
+                "Bedroom"
             ],
-            "fireplace": false,
+            "fireplace": true,
             "kitchen": {
                 "features": [
-                    "Quartz Countertops",
-                    "Gas Range",
-                    "Walk-in Pantry",
-                    "Recessed Lighting"
+                    "Pantry",
+                    "Updated Appliances"
                 ]
             }
         },
         "community": {
             "hoa": {
                 "hasHOA": true,
-                "fee": 150
+                "fee": 250
             },
             "features": [
-                "Gated Access",
-                "Street Lights",
-                "Guest Parking",
-                "Dog Friendly"
+                "Playground",
+                "Walking Trail"
             ]
         },
         "climateFactors": {
             "floodFactor": 2,
-            "fireFactor": 2,
-            "windFactor": 3,
-            "airFactor": 5,
-            "heatFactor": 6
-        },
-        "nearbySchools": [
-            {
-                "name": "Zavala Elementary School",
-                "distance": "0.4",
-                "rating": 6
-            },
-            {
-                "name": "Martin Middle School",
-                "distance": "1.2",
-                "rating": 7
-            },
-            {
-                "name": "Eastside Early College High School",
-                "distance": "1.5",
-                "rating": 7
-            }
-        ],
-        "utility": {
-            "electric": "Circuit Breakers",
-            "sewer": "Public Sewer",
-            "water": "Municipal Water"
-        }
-    },
-    {
-        "basic": {
-            "id": 8,
-            "propertyType": "Condo",
-            "homeType": "Penthouse",
-            "status": "For Rent",
-            "yearBuilt": 2017,
-            "price": 7900,
-            "sqrFt": 1450,
-            "acres": 0.00,
-            "floorCount": 1,
-            "floorLevel": 38,
-            "bedroom": 2,
-            "bathroom": 2,
-            "parkingSpaces": 0
-        },
-        "location": {
-            "latitude": 40.7550,
-            "longitude": -73.9835,
-            "ZipCode": "NY 10018",
-            "street": "350 W 42nd St Unit PH-A, New York"
-        },
-        "media": {
-            "mainImage": "https://photos.zillowstatic.com/fp/4061c014f879fdb00fde39dba7dd2f05-cc_ft_1152.webp",
-            "galleryImages": [
-                "https://photos.zillowstatic.com/fp/f640e142fb814caff2d12336d07066f0-cc_ft_576.webp",
-                "https://photos.zillowstatic.com/fp/a82630dcb04a041d016f0501ad4cc1d2-cc_ft_1152.webp",
-                "https://photos.zillowstatic.com/fp/60a75953cf5829d93eb59d401613b28f-cc_ft_1152.webp",
-                "https://photos.zillowstatic.com/fp/b2229b4f9310bd43ffbf664e356dc26b-cc_ft_576.webp",
-                "https://photos.zillowstatic.com/fp/f00252cafb4607d219f752c85485fc5c-cc_ft_576.webp",
-                "https://photos.zillowstatic.com/fp/c3102451f2dcd5075574f888082578e8-cc_ft_1152.webp",
-                "https://photos.zillowstatic.com/fp/1f471bf930c1bc5491cd1614ba7e2b9b-cc_ft_576.webp",
-                "https://photos.zillowstatic.com/fp/46ccca0d332d66b11bee56a921504805-cc_ft_576.webp",
-                "https://photos.zillowstatic.com/fp/462f13f90d3c2d82531f68682dad4e34-cc_ft_1152.webp"
-            ],
-            "moreTextAboutThePlace": "Luxury Midtown Manhattan penthouse with panoramic skyline and Hudson River views. Floor-to-ceiling glass, open chef’s kitchen, private terrace, and full-service doorman building with indoor pool."
-        },
-        "company": {
-            "name": "REBNY",
-            "logoImg": "https://upload.wikimedia.org/wikipedia/commons/d/d1/Cityscape_building_logo.png",
-            "address": "570 Lexington Ave #1600, New York, NY 10022, United States"
-        },
-        "features": {
-            "hasGarage": false,
-            "parkFeatures": [],
-            "hasPool": true,
-            "hasGarden": false
-        },
-        "special": [
-            "Floor-to-ceiling glass windows",
-            "Private terrace",
-            "Doorman & concierge",
-            "Indoor heated pool",
-            "Sky lounge"
-        ],
-        "interior": {
-            "furnished": true,
-            "rooms": [
-                "Living Room",
-                "Dining Area",
-                "Primary Suite",
-                "Walk-in Closet"
-            ],
-            "fireplace": false,
-            "kitchen": {
-                "features": [
-                    "Marble Countertops",
-                    "Chef-grade Appliances",
-                    "Wine Cooler",
-                    "Breakfast Bar"
-                ]
-            }
-        },
-        "community": {
-            "hoa": {
-                "hasHOA": true,
-                "fee": 750
-            },
-            "features": [
-                "Doorman",
-                "Fitness Center",
-                "Indoor Pool",
-                "Residents Lounge",
-                "24/7 Security"
-            ]
-        },
-        "climateFactors": {
-            "floodFactor": 3,
             "fireFactor": 1,
-            "windFactor": 4,
-            "airFactor": 7,
+            "windFactor": 2,
+            "airFactor": 5,
             "heatFactor": 3
         },
         "nearbySchools": [
             {
-                "name": "P.S. 51 Elias Howe",
-                "distance": "0.3",
-                "rating": 7
+                "name": "Glen Grove Elementary",
+                "distance": "0.5",
+                "rating": 9
             },
             {
-                "name": "M.S. 260 Clinton School for Writers",
-                "distance": "0.8",
-                "rating": 8
-            },
-            {
-                "name": "Beacon High School",
+                "name": "Glenbrook South High",
                 "distance": "1.5",
-                "rating": 8
+                "rating": 9
             }
         ],
         "utility": {
             "electric": "Circuit Breakers",
             "sewer": "Public Sewer",
-            "water": "City Water"
+            "water": "Public"
         }
     }
 ]

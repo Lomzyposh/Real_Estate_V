@@ -20,9 +20,13 @@ import AgentDashboard from './pages/Agents/AgentDashboard';
 import AdminDashboard from './pages/Admin/AdminDashboard';
 import Sell from './pages/Sell';
 import { Toaster } from "react-hot-toast";
+import Footer from './components/Footer';
+import Contact from './pages/Contact';
 
 const App = () => {
   const [loading, setLoading] = useState(false);
+
+
 
   return (
     <>
@@ -42,6 +46,7 @@ const App = () => {
 
         <Route path="/details/:id" element={<HomeDetails />} />
         <Route path="/sell" element={<Sell />} />
+        <Route path="/contact" element={<Contact />} />
 
 
         <Route path="/allProperties" element={<AllProperties />} />
@@ -65,6 +70,7 @@ const App = () => {
         bodyClassName={() => "text-sm"}
         progressClassName="!bg-orange-500"
       />
+      <Footer />
     </>
   )
 }

@@ -2,6 +2,7 @@
 import React, { useMemo, useRef, useState } from "react";
 import { useAdmin } from "../contexts/AdminContext";
 import { AgentComboBox } from "./AgentCombox";
+import { toast } from "react-toastify";
 
 const PROPERTY_TYPES = ["House", "Townhouse", "Condo", "Apartment", "Duplex"];
 const HOME_TYPES = ["SingleFamily", "Townhouse", "Condominium", "Loft"];
@@ -131,6 +132,7 @@ export default function PropertyQuickAdd({ onCreated }) {
         sqft: "",
 
         street: "",
+        city: "",
         zip_code: "",
         latitude: "",
         longitude: "",
@@ -140,7 +142,7 @@ export default function PropertyQuickAdd({ onCreated }) {
         parking_spaces: "",
 
         main_image: "",
-        images: [], // 👈 NEW
+        images: [],
         hoa_has: false,
         hoa_fee: "",
         electric: "Circuit Breakers",
@@ -225,7 +227,7 @@ export default function PropertyQuickAdd({ onCreated }) {
     }, [form]);
 
     const canNextFromStep2 = useMemo(() => {
-        return !!form.street.trim() && !!form.zip_code.trim();
+        return !!form.street.trim() && !!form.zip_code.trim() && !!form.city;
     }, [form]);
 
     const isFinalStep = step === 4;
@@ -250,10 +252,12 @@ export default function PropertyQuickAdd({ onCreated }) {
             if (!isPositiveNumber(form.bedrooms)) stepErrors.bedrooms = "Enter valid number.";
             if (!isPositiveNumber(form.bathrooms)) stepErrors.bathrooms = "Enter valid number.";
             if (!isPositiveNumber(form.sqft)) stepErrors.sqft = "Enter valid sqft.";
+
         }
 
         if (stepIndex === 2) {
             if (!form.street.trim()) stepErrors.street = "Street is required.";
+            if (!form.city.trim()) stepErrors.city = "City is required.";
             if (!form.zip_code.trim()) stepErrors.zip_code = "ZIP code is required.";
             if (String(form.latitude).trim() && toNumberOrNull(form.latitude) === null)
                 stepErrors.latitude = "Latitude must be a number.";
@@ -270,7 +274,7 @@ export default function PropertyQuickAdd({ onCreated }) {
                 } else {
                     const currentYear = new Date().getFullYear();
                     if (yb > currentYear) {
-                        alert("Year built can’t be in the future (>${currentYear} ");
+                        alert(`Year built can’t be in the future (>${currentYear} `);
                         stepErrors.year_built = `Year built can’t be in the future (>${currentYear}).`;
                     }
                     // Optional: basic lower bound
@@ -346,6 +350,7 @@ export default function PropertyQuickAdd({ onCreated }) {
             bathrooms: toNumberOrNull(form.bathrooms),
             sqft: toNumberOrNull(form.sqft),
             street: form.street,
+            city: form.city,
             zip_code: form.zip_code,
             latitude: toNumberOrNull(form.latitude),
             longitude: toNumberOrNull(form.longitude),
@@ -353,10 +358,8 @@ export default function PropertyQuickAdd({ onCreated }) {
             acres: toNumberOrNull(form.acres),
             parking_spaces: toNumberOrNull(form.parking_spaces),
 
-            // use pasted URL if provided; otherwise fallback to first uploaded
             main_image: form.main_image || (form.images[0]?.url ?? null),
 
-            // keep a lightweight array (url + public_id) for DB
             images: form.images?.map((x) => ({ url: x.url, public_id: x.public_id })) || [],
 
             hoa_has: form.hoa_has ? 1 : 0,
@@ -379,7 +382,7 @@ export default function PropertyQuickAdd({ onCreated }) {
                 throw new Error(txt || `Failed (${res.status})`);
             }
             const created = await res.json();
-            alert("✅ Property Created!");
+            toast.success(`Property Uploaded Successfully ✅`);
             onCreated?.(created);
 
             setForm((f) => ({
@@ -389,6 +392,7 @@ export default function PropertyQuickAdd({ onCreated }) {
                 bathrooms: "",
                 sqft: "",
                 street: "",
+                city: "",
                 zip_code: "",
                 latitude: "",
                 longitude: "",
@@ -396,7 +400,7 @@ export default function PropertyQuickAdd({ onCreated }) {
                 acres: "",
                 parking_spaces: "",
                 main_image: "",
-                images: [], // reset
+                images: [],
                 hoa_has: false,
                 hoa_fee: "",
             }));
@@ -460,6 +464,7 @@ export default function PropertyQuickAdd({ onCreated }) {
 
             {step === 2 && (
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <Input label="City" value={form.city} onChange={set("city")} required />
                     <Input label="Street" value={form.street} onChange={set("street")} required />
                     <Input label="ZIP / Postal Code" value={form.zip_code} onChange={set("zip_code")} required />
                     <Input label="Latitude" type="number" value={form.latitude} onChange={set("latitude")} />

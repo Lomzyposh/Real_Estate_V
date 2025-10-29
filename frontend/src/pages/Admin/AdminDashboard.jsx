@@ -27,6 +27,7 @@ async function togglePublishedRequest(propertyId, published) {
 }
 
 export default function AdminDashboard() {
+  ;
   const [active, setActive] = useState("overview");
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const mainRef = useRef(null);
@@ -105,19 +106,17 @@ export default function AdminDashboard() {
   return (
     <RequireAdmin>
       <div className="flex min-h-screen bg-[#f9f9ff] dark:bg-[#0f111a] transition-colors duration-300">
-        {/* Mobile top bar */}
         <div className="lg:hidden fixed top-0 left-0 right-0 z-40 bg-white/90 dark:bg-[#1a1d29]/90 backdrop-blur border-b border-gray-100 dark:border-gray-800 px-4 py-3 flex items-center justify-between">
           <button onClick={() => setSidebarOpen((s) => !s)} className="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800">
             <FiMenu className="text-[#252525] dark:text-white" />
           </button>
           <div onClick={() => navigate("/")} className="flex items-center gap-2 cursor-pointer">
             <img src="/images/homeLogo.png" alt="Logo" className="w-12 h-12" />
-            <h2 className="text-xl dark:text-[var(--primary)] font-bold font-[Montserrat] tracking-wide">NestNova</h2>
+            <h2 className="text-xl dark:text-[var(--primary)] font-bold font-[Prata] tracking-wide">NestNova</h2>
           </div>
           <div className="w-8" />
         </div>
 
-        {/* Sidebar */}
         <aside
           className={clsx(
             "fixed top-0 left-0 z-50 h-screen w-64 bg-white dark:bg-[#1a1d29] border-r border-gray-100 dark:border-gray-800 shadow-sm p-5 flex flex-col justify-between transition-transform duration-300",
@@ -132,8 +131,6 @@ export default function AdminDashboard() {
 
             <nav className="flex flex-col gap-2 text-gray-600 dark:text-gray-300">
               <SideItem id="overview" active={active} onClick={scrollTo} icon={<FiHome />} label="Overview" />
-              <SideItem id="users" active={active} onClick={scrollTo} icon={<FiUsers />} label="Users" />
-              <SideItem id="agents" active={active} onClick={scrollTo} icon={<FiUserCheck />} label="Agents" />
               <SideItem id="properties" active={active} onClick={scrollTo} icon={<FiMap />} label="Properties" />
             </nav>
           </div>
@@ -147,10 +144,22 @@ export default function AdminDashboard() {
             </button>
             <button
               onClick={() => navigate("/")}
-              className="w-full px-4 py-2 rounded-lg text-sm bg-indigo-900/30 hover:bg-red-900/10 text-gray-600 dark:text-gray-300"
+              className="group w-full flex items-center justify-center gap-2 px-4 py-2.5
+             rounded-xl font-medium text-sm 
+             bg-gradient-to-r from-indigo-100 via-indigo-200 to-indigo-100
+             dark:from-indigo-950/40 dark:via-indigo-900/40 dark:to-indigo-950/40
+             text-indigo-700 dark:text-indigo-300
+             shadow-[inset_0_1px_0_rgba(255,255,255,0.2),0_4px_10px_rgba(0,0,0,0.1)]
+             hover:shadow-[0_6px_14px_rgba(0,0,0,0.15)]
+             hover:from-indigo-200 hover:to-indigo-100
+             dark:hover:from-indigo-900/60 dark:hover:to-indigo-950/60
+             hover:text-indigo-800 dark:hover:text-indigo-200
+             transition-all duration-300 ease-out"
             >
-              <i className="bi bi-arrow-left-circle-fill"></i> Main Page
+              <i className="bi bi-arrow-left-circle-fill text-lg group-hover:-translate-x-1 transition-transform duration-300"></i>
+              <span>Main Page</span>
             </button>
+
           </div>
         </aside>
 
@@ -319,7 +328,7 @@ function SideItem({ id, active, onClick, icon, label }) {
     <button
       onClick={() => onClick(id)}
       className={clsx(
-        "flex items-center gap-3 px-4 py-2 rounded-lg transition-colors select-none",
+        "flex items-center gap-3 px-4 py-2.5 rounded-lg transition-colors select-none",
         active === id
           ? "bg-indigo-100 text-indigo-700 dark:bg-indigo-900/50 dark:text-indigo-300 font-medium"
           : "hover:bg-indigo-50 dark:hover:bg-indigo-900/30"

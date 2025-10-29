@@ -9,6 +9,7 @@ import { useAuth } from '../../contexts/AuthContext';
 
 
 const Login = ({ setIsSignUpActive }) => {
+  
   const { setShowLoader, setLoaderText } = useLoader();
   const [showForgotForm, setShowForgotForm] = useState(false);
   const [email, setEmail] = useState('');

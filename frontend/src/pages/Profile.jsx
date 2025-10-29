@@ -4,6 +4,7 @@ import UnauthorizedOverlay from "../components/unAuth";
 import { toast } from "react-toastify";
 import { useLoader } from "../contexts/LoaderContext";
 
+
 async function uploadImageToServer(file, endpoint = "/api/profile/upload") {
     const fd = new FormData();
     fd.append("file", file);
@@ -14,6 +15,7 @@ async function uploadImageToServer(file, endpoint = "/api/profile/upload") {
 }
 
 export default function CustomerSettings() {
+    ;
     const { user, setUser } = useAuth();
     const { showLoader, loaderText } = useLoader();
 

@@ -10,11 +10,17 @@ import { SavedProvider } from './contexts/SavedContext.jsx'
 import { PropertiesProvider } from './contexts/PropertiesContext.jsx'
 import { AgentProvider } from './contexts/AgentContext.jsx'
 import { AdminProvider } from './contexts/AdminContext.jsx'
+import { useScrollToTopOnRouteChange } from '../hooks/useScrollTop.js'
 
+function ScrollHandler() {
+  useScrollToTopOnRouteChange();
+  return null; // doesn’t render anything — just the effect
+}
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <BrowserRouter>
+      <ScrollHandler />
       <AuthProvider>
         <LoaderProvider>
           <ThemeProvider>

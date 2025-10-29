@@ -9,8 +9,9 @@ import ImportPropertiesButton from "./ImportPropertiesButton";
 
 const navLinks = [
   { to: "/", label: "Home" },
-  { to: "/allProperties", label: "Property List" },
+  { to: "/allProperties", label: "Buy" },
   { to: "/sell", label: "Sell" },
+  { to: "/allProperties?status=rent", label: "Rent" },
   { to: "/contact", label: "Contact" },
 ];
 
@@ -90,7 +91,7 @@ export default function Navbar() {
           <div className="flex items-center justify-center gap-2 cursor-pointer"
             onClick={() => navigate("/")}>
             <img src="/images/homeLogo.png" alt="Logo" className='w-12 h-12' />
-            <h2 className="text-xl text-[var(--text)] dark:text-[var(--primary)] font-bold font-[Montserrat] tracking-wide">NestNova</h2>
+            <h2 className="text-xl text-[var(--text)] dark:text-[var(--primary)] font-bold font-[Prata] tracking-wide">NestNova</h2>
           </div>
           {/* <ImportPropertiesButton fileUrl="/data/property.json" batchSize={100} /> */}
 
@@ -103,12 +104,12 @@ export default function Navbar() {
                     "relative font-[Quicksand] transition-colors duration-300",
                     "text-[var(--dark-text)] dark:text-white",
                     "before:content-[''] before:absolute before:left-1/2 before:-translate-x-1/2 before:-bottom-1 before:h-[2px] before:w-0 before:bg-[var(--dark-primary)] dark:before:bg-[var(--primary)] before:transition-all before:duration-300 hover:before:w-full",
-                    isActive(link.to)
-                      ? "text-orange-400 dark:text-[var(--primary)]"
-                      : "hover:text-[var(--dark-primary)] dark:hover:text-[var(--primary)]"
+                    
                   )}
                 >
-                  <Link to={link.to} className="py-2" aria-current={isActive(link.to) ? "page" : undefined}>
+                  <Link to={link.to} className={clsx("py-2",isActive(link.to)
+                      ? "text-orange-400"
+                      : "hover:text-[var(--dark-primary)] dark:hover:text-[var(--primary)]")} aria-current={isActive(link.to) ? "page" : undefined}>
                     {link.label}
                   </Link>
                 </li>
@@ -125,6 +126,7 @@ export default function Navbar() {
                 "shadow-[inset_0_2px_4px_rgba(255,255,255,0.3),inset_0_-2px_4px_rgba(0,0,0,0.5),0_6px_10px_rgba(0,0,0,0.3)]",
                 "duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--primary)] cursor-pointer"
               )}
+              onClick={() => navigate('/allproperties?favorite=true')}
             >
               <i className="bi bi-bookmark-fill text-amber-400 text-xl"></i>
             </button>
@@ -201,7 +203,6 @@ export default function Navbar() {
               </button>
             )}
 
-            {/* Mobile menu button */}
             <button
               className="md:hidden inline-flex items-center justify-center rounded p-2 outline-none focus-visible:ring-2 focus-visible:ring-[var(--primary)] text-[var(--dark-text)] dark:text-white"
               onClick={() => setOpen((v) => !v)}
@@ -214,7 +215,6 @@ export default function Navbar() {
         </div>
       </div>
 
-      {/* Mobile overlay */}
       <div
         className={clsx(
           "fixed inset-0 bg-black/40 z-40 transition-opacity duration-300 md:hidden",

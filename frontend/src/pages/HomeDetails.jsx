@@ -73,6 +73,12 @@ export default function HomeDetails() {
     const images = Array.isArray(rawImages) ? rawImages : [];
     const hasMain = Boolean(main_image);
     const hasGallery = images.length > 0;
+    let specials = [];
+    try {
+        specials = JSON.parse(property.specials || "[]").map(s => s.item || s);
+    } catch {
+        specials = [];
+    }
     const hasAnyImage = hasMain || hasGallery;
     const isPublished = published === true || published === 1 || published === "1";
 
@@ -92,7 +98,7 @@ export default function HomeDetails() {
                 <AllGallery images={images} setShowGallery={setShowGallery} />
             ) : (
                 <section className="max-w-6xl mx-auto mt-20 px-4 py-10 text-gray-800 dark:text-white">
-                    {/* Header */}
+
                     <div className="flex items-center justify-between mb-2">
                         <div className="mb-4">
                             <button
@@ -115,7 +121,7 @@ export default function HomeDetails() {
                hover:bg-[#e9e9e9] dark:hover:bg-[#444]
                transition-all duration-300 hover:shadow-md select-none
                shadow-[inset_0px_2px_4px_rgba(255,255,255,0.3),inset_0px_-2px_4px_rgba(0,0,0,0.5),0_6px_10px_rgba(0,0,0,0.3)]"
-                            onClick={() => toggleSaved(property.property_id)}
+
                         >
                             {saved ? (
                                 <i className="bi bi-bookmark-fill text-amber-400 text-xl transition-transform duration-200 group-hover:scale-110"></i>
@@ -123,6 +129,17 @@ export default function HomeDetails() {
                                 <i className="bi bi-bookmark text-gray-400 text-xl transition-transform duration-200 group-hover:scale-110"></i>
                             )}
                             <span className="font-medium text-base">{saved ? "Saved" : "Save"}</span>
+                        </button>
+                        <button
+                            onClick={() => toggleSaved(property.property_id)}
+                            aria-label={saved ? "Remove from saved" : "Save home"}
+                            className={`absolute top-3 right-3 grid place-items-center h-9 w-9 rounded-full bg-white/90 dark:bg-black/60 backdrop-blur border border-black/10 dark:border-white/10 shadow
+        ${saved ? "text-red-500" : "text-gray-700 dark:text-gray-200"}`}
+                        >
+
+                            <svg width="22" height="22" viewBox="0 0 24 24" fill={saved ? "currentColor" : "none"} stroke="currentColor" strokeWidth="1.6">
+                                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 0 0 0-7.78z" />
+                            </svg>
                         </button>
                     </div>
 
@@ -225,30 +242,27 @@ export default function HomeDetails() {
                         </div>
 
                         <div className="flex flex-col flex-1 gap-5">
-                            <div className="special">
-                                <h3 className="text-xl font-semibold mb-3 text-gray-800 dark:text-gray-100">Special Features</h3>
+                            {
+                                specials &&
+                                <div className="special">
+                                    <h3 className="text-xl font-semibold mb-3 text-gray-800 dark:text-gray-100">Special Features</h3>
 
-                                <div className="flex flex-wrap gap-2">
-                                    {[
-                                        "Eating Area - Breakfast Bar",
-                                        "Island",
-                                        "Custom Cabinetry",
-                                        "Solid Surface Counter",
-                                        "Updated Kitchen",
-                                    ].map((feature, i) => (
-                                        <div
-                                            key={i}
-                                            className="px-3 py-1 rounded-full text-sm font-medium
+                                    <div className="flex flex-wrap gap-2">
+                                        {specials.map((feature, i) => (
+                                            <div
+                                                key={i}
+                                                className="px-3 py-1 rounded-full text-sm font-medium
                       bg-[#f3f3f3] dark:bg-[#373737]
                       text-gray-700 dark:text-gray-200
                       hover:bg-gray-200 dark:hover:bg-[#4a4a4a]
                       transition-all duration-200 shadow-[inset_0px_2px_4px_rgba(255,255,255,0.3),inset_0px_-2px_4px_rgba(0,0,0,0.5),0_6px_10px_rgba(0,0,0,0.3)] cursor-default"
-                                        >
-                                            {feature}
-                                        </div>
-                                    ))}
+                                            >
+                                                {feature}
+                                            </div>
+                                        ))}
+                                    </div>
                                 </div>
-                            </div>
+                            }
 
                             <div>
                                 <h3 className="text-xl font-semibold mb-2">About {home_type}</h3>

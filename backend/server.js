@@ -493,9 +493,6 @@ app.get("/api/properties", async (req, res) => {
 
 
 
-
-
-// GET /api/properties/:id
 app.get("/api/properties/:id", async (req, res) => {
     try {
         const rawId = String(req.params.id || "").trim();
@@ -511,11 +508,9 @@ app.get("/api/properties/:id", async (req, res) => {
         const home = await findPropertyById(id);
         if (!home) return res.status(404).json({ message: "Property not found." });
 
-        // Parse JSON fields coming from FOR JSON
-        const images = safeParseJson(home.images, []);   // [{ id, url }, ...]
-        const agent = safeParseJson(home.agent, null);  // { agentId, agentName, agentCompany, userId, email, profileUrl }
+        const images = safeParseJson(home.images, []); 
+        const agent = safeParseJson(home.agent, null);
 
-        // Reassemble clean payload
         const { images: _img, agent: _ag, ...rest } = home;
 
         const property = {
@@ -763,6 +758,7 @@ app.post("/api/add/properties", requireAuth(), async (req, res) => {
         sqft,
 
         street,
+        city,
         zip_code,
         latitude,
         longitude,
@@ -791,14 +787,15 @@ app.post("/api/add/properties", requireAuth(), async (req, res) => {
     if (price == null || bedrooms == null || bathrooms == null || sqft == null) {
         return res.status(400).json({ error: "price, bedrooms, bathrooms, sqft are required" });
     }
-    if (!street || !zip_code) {
-        return res.status(400).json({ error: "street, zip_code are required" });
+    if (!street || !zip_code || !city) {
+        return res.status(400).json({ error: "city, street, zip_code are required" });
     }
 
     const payload = {
         agentId,
         property_type, home_type, status,
         price, bedrooms, bathrooms, sqft,
+        city,
         street, zip_code,
         latitude, longitude,
         year_built, acres, parking_spaces,
@@ -865,6 +862,78 @@ app.patch(
     }
 );
 
+const clamp = (s = "", max = 150) => (typeof s === "string" ? s.trim().slice(0, max) : null);
+const emailOk = (e) => /^\S+@\S+\.\S+$/.test(String(e || "").trim());
+
+app.post("/api/contact", async (req, res) => {
+    try {
+        const {
+            purpose = "",
+            persona = "",
+            name = "",
+            email = "",
+            org = "",
+            phone = "",
+            message = "",
+        } = req.body || {};
+
+        if (!name.trim() || !email.trim() || !message.trim()) {
+            return res.status(400).json({ error: "Name, email, and message are required." });
+        }
+
+        const pool = await getPool();
+        const request = pool.request();
+
+        request.input("purpose", sql.NVarChar(100), purpose || null);
+        request.input("persona", sql.NVarChar(100), persona || null);
+        request.input("name", sql.NVarChar(150), name.trim());
+        request.input("email", sql.NVarChar(150), email.trim());
+        request.input("org", sql.NVarChar(150), org || null);
+        request.input("phone", sql.NVarChar(50), phone || null);
+        request.input("message", sql.NVarChar(sql.MAX), message.trim());
+
+        const result = await request.query(`
+      INSERT INTO dbo.ContactMessages
+        (purpose, persona, name, email, org, phone, message, created_at)
+      OUTPUT INSERTED.id, INSERTED.created_at
+      VALUES (@purpose, @persona, @name, @email, @org, @phone, @message, SYSDATETIME());
+    `);
+
+        const inserted = result.recordset?.[0];
+
+        const adminEmail = "nestnova09@gmail.com";
+        const subject = `📬 New Contact Message from ${name}`;
+        const htmlMessage = `
+      <div style="font-family: Arial, sans-serif; line-height:1.5;">
+        <h2 style="color:#0d9488;">New Contact Message</h2>
+        <p><b>Purpose:</b> ${purpose || "N/A"}</p>
+        <p><b>Persona:</b> ${persona || "N/A"}</p>
+        <p><b>Name:</b> ${name}</p>
+        <p><b>Email:</b> ${email}</p>
+        <p><b>Organization:</b> ${org || "N/A"}</p>
+        <p><b>Phone:</b> ${phone || "N/A"}</p>
+        <p><b>Message:</b></p>
+        <blockquote style="border-left:3px solid #0d9488;padding-left:1em;color:#333;">
+          ${message.replace(/\n/g, "<br/>")}
+        </blockquote>
+        <hr>
+        <p style="font-size:0.9em;color:#666;">Sent via NestNova Contact Form</p>
+      </div>
+    `;
+
+        await processMail(adminEmail, subject, htmlMessage);
+
+        return res.status(201).json({
+            ok: true,
+            id: inserted?.id,
+            created_at: inserted?.created_at,
+            message: "Message sent successfully!",
+        });
+    } catch (err) {
+        console.error("❌ Contact API error:", err);
+        return res.status(500).json({ error: "Failed to submit message." });
+    }
+});
 
 
 

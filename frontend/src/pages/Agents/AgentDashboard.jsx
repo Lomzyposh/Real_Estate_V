@@ -15,7 +15,6 @@ import { useAgent } from "../../contexts/AgentContext";
 import ConfirmDialog from "../../components/ConfirmDialog";
 import toast from "react-hot-toast";
 
-/* --- shared endpoint: approve/unapprove --- */
 async function approvePropertyRequest(propertyId, approved = true) {
   const res = await fetch(`/api/properties/${propertyId}/approve`, {
     method: "PATCH",
@@ -25,13 +24,14 @@ async function approvePropertyRequest(propertyId, approved = true) {
   });
   const data = await res.json().catch(() => ({}));
   if (!res.ok) throw new Error(data?.message || "Failed to update approval");
-  return data; // { ok:true, property_id, agentApproved: 1/0 }
+  return data;
 }
 async function unapprovePropertyRequest(propertyId) {
   return approvePropertyRequest(propertyId, false);
 }
 
 export default function AgentDashboard() {
+
   const [active, setActive] = useState("dashboard");
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
@@ -39,7 +39,6 @@ export default function AgentDashboard() {
   const [filteredProperties, setFilteredProperties] = useState([]);
   const [approvingId, setApprovingId] = useState(null);
 
-  // confirm dialog state (used for both approve & unapprove)
   const [confirmVisible, setConfirmVisible] = useState(false);
   const [targetProperty, setTargetProperty] = useState(null);
 
@@ -51,7 +50,6 @@ export default function AgentDashboard() {
   const dashboardRef = useRef(null);
   const performanceRef = useRef(null);
 
-  // (kept) optional local modal (not used for approve/unapprove anymore)
   const [modalOpen, setModalOpen] = useState(false);
   const [modalProperty, setModalProperty] = useState(null);
   const [submitMessage, setSubmitMessage] = useState("");
@@ -281,11 +279,23 @@ export default function AgentDashboard() {
             </button>
 
             <button
-              className="w-full gap-3 px-4 py-2 rounded-lg transition-color select-none text-sm bg-indigo-900/30 hover:bg-red-900/10 text-gray-600 dark:text-gray-300 cursor-pointer"
               onClick={() => navigate("/")}
+              className="group w-full flex items-center justify-center gap-2 px-4 py-2.5
+             rounded-xl font-medium text-sm 
+             bg-gradient-to-r from-indigo-100 via-indigo-200 to-indigo-100
+             dark:from-indigo-950/40 dark:via-indigo-900/40 dark:to-indigo-950/40
+             text-indigo-700 dark:text-indigo-300
+             shadow-[inset_0_1px_0_rgba(255,255,255,0.2),0_4px_10px_rgba(0,0,0,0.1)]
+             hover:shadow-[0_6px_14px_rgba(0,0,0,0.15)]
+             hover:from-indigo-200 hover:to-indigo-100
+             dark:hover:from-indigo-900/60 dark:hover:to-indigo-950/60
+             hover:text-indigo-800 dark:hover:text-indigo-200
+             transition-all duration-300 ease-out"
             >
-              <i className="bi bi-arrow-left-circle-fill"></i> Main Page
+              <i className="bi bi-arrow-left-circle-fill text-lg group-hover:-translate-x-1 transition-transform duration-300"></i>
+              <span>Main Page</span>
             </button>
+
           </div>
         </aside>
 

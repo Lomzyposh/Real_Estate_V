@@ -42,9 +42,9 @@ const card = {
 };
 
 const Sell = () => {
+    ;
     return (
         <div>
-            {/* HERO */}
             <section className="relative w-full min-h-[90vh] flex items-center justify-center px-6 md:px-16 py-20 overflow-hidden">
                 <motion.img
                     src="/images/house1.jpg"
@@ -82,7 +82,6 @@ const Sell = () => {
                 </motion.div>
             </section>
 
-            {/* STEPS */}
             <section className="w-full py-20 px-6 md:px-16 bg-white dark:bg-[#252525]">
                 <motion.div
                     className="max-w-6xl mx-auto text-center mb-14"
@@ -114,7 +113,6 @@ const Sell = () => {
                     viewport={{ once: true, amount: 0.2 }}
                     variants={stagger}
                 >
-                    {/* 01 */}
                     <motion.div className="flex items-center gap-6" variants={card}>
                         <div className="text-6xl font-extrabold text-orange-400 opacity-100 dark:opacity-20">01</div>
                         <div>
@@ -125,7 +123,6 @@ const Sell = () => {
                         </div>
                     </motion.div>
 
-                    {/* 02 */}
                     <motion.div className="flex items-center gap-6" variants={card}>
                         <div className="text-6xl font-extrabold text-orange-400 opacity-100 dark:opacity-20">02</div>
                         <div>
@@ -136,7 +133,6 @@ const Sell = () => {
                         </div>
                     </motion.div>
 
-                    {/* 03 */}
                     <motion.div className="flex items-center gap-6" variants={card}>
                         <div className="text-6xl font-extrabold text-orange-400 opacity-100 dark:opacity-20">03</div>
                         <div>
@@ -147,7 +143,6 @@ const Sell = () => {
                         </div>
                     </motion.div>
 
-                    {/* 04 */}
                     <motion.div className="flex items-center gap-6" variants={card}>
                         <div className="text-6xl font-extrabold text-orange-400 opacity-100 dark:opacity-20">04</div>
                         <div>
@@ -158,7 +153,6 @@ const Sell = () => {
                         </div>
                     </motion.div>
 
-                    {/* 05 */}
                     <motion.div className="flex items-center gap-6" variants={card}>
                         <div className="text-6xl font-extrabold text-orange-400 opacity-100 dark:opacity-20">05</div>
                         <div>
@@ -171,7 +165,6 @@ const Sell = () => {
                 </motion.div>
             </section>
 
-            {/* RESOURCES */}
             <section className="flex flex-col justify-center items-center p-10 bg-[#4caf4f5c] dark:bg-[#25252577]">
                 <motion.div
                     initial="hidden"

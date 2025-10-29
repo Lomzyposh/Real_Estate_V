@@ -1,4 +1,3 @@
-// src/components/ImportPropertiesButton.jsx
 import React, { useState } from "react";
 
 const chunk = (arr, size) => {
@@ -8,7 +7,7 @@ const chunk = (arr, size) => {
 };
 
 export default function ImportPropertiesButton({ fileUrl = "/data/property.json", batchSize = 100 }) {
-    const [status, setStatus] = useState("idle");         // idle | loading | done | error
+    const [status, setStatus] = useState("idle");
     const [message, setMessage] = useState("");
     const [progress, setProgress] = useState({ total: 0, done: 0 });
     const [results, setResults] = useState(null);
@@ -20,18 +19,15 @@ export default function ImportPropertiesButton({ fileUrl = "/data/property.json"
         setProgress({ total: 0, done: 0 });
 
         try {
-            // 1) Fetch the JSON from public/
             const resp = await fetch(fileUrl, { cache: "no-store" });
             if (!resp.ok) throw new Error(`Failed to fetch ${fileUrl}: ${resp.status}`);
             const data = await resp.json();
 
-            // Your endpoint expects an array
             const list = Array.isArray(data) ? data : (Array.isArray(data?.properties) ? data.properties : []);
             if (!Array.isArray(list) || list.length === 0) {
                 throw new Error("JSON must be a non-empty array (or { properties: [...] }).");
             }
 
-            // 2) Batch POST to avoid huge payloads/timeouts
             const batches = chunk(list, batchSize);
             setProgress({ total: batches.length, done: 0 });
 

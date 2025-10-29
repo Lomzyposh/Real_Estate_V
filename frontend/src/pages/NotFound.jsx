@@ -2,7 +2,10 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 
+
 const NotFound = () => {
+  ;
+
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gray-50 dark:bg-[#0b1220] text-center px-6">
       <motion.div
@@ -15,7 +18,7 @@ const NotFound = () => {
         <img
           src="https://cdn.dribbble.com/users/285475/screenshots/2083086/dribbble_1.gif"
           alt="Not Found"
-          className="mx-auto w-72 h-72 object-contain mb-6"
+          className="mx-auto w-72 h-72 object-contain brightness-75 mb-6 rounded-full"
         />
 
         {/* Title */}
