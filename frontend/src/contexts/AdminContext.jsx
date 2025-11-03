@@ -1,20 +1,7 @@
-// src/contexts/AdminContext.jsx
 import React, { createContext, useContext, useEffect, useMemo, useState } from "react";
 import { useAuth } from "./AuthContext";
 import { useLoader } from "./LoaderContext";
 
-/**
- * AdminContext centralizes platform-wide datasets:
- * - users (all), agents (all), properties (all)
- * It exposes loading state and small helpers.
- *
- * Endpoints expected (adjust to your server.js):
- *  GET /api/admin/users
- *  GET /api/admin/agents
- *  GET /api/admin/properties
- *
- * All requests use `credentials: 'include'` to support cookie sessions.
- */
 
 const AdminContext = createContext(null);
 
@@ -102,7 +89,7 @@ export function AdminProvider({ children }) {
 
         const prev = properties[idx]?.isPublished === true;
         const next = typeof desired === "boolean" ? desired : !prev;
-    
+
         setProperties((list) =>
             list.map((p) =>
                 String(p.property_id) === String(propertyId) ? { ...p, isPublished: next } : p

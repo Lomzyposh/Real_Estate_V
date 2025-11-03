@@ -13,7 +13,6 @@ import { useAdmin } from "../../contexts/AdminContext";
 import ConfirmDialog from "../../components/ConfirmDialog";
 import toast from "react-hot-toast";
 
-/* Fallback request helper (used by confirm action if you don't want to rely on context) */
 async function togglePublishedRequest(propertyId, published) {
   const res = await fetch(`/api/admin/properties/${propertyId}/published`, {
     method: "PATCH",
@@ -23,7 +22,7 @@ async function togglePublishedRequest(propertyId, published) {
   });
   const data = await res.json().catch(() => ({}));
   if (!res.ok) throw new Error(data?.error || "Failed to update publish state");
-  return data; // return updated property row
+  return data;
 }
 
 export default function AdminDashboard() {
@@ -77,7 +76,6 @@ export default function AdminDashboard() {
     setSidebarOpen(false);
   };
 
-  // Scroll spy
   useEffect(() => {
     const main = mainRef.current;
     if (!main) return;
@@ -105,21 +103,21 @@ export default function AdminDashboard() {
 
   return (
     <RequireAdmin>
-      <div className="flex min-h-screen bg-[#f9f9ff] dark:bg-[#0f111a] transition-colors duration-300">
+      <div className="flex min-h-screen bg-[#f9f9ff] dark:bg-[#1e1e1e] transition-colors duration-300">
         <div className="lg:hidden fixed top-0 left-0 right-0 z-40 bg-white/90 dark:bg-[#1a1d29]/90 backdrop-blur border-b border-gray-100 dark:border-gray-800 px-4 py-3 flex items-center justify-between">
           <button onClick={() => setSidebarOpen((s) => !s)} className="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800">
             <FiMenu className="text-[#252525] dark:text-white" />
           </button>
           <div onClick={() => navigate("/")} className="flex items-center gap-2 cursor-pointer">
             <img src="/images/homeLogo.png" alt="Logo" className="w-12 h-12" />
-            <h2 className="text-xl dark:text-[var(--primary)] font-bold font-[Prata] tracking-wide">NestNova</h2>
+            <h2 className="text-xl text-[var(--primary)] font-[lora] tracking-wide">NestNova</h2>
           </div>
           <div className="w-8" />
         </div>
 
         <aside
           className={clsx(
-            "fixed top-0 left-0 z-50 h-screen w-64 bg-white dark:bg-[#1a1d29] border-r border-gray-100 dark:border-gray-800 shadow-sm p-5 flex flex-col justify-between transition-transform duration-300",
+            "fixed top-0 left-0 z-50 h-screen w-64 bg-white dark:bg-[#252525] border-r border-gray-100 dark:border-gray-800 shadow-sm p-5 flex flex-col justify-between transition-transform duration-300",
             sidebarOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"
           )}
         >
@@ -147,14 +145,14 @@ export default function AdminDashboard() {
               className="group w-full flex items-center justify-center gap-2 px-4 py-2.5
              rounded-xl font-medium text-sm 
              bg-gradient-to-r from-indigo-100 via-indigo-200 to-indigo-100
-             dark:from-indigo-950/40 dark:via-indigo-900/40 dark:to-indigo-950/40
-             text-indigo-700 dark:text-indigo-300
+             dark:from-[#1e1e1e] dark:via-[#252525] dark:to-[#1e1e1e]
+             text-green-700 dark:text-green-300
              shadow-[inset_0_1px_0_rgba(255,255,255,0.2),0_4px_10px_rgba(0,0,0,0.1)]
              hover:shadow-[0_6px_14px_rgba(0,0,0,0.15)]
              hover:from-indigo-200 hover:to-indigo-100
-             dark:hover:from-indigo-900/60 dark:hover:to-indigo-950/60
+             dark:hover:from-[#252525] dark:hover:to-[#1e1e1e]
              hover:text-indigo-800 dark:hover:text-indigo-200
-             transition-all duration-300 ease-out"
+             transition-all duration-300 ease-out cursor-pointer"
             >
               <i className="bi bi-arrow-left-circle-fill text-lg group-hover:-translate-x-1 transition-transform duration-300"></i>
               <span>Main Page</span>
@@ -163,7 +161,6 @@ export default function AdminDashboard() {
           </div>
         </aside>
 
-        {/* Main content */}
         <main
           ref={mainRef}
           className="flex-1 p-4 sm:p-8 text-gray-700 dark:text-gray-200 transition-colors lg:ml-64 pt-16 lg:pt-0"
@@ -177,7 +174,6 @@ export default function AdminDashboard() {
             </div>
           </section>
 
-          {/* Properties */}
           <section id="properties" ref={propertiesRef} className="mt-8">
             <StickyTitle title="Properties" subtitle="All listings across the platform" />
             <div className="p-4 sm:p-6">
@@ -191,13 +187,12 @@ export default function AdminDashboard() {
                 <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
                   {properties.map((p) => {
                     const id = propertyId(p);
-                    // 👉 approved state mirrors PUBLISHED
                     const approved =
                       p.published === true || p.published === 1 || p.published === "1";
                     const cover = p.main_image || p.images?.[0]?.url;
 
                     return (
-                      <div key={id} className="rounded-xl overflow-hidden border border-gray-200 dark:border-gray-800 bg-white/70 dark:bg-[#121426]/70 flex flex-col">
+                      <div key={id} className="rounded-xl overflow-hidden border border-gray-200 dark:border-gray-800 bg-white/70 dark:bg-[#252525]/70 flex flex-col">
                         <div className="h-40 sm:h-44 bg-gray-100 dark:bg-gray-800 overflow-hidden">
                           {cover ? (
                             <img src={cover} alt="Property" className="w-full h-full object-cover" />
@@ -231,12 +226,11 @@ export default function AdminDashboard() {
                           <div className="mt-auto grid grid-cols-2 gap-2">
                             <button
                               onClick={() => navigate(`/details/${id}`)}
-                              className="px-3 py-2 rounded-lg text-sm border border-indigo-200 dark:border-indigo-800 hover:bg-indigo-50 dark:hover:bg-indigo-900/30"
+                              className="px-3 py-2 rounded-lg text-sm border border-indigo-200 dark:border-green-800 hover:bg-indigo-50 dark:hover:bg-indigo-900/30"
                             >
                               View
                             </button>
 
-                            {/* Approve/Unpublish driven by `published` */}
                             <button
                               onClick={() => {
                                 setTargetProperty(p);
@@ -247,7 +241,7 @@ export default function AdminDashboard() {
                                 "px-3 py-2 rounded-lg text-sm font-medium border transition-colors",
                                 approved
                                   ? "border-red-200 dark:border-red-800 hover:bg-red-50 dark:hover:bg-red-900/30"
-                                  : "bg-indigo-50 text-indigo-700 border-indigo-200 hover:bg-indigo-100 dark:bg-indigo-900/30 dark:text-indigo-300 dark:border-indigo-800 dark:hover:bg-indigo-900/50",
+                                  : "bg-indigo-50 text-green-700 border-indigo-200 hover:bg-indigo-100 dark:bg-[#1e1e1e] dark:text-indigo-300 dark:border-[#252525] dark:hover:bg-[#1e1e1e]",
                                 busyId === id && "opacity-60 cursor-not-allowed"
                               )}
                             >
@@ -284,7 +278,6 @@ export default function AdminDashboard() {
             setConfirmVisible(false);
 
             try {
-              // Use context action if provided; fall back to direct request helper
               if (typeof togglePublished === "function") {
                 await togglePublished(id, nextPublished);
               } else {
@@ -309,7 +302,7 @@ export default function AdminDashboard() {
 /* ---------- Small UI helpers ---------- */
 function StickyTitle({ title, subtitle }) {
   return (
-    <div className="sticky top-0 z-10 px-4 sm:px-6 py-4 bg-white/80 dark:bg-[#151826]/80 border-b border-gray-100 dark:border-gray-800 backdrop-blur rounded-t-2xl">
+    <div className="sticky top-0 z-10 px-4 sm:px-6 py-4 bg-white/80 dark:bg-[#252525]/80 border-b border-gray-100 dark:border-gray-800 backdrop-blur rounded-t-2xl">
       <h2 className="text-lg font-semibold">{title}</h2>
       <p className="text-sm text-gray-500 dark:text-gray-300">{subtitle}</p>
     </div>
@@ -317,7 +310,7 @@ function StickyTitle({ title, subtitle }) {
 }
 function KPI({ title, value }) {
   return (
-    <div className="rounded-xl border border-gray-200 dark:border-gray-800 p-5 bg-white/70 dark:bg-[#121426]/70">
+    <div className="rounded-xl border border-gray-200 dark:border-gray-800 p-5 bg-white/70 dark:bg-[#252525]/70">
       <div className="text-sm text-gray-600 dark:text-gray-200">{title}</div>
       <div className="text-3xl font-bold mt-1 text-gray-900 dark:text-white">{value}</div>
     </div>
@@ -330,8 +323,8 @@ function SideItem({ id, active, onClick, icon, label }) {
       className={clsx(
         "flex items-center gap-3 px-4 py-2.5 rounded-lg transition-colors select-none",
         active === id
-          ? "bg-indigo-100 text-indigo-700 dark:bg-indigo-900/50 dark:text-indigo-300 font-medium"
-          : "hover:bg-indigo-50 dark:hover:bg-indigo-900/30"
+          ? "bg-indigo-100 text-green-700 dark:bg-[#1e1e1e] dark:text-green-300 font-medium"
+          : "hover:bg-indigo-50 dark:hover:bg-[#313131]"
       )}
     >
       {icon} {label}

@@ -9,7 +9,7 @@ import { useAuth } from '../../contexts/AuthContext';
 const SignUp = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const { signup } = useAuth();
+    const { signup, checkStatus } = useAuth();
     const [confirmPassword, setConfirmPassword] = useState('');
     const [errorMsg, setErrorMsg] = useState('');
     const [strength, setStrength] = useState(0);
@@ -61,6 +61,7 @@ const SignUp = () => {
                 setErrorMsg('Signup failed. Email may already be in use.');
                 return;
             }
+            await checkStatus();
             navigate('/');
         } catch (err) {
             setErrorMsg('An error occurred. Please try again.');

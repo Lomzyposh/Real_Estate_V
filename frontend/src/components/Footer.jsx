@@ -1,4 +1,3 @@
-// components/Footer.jsx
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import { FaFacebookF, FaInstagram, FaLinkedinIn, FaXTwitter } from "react-icons/fa6";
@@ -10,10 +9,10 @@ export default function Footer() {
 
     if (hideNav) return null;
     return (
-        <footer className="relative bg-gray-50 dark:bg-[#0e111d] border-t border-gray-200 dark:border-gray-800">
+        <footer className="relative bg-gray-50 dark:bg-[#1e1e1e]">
             <svg
                 aria-hidden="true"
-                className="pointer-events-none absolute inset-0 h-full w-full opacity-[0.06] dark:opacity-[0.12]"
+                className="pointer-events-none absolute inset-0 h-full w-full opacity-[0.06] dark:opacity-[0.32]"
                 viewBox="0 0 1440 400"
                 preserveAspectRatio="none"
             >
@@ -28,7 +27,7 @@ export default function Footer() {
                     <div className="space-y-5">
                         <Link to="/" className="inline-flex items-center gap-2">
                             <img src="/images/homeLogo.png" alt="NestNova" className="h-8 w-8 rounded-md" />
-                            <span className="text-2xl font-extrabold font-[Prata] tracking-tight text-gray-900 dark:text-gray-100">
+                            <span className="text-2xl font-extrabold font-[Prata] tracking-tight text-[var(--primary)]">
                                 NestNova
                             </span>
                         </Link>
@@ -94,13 +93,12 @@ export default function Footer() {
                 </div>
             </div>
 
-            {/* Bottom accent bar */}
             <div className="relative">
                 <div className="h-px bg-gradient-to-r from-transparent via-gray-200 dark:via-gray-800 to-transparent" />
                 <div className="mx-auto max-w-7xl px-4 sm:px-6 py-4 text-center text-xs text-gray-600 dark:text-gray-400">
                     © {new Date().getFullYear()} NestNova. All rights reserved.
                 </div>
-                <div className="h-1 w-full bg-gradient-to-r from-amber-400 via-amber-500 to-amber-400/70 opacity-70" />
+                {/* <div className="h-1 w-full bg-gradient-to-r from-amber-400 via-amber-500 to-amber-400/70 opacity-70" /> */}
             </div>
         </footer>
     );

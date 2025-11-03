@@ -135,7 +135,6 @@ export function AgentComboBox({ agents = [], value, onChange, loading }) {
                     afterLeave={() => setQuery("")}
                 >
                     <Combobox.Options
-                        // Important: z-50 + max height + overflow for scroll
                         className="absolute z-50 mt-2 w-full overflow-y-auto overscroll-contain
                        rounded-xl border border-black/10 dark:border-white/15
                        bg-white dark:bg-zinc-900 py-1 shadow-xl focus:outline-none

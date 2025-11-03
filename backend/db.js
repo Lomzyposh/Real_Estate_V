@@ -25,7 +25,7 @@ pool.on('error', err => {
 
 
 export async function getPool() {
-  await poolConnect;    // ensures a single connect() happens
+  await poolConnect;
   return pool;
 }
 
@@ -187,7 +187,6 @@ export async function upsertProperty(tx, item, companyId, isDemo = false) {
 
 
 export async function replaceChildArrays(tx, propertyId, item) {
-  // 1) Clear child tables (leave Approvals alone)
   await tx.request().input('pid', sql.Int, propertyId).query(`
     DELETE FROM dbo.PropertyGalleryImages     WHERE property_id = @pid;
     DELETE FROM dbo.PropertyParkFeatures      WHERE property_id = @pid;
@@ -198,7 +197,6 @@ export async function replaceChildArrays(tx, propertyId, item) {
     DELETE FROM dbo.NearbySchools             WHERE property_id = @pid;
   `);
 
-  // 2) Ensure an Approvals row exists (insert if missing)
   const agentApproved =
     (item?.approvals?.adminApproved ?? item?.adminApproved ?? 0) ? 1 : 0;
 
@@ -212,7 +210,6 @@ export async function replaceChildArrays(tx, propertyId, item) {
         VALUES (@pid, @adm);
     `);
 
-  // 3) Re-insert children
   const images   = item.media?.galleryImages || [];
   const parks    = item.features?.parkFeatures || [];
   const specials = item.special || [];
@@ -550,7 +547,6 @@ export async function addSaved(userId, propertyId) {
 export async function getAgentProperties(userId) {
   const pool = await getPool();
 
-  // 1) Find agentId for this user
   const agentRes = await pool.request()
     .input("uid", sql.VarChar(32), userId)
     .query(`
@@ -698,7 +694,6 @@ export async function insertPropertyWithImages(obj = {}, galleryUrls = [], appro
     req.input("sewer", sql.NVarChar(100), toStrOrNull(sewer));
     req.input("water", sql.NVarChar(100), toStrOrNull(water));
 
-    // numbers
     req.input("price", sql.Decimal(18, 2), toNum(price));
     req.input("bedrooms", sql.Int, toNum(bedrooms));
     req.input("bathrooms", sql.Int, toNum(bathrooms));
@@ -708,14 +703,12 @@ export async function insertPropertyWithImages(obj = {}, galleryUrls = [], appro
     req.input("year_built", sql.Int, toNum(year_built));
     req.input("acres", sql.Decimal(10, 2), toNum(acres));
     req.input("parking_spaces", sql.Int, toNum(parking_spaces));
-
-    // bits
+  
     const hoaHasBit = toBit(!!hoa_has);
     req.input("hoa_has", sql.Bit, hoaHasBit);
     req.input("hoa_fee", sql.Decimal(10, 2), hoaHasBit ? toNum(hoa_fee) : null);
     req.input("is_demo", sql.Bit, toBit(!!is_demo));
 
-    // 1) Insert property
     const insertProp = await req.query(`
       INSERT INTO dbo.Properties
 (
@@ -752,7 +745,6 @@ VALUES
 
     const propertyId = createdProp.property_id || createdProp.id;
 
-    // 2) Insert gallery images
     if (propertyId && Array.isArray(galleryUrls) && galleryUrls.length > 0) {
       for (const url of galleryUrls) {
         if (!url) continue;
@@ -766,7 +758,6 @@ VALUES
       }
     }
 
-    // 3) Insert/Upsert Approvals (optional)
     if (propertyId && approval) {
       const reqAp = new sql.Request(tx);
       reqAp.input("pid", sql.Int, propertyId);

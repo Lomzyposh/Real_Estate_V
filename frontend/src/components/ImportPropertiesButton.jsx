@@ -41,10 +41,8 @@ export default function ImportPropertiesButton({ fileUrl = "/data/property.json"
                     body: JSON.stringify(batches[i]),
                 });
 
-                // server returns: { count, results: [...] }
                 const out = await res.json();
                 if (!res.ok) {
-                    // capture partial error but continue / or break if you prefer
                     allResults.push({ error: true, batch: i + 1, detail: out });
                 } else {
                     allResults.push(out);

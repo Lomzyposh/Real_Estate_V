@@ -1,5 +1,4 @@
-// src/pages/Contact.jsx
-import React, { useState, Children, cloneElement, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { useAuth } from "../contexts/AuthContext";
 import toast from "react-hot-toast";
@@ -27,9 +26,7 @@ export default function Contact() {
     const set = (k, v) => setForm((f) => ({ ...f, [k]: v }));
 
     useEffect(() => {
-        if (user?.email) {
-            setForm((prev) => ({ ...prev, email: user.email }));
-        }
+        if (user?.email) setForm((prev) => ({ ...prev, email: user.email }));
     }, [user]);
 
     const validate = () => {
@@ -67,10 +64,8 @@ export default function Contact() {
         }
     };
 
-
-
     return (
-        <main className="min-h-screen mt-20 bg-[#F4F0EC] dark:bg-[#0e1116]">
+        <main className="min-h-screen mt-20 bg-[#F4F0EC] dark:bg-[#1e1e1e]">
             <section className="mx-auto max-w-6xl px-4 sm:px-6 pt-14 pb-8">
                 <h1 className="text-4xl font-[Prata] tracking-tight text-emerald-900 dark:text-emerald-200">
                     Let’s Get In Touch
@@ -85,10 +80,10 @@ export default function Contact() {
                 <hr className="mt-10 border-emerald-900/20 dark:border-emerald-100/10" />
             </section>
 
+            {/* ✅ Always animates in (no whileInView race) */}
             <motion.section
                 initial={{ opacity: 0, y: 24 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
+                animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5 }}
                 className="mx-auto max-w-6xl px-4 sm:px-6 pb-16"
             >
@@ -98,14 +93,17 @@ export default function Contact() {
 
                 <form
                     onSubmit={submit}
-                    className="mt-6 rounded-2xl dark:border-emerald-100/10 bg-white/70 dark:bg-[#0f1622]/60 backdrop-blur p-4 sm:p-6"
+                    className="mt-6 rounded-2xl border border-emerald-900/10 dark:border-emerald-100/10 bg-white/70 dark:bg-[#252525]/60 backdrop-blur p-4 sm:p-6"
                 >
                     <div className="grid gap-4 sm:grid-cols-2">
                         <Field label="Inquiry Purpose*" error={errors.purpose} icon="compass">
                             <select
                                 value={form.purpose}
                                 onChange={(e) => set("purpose", e.target.value)}
-                                className="nv-input w-full bg-[#fff] dark:bg-[#0f1622] rounded dark:text-white"
+                                className="w-full rounded-lg border outline-none text-sm pr-3
+                           border-emerald-900/20 focus:border-emerald-900/40 focus:ring-2 focus:ring-emerald-900/10
+                           bg-white/90 text-emerald-900 placeholder:text-emerald-900/50
+                           dark:bg-[#252525] dark:text-emerald-100 dark:border-emerald-100/15 dark:focus:ring-white/10"
                             >
                                 <option value="">Choose one option…</option>
                                 {PURPOSES.map((p) => (
@@ -120,7 +118,10 @@ export default function Contact() {
                             <select
                                 value={form.persona}
                                 onChange={(e) => set("persona", e.target.value)}
-                                className="nv-input w-full bg-[#fff] dark:bg-[#0f1622] rounded dark:text-white"
+                                className="w-full rounded-lg border outline-none text-sm pr-3
+                           border-emerald-900/20 focus:border-emerald-900/40 focus:ring-2 focus:ring-emerald-900/10
+                           bg-white/90 text-emerald-900 placeholder:text-emerald-900/50
+                           dark:bg-[#252525] dark:text-emerald-100 dark:border-emerald-100/15 dark:focus:ring-white/10"
                             >
                                 <option value="">Choose one option…</option>
                                 {PERSONAS.map((p) => (
@@ -139,7 +140,10 @@ export default function Contact() {
                                 placeholder="Enter your full name…"
                                 value={form.name}
                                 onChange={(e) => set("name", e.target.value)}
-                                className="nv-input w-full bg-[#fff] dark:bg-[#0f1622] rounded dark:text-white"
+                                className="w-full rounded-lg border outline-none text-sm pr-3 h-11
+                           border-emerald-900/20 focus:border-emerald-900/40 focus:ring-2 focus:ring-emerald-900/10
+                           bg-white/90 text-emerald-900 placeholder:text-emerald-900/50
+                           dark:bg-[#252525] dark:text-emerald-100 dark:border-emerald-100/15 dark:focus:ring-white/10"
                             />
                         </Field>
 
@@ -149,7 +153,10 @@ export default function Contact() {
                                 placeholder="Enter your organization…"
                                 value={form.org}
                                 onChange={(e) => set("org", e.target.value)}
-                                className="nv-input w-full bg-[#fff] dark:bg-[#0f1622] rounded dark:text-white"
+                                className="w-full rounded-lg border outline-none text-sm pr-3 h-11
+                           border-emerald-900/20 focus:border-emerald-900/40 focus:ring-2 focus:ring-emerald-900/10
+                           bg-white/90 text-emerald-900 placeholder:text-emerald-900/50
+                           dark:bg-[#252525] dark:text-emerald-100 dark:border-emerald-100/15 dark:focus:ring-white/10"
                             />
                         </Field>
                     </div>
@@ -161,7 +168,10 @@ export default function Contact() {
                                 placeholder="Enter your email address…"
                                 value={form.email}
                                 onChange={(e) => set("email", e.target.value)}
-                                className="nv-input w-full bg-[#fff] dark:bg-[#0f1622] rounded dark:text-white"
+                                className="w-full rounded-lg border outline-none text-sm pr-3 h-11
+                           border-emerald-900/20 focus:border-emerald-900/40 focus:ring-2 focus:ring-emerald-900/10
+                           bg-white/90 text-emerald-900 placeholder:text-emerald-900/50
+                           dark:bg-[#252525] dark:text-emerald-100 dark:border-emerald-100/15 dark:focus:ring-white/10"
                             />
                         </Field>
 
@@ -171,7 +181,10 @@ export default function Contact() {
                                 placeholder="Enter your phone number…"
                                 value={form.phone}
                                 onChange={(e) => set("phone", e.target.value)}
-                                className="nv-input w-full bg-[#fff] dark:bg-[#0f1622] rounded dark:text-white"
+                                className="w-full rounded-lg border outline-none text-sm pr-3 h-11
+                           border-emerald-900/20 focus:border-emerald-900/40 focus:ring-2 focus:ring-emerald-900/10
+                           bg-white/90 text-emerald-900 placeholder:text-emerald-900/50
+                           dark:bg-[#252525] dark:text-emerald-100 dark:border-emerald-100/15 dark:focus:ring-white/10"
                             />
                         </Field>
                     </div>
@@ -183,7 +196,10 @@ export default function Contact() {
                                 placeholder="Enter your message here…"
                                 value={form.message}
                                 onChange={(e) => set("message", e.target.value)}
-                                className="nv-input w-full bg-[#fff] dark:bg-[#0f1622] rounded dark:text-white resize-y"
+                                className="w-full rounded-lg border outline-none text-sm pr-3 pt-3 resize-y
+                           border-emerald-900/20 focus:border-emerald-900/40 focus:ring-2 focus:ring-emerald-900/10
+                           bg-white/90 text-emerald-900 placeholder:text-emerald-900/50
+                           dark:bg-[#252525] dark:text-emerald-100 dark:border-emerald-100/15 dark:focus:ring-white/10"
                             />
                         </Field>
                     </div>
@@ -221,10 +237,11 @@ export default function Contact() {
     );
 }
 
+/* ---------- Bits ---------- */
 
 function InfoCard({ icon, title, lines = [] }) {
     return (
-        <div className="rounded-2xl border border-emerald-900/10 dark:border-emerald-100/10 bg-white/70 dark:bg-[#0f1622]/60 backdrop-blur p-4 sm:p-5">
+        <div className="rounded-2xl border border-emerald-900/10 dark:border-emerald-100/10 bg-white/70 dark:bg-[#252525]/60 backdrop-blur p-4 sm:p-5">
             <div className="flex items-start gap-3">
                 <div className="mt-1 text-emerald-900 dark:text-emerald-200">
                     <Icon name={icon} />
@@ -242,37 +259,31 @@ function InfoCard({ icon, title, lines = [] }) {
     );
 }
 
-
 function Field({ label, error, icon, children }) {
-    // get first valid child if any
     const arr = React.Children.toArray(children);
     const rawChild = arr[0];
-
     const isValid = React.isValidElement(rawChild);
-    const isNative =
-        isValid && typeof rawChild.type === "string"; // 'input' | 'select' | 'textarea'
+    const isNative = isValid && typeof rawChild.type === "string";
     const isTextarea = isNative && rawChild.type === "textarea";
 
-    // merge classes
-    const base = "nv-input w-full bg-[#fff] dark:bg-[#0f1622] rounded dark:text-white";
-    const merged = [
-        isValid ? rawChild.props.className : "",
-        base,
-        "pl-11",
-        isTextarea ? "pt-3" : "h-11",
-    ]
-        .filter(Boolean)
-        .join(" ");
+    // merge classes (avoid duplicating if the child already has base pieces)
+    const base = "w-full rounded-lg border outline-none text-sm pr-3";
+    const baseFocus =
+        "border-emerald-900/20 focus:border-emerald-900/40 focus:ring-2 focus:ring-emerald-900/10";
+    const baseTheme =
+        "bg-white/90 text-emerald-900 placeholder:text-emerald-900/50 dark:bg-[#252525] dark:text-emerald-100 dark:border-emerald-100/15 dark:focus:ring-white/10";
 
-    // only clone if valid element; otherwise render whatever came in
+    let merged = base + " " + baseFocus + " " + baseTheme + " pl-11 " + (isTextarea ? "pt-3" : "h-11");
+    if (isValid && rawChild.props.className) {
+        merged = [rawChild.props.className, merged].join(" ");
+    }
+
     const content = isValid ? React.cloneElement(rawChild, { className: merged }) : children;
 
     return (
         <label className="block">
             <div className="mb-1 flex items-center gap-2">
-                <span className="text-sm font-medium text-emerald-900 dark:text-emerald-100">
-                    {label}
-                </span>
+                <span className="text-sm font-medium text-emerald-900 dark:text-emerald-100">{label}</span>
             </div>
 
             <div className="relative">
@@ -291,7 +302,6 @@ function Field({ label, error, icon, children }) {
         </label>
     );
 }
-
 
 function Icon({ name }) {
     const common = "h-5 w-5";
@@ -370,11 +380,3 @@ function Icon({ name }) {
             return null;
     }
 }
-
-/* Tailwind helper:
-   Add this to your global CSS as utilities if you want:
-   .nv-input w-full bg-[#fff] dark:bg-[#0f1622] rounded dark:text-white { @apply w-full rounded-lg border outline-none text-sm pr-3
-               border-emerald-900/20 focus:border-emerald-900/40 focus:ring-2 focus:ring-emerald-900/10
-               bg-white/90 text-emerald-900 placeholder:text-emerald-900/50
-               dark:bg-[#0f172a] dark:text-emerald-100 dark:border-emerald-100/15 dark:focus:ring-white/10; }
-*/

@@ -7,7 +7,7 @@ import { TbStairs } from "react-icons/tb";
 import clsx from "clsx";
 import { useSaved } from "../contexts/SavedContext";
 import { useNavigate } from "react-router-dom";
-import { LazyMotion, domAnimation, MotionConfig, m } from "framer-motion"; // CHANGED
+import { LazyMotion, domAnimation, MotionConfig, m, useReducedMotion } from "framer-motion"; // CHANGED
 
 const formatMoney = (n = 0, currency = "USD") =>
     new Intl.NumberFormat(undefined, {
@@ -47,6 +47,8 @@ export default function PropertyCard({
     className = "",
     currency = "USD",
 }) {
+    const reduce = useReducedMotion();
+
     const {
         property_id,
         street,
@@ -71,21 +73,24 @@ export default function PropertyCard({
     return (
         <m.article
             variants={cardVariants}
-            initial="hidden"   // <—
-            animate="show"
+            initial={reduce ? false : "hidden"}
+            animate={reduce ? undefined : "show"}
             whileHover={{
                 y: -2,
                 scale: 1.01,
                 transition: { type: "spring", stiffness: 500, damping: 32 },
-            }}
+            }
+            }
             style={{ willChange: "transform, opacity", transform: "translateZ(0)" }} // CHANGED
-            className={clsx(
-                "rounded-2xl border border-slate-200/70 bg-white shadow-sm",
-                "dark:bg-slate-900 dark:border-slate-700/60",
-                // Avoid transition-all & transform transitions (let Framer own transform)
-                "overflow-hidden transition-shadow duration-200 hover:shadow-lg", // CHANGED
-                className
-            )}
+            className={
+                clsx(
+                    "rounded-2xl border border-slate-200/70 bg-white shadow-sm",
+                    "dark:bg-[#252525] dark:border-slate-700/60",
+                    // Avoid transition-all & transform transitions (let Framer own transform)
+                    "overflow-hidden transition-shadow duration-200 hover:shadow-lg", // CHANGED
+                    className
+                )
+            }
         >
             <div className="relative">
                 <img
@@ -121,9 +126,9 @@ export default function PropertyCard({
                     aria-label={saved ? "Remove from favorites" : "Save to favorites"}
                 >
                     {saved ? (
-                        <i className="bi bi-bookmark-fill text-amber-400 text-xl"></i>
+                        <i className="bi bi-bookmark text-green-500 text-xl" />
                     ) : (
-                        <i className="bi bi-bookmark text-gray-400 text-xl"></i>
+                        <i className="bi bi-bookmark text-gray-600 dark:text-gray-200 text-xl" />
                     )}
                 </button>
 
@@ -190,11 +195,12 @@ export default function PropertyCard({
                     )}
                 </div>
             </div>
-        </m.article>
+        </m.article >
     );
 }
 
 export function PropertyList({ properties = [], className = "" }) {
+    const reduce = useReducedMotion();
     if (!properties?.length) {
         return (
             <div className="rounded-2xl border border-dashed border-slate-300 p-8 text-center text-slate-500 dark:border-slate-700 dark:text-slate-300">
@@ -210,10 +216,10 @@ export function PropertyList({ properties = [], className = "" }) {
                 transition={{ type: "spring", stiffness: 360, damping: 30, mass: 0.8 }}
             >
                 <m.div
-                    variants={listVariants}
-                    initial="hidden"
-                    whileInView="show"
-                    viewport={{ once: true, amount: 0.2 }}
+                    initial={reduce ? false : "hidden"}
+                    animate={reduce ? "show" : undefined}
+                    whileInView={reduce ? undefined : "show"}
+                    viewport={reduce ? { once: true, amount: 0 } : { once: true, amount: 0.2 }}
                     className={clsx(
                         "grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4",
                         className

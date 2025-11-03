@@ -1,4 +1,3 @@
-// src/layouts/AgentDashboard.jsx
 import React, { useEffect, useMemo, useRef, useState, useCallback, useContext } from "react";
 import {
   ResponsiveContainer,
@@ -61,7 +60,6 @@ export default function AgentDashboard() {
     altAgentEmail: "",
   });
 
-  // map scroll targets once
   const refById = useMemo(
     () => ({ dashboard: dashboardRef, performance: performanceRef }),
     []
@@ -76,7 +74,6 @@ export default function AgentDashboard() {
     setSidebarOpen(false);
   };
 
-  // scroll spy
   useEffect(() => {
     const main = mainRef.current;
     if (!main) return;
@@ -98,7 +95,6 @@ export default function AgentDashboard() {
   const forSale = filteredProperties.filter((p) => /sale/i.test(p?.status || "")).length;
   const forRent = filteredProperties.filter((p) => /rent/i.test(p?.status || "")).length;
 
-  // (kept) optional local modal open/close
   const openReleaseModal = useCallback((property) => {
     setModalProperty(property);
     setForm({ reason: "", effectiveDate: "", handoverNotes: "", altAgentEmail: "" });
@@ -107,7 +103,6 @@ export default function AgentDashboard() {
   }, []);
   const closeModal = useCallback(() => { setModalOpen(false); setModalProperty(null); }, []);
 
-  // modal validation (kept local)
   const [errors, setErrors] = useState({});
   const [touched, setTouched] = useState({});
   const startOfToday = new Date(); startOfToday.setHours(0, 0, 0, 0);
@@ -140,9 +135,8 @@ export default function AgentDashboard() {
     setSubmitMessage("Your suggestion has been recorded locally (not submitted).");
   };
 
-  // charts
   const mockMonthly = [
-    { m: "Jan", v: 2 }, { m: "Feb", v: 3 }, { m: "Mar", v: 1 },
+    { m: "Jan", v: 8 }, { m: "Feb", v: 3 }, { m: "Mar", v: 1 },
     { m: "Apr", v: 4 }, { m: "May", v: 2 }, { m: "Jun", v: 5 },
   ];
   const rentCount = filteredProperties.filter(p => /rent/i.test(p?.status || "")).length;
@@ -155,7 +149,6 @@ export default function AgentDashboard() {
   ];
   const PIE_COLORS = ["#22C55E", "#6366F1", "#F59E0B"];
 
-  // single declaration of dark mode
   const isDark = theme === "dark";
   const axisTickColor = isDark ? "#E5E7EB" : "#374151";
   const gridStroke = isDark ? "rgba(148,163,184,0.25)" : "rgba(17,24,39,0.12)";
@@ -164,7 +157,6 @@ export default function AgentDashboard() {
   const tooltipText = isDark ? "#E5E7EB" : "#111827";
   const legendColor = isDark ? "#E5E7EB" : "#111827";
 
-  // optimistic approve
   const doApprove = async (id) => {
     setApprovingId(id);
     const prev = filteredProperties;
@@ -183,7 +175,6 @@ export default function AgentDashboard() {
     }
   };
 
-  // optimistic unapprove
   const doUnapprove = async (id) => {
     setApprovingId(id);
     const prev = filteredProperties;
@@ -204,7 +195,7 @@ export default function AgentDashboard() {
 
   return (
     <RequireAgent>
-      <div className="flex min-h-screen bg-[#f9f9ff] dark:bg-[#0f111a] transition-colors duration-300">
+      <div className="flex min-h-screen bg-[#f9f9ff] dark:bg-[#1e1e1e] transition-colors duration-300">
         {/* Mobile top bar */}
         <div className="lg:hidden fixed top-0 left-0 right-0 z-40 bg-white/90 dark:bg-[#1a1d29]/90 backdrop-blur border-b border-gray-100 dark:border-gray-800 px-4 py-3 flex items-center justify-between">
           <button onClick={() => setSidebarOpen((s) => !s)} className="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800" aria-label="Toggle sidebar">
@@ -220,7 +211,7 @@ export default function AgentDashboard() {
         {/* Sidebar */}
         <aside
           className={clsx(
-            "fixed top-0 left-0 z-50 h-screen w-64 bg-white dark:bg-[#1a1d29] border-r border-gray-100 dark:border-gray-800 shadow-sm p-5 flex flex-col justify-between transition-transform duration-300",
+            "fixed top-0 left-0 z-50 h-screen w-64 bg-white dark:bg-[#252525] border-r border-gray-100 dark:border-gray-800 shadow-sm p-5 flex flex-col justify-between transition-transform duration-300",
             "lg:translate-x-0",
             sidebarOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"
           )}
@@ -249,8 +240,8 @@ export default function AgentDashboard() {
                 className={clsx(
                   "flex items-center gap-3 px-4 py-2 rounded-lg transition-colors select-none",
                   active === "dashboard"
-                    ? "bg-indigo-100 text-indigo-700 dark:bg-indigo-900/50 dark:text-indigo-300 font-medium"
-                    : "hover:bg-indigo-50 dark:hover:bg-indigo-900/30"
+                    ? "bg-indigo-100 text-green-700 dark:bg-[#1e1e1e] dark:text-green-300 font-medium"
+                    : "hover:bg-indigo-50 dark:hover:bg-[#313131]"
                 )}
               >
                 <FiHome /> Dashboard
@@ -261,8 +252,8 @@ export default function AgentDashboard() {
                 className={clsx(
                   "flex items-center gap-3 px-4 py-2 rounded-lg transition-colors select-none",
                   active === "performance"
-                    ? "bg-indigo-100 text-indigo-700 dark:bg-indigo-900/50 dark:text-indigo-300 font-medium"
-                    : "hover:bg-indigo-50 dark:hover:bg-indigo-900/30"
+                    ? "bg-indigo-100 text-green-700 dark:bg-[#1e1e1e] dark:text-green-300 font-medium"
+                    : "hover:bg-indigo-50 dark:hover:bg-[#313131]"
                 )}
               >
                 <FiBarChart2 /> Performance
@@ -283,14 +274,14 @@ export default function AgentDashboard() {
               className="group w-full flex items-center justify-center gap-2 px-4 py-2.5
              rounded-xl font-medium text-sm 
              bg-gradient-to-r from-indigo-100 via-indigo-200 to-indigo-100
-             dark:from-indigo-950/40 dark:via-indigo-900/40 dark:to-indigo-950/40
-             text-indigo-700 dark:text-indigo-300
+             dark:from-[#1e1e1e] dark:via-[#252525] dark:to-[#1e1e1e]
+             text-green-700 dark:text-green-300
              shadow-[inset_0_1px_0_rgba(255,255,255,0.2),0_4px_10px_rgba(0,0,0,0.1)]
              hover:shadow-[0_6px_14px_rgba(0,0,0,0.15)]
              hover:from-indigo-200 hover:to-indigo-100
-             dark:hover:from-indigo-900/60 dark:hover:to-indigo-950/60
+             dark:hover:from-[#252525] dark:hover:to-[#1e1e1e]
              hover:text-indigo-800 dark:hover:text-indigo-200
-             transition-all duration-300 ease-out"
+             transition-all duration-300 ease-out cursor-pointer"
             >
               <i className="bi bi-arrow-left-circle-fill text-lg group-hover:-translate-x-1 transition-transform duration-300"></i>
               <span>Main Page</span>
@@ -308,28 +299,28 @@ export default function AgentDashboard() {
             "pt-16 lg:pt-0"
           )}
         >
-          {/* Dashboard */}
+
           <section
             id="dashboard"
             ref={dashboardRef}
-            className="mb-12 rounded-2xl border border-gray-200 dark:border-gray-800 bg-white/80 dark:bg-[#151826]/80 shadow-sm backdrop-blur scroll-mt-6"
+            className="mb-12 rounded-2xl border border-gray-200 dark:border-gray-800 bg-white/80 dark:bg-[#1e1e1e]/80 shadow-sm backdrop-blur scroll-mt-6"
             style={{ minHeight: "70vh" }}
           >
-            <div className="sticky top-0 z-10 px-4 sm:px-6 py-4 rounded-t-2xl bg-white/80 dark:bg-[#151826]/80 border-b border-gray-100 dark:border-gray-800 backdrop-blur">
+            <div className="sticky top-0 z-10 px-4 sm:px-6 py-4 rounded-t-2xl bg-white/80 dark:bg-[#1e1e1e]/80 border-b border-gray-100 dark:border-gray-800 backdrop-blur">
               <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">Dashboard</h2>
               <p className="text-sm text-gray-500 dark:text-gray-300">Your portfolio at a glance</p>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 p-4 sm:p-6">
-              <div className="rounded-xl border border-gray-200 dark:border-gray-800 p-5 bg-white/70 dark:bg-[#121426]/70">
+              <div className="rounded-xl border border-gray-200 dark:border-gray-800 p-5 bg-white/70 dark:bg-[#252525]/70">
                 <div className="text-sm text-gray-600 dark:text-gray-200">Total Properties</div>
                 <div className="text-3xl font-bold mt-1 text-gray-900 dark:text-white">{totalMine}</div>
               </div>
-              <div className="rounded-xl border border-gray-200 dark:border-gray-800 p-5 bg-white/70 dark:bg-[#121426]/70">
+              <div className="rounded-xl border border-gray-200 dark:border-gray-800 p-5 bg-white/70 dark:bg-[#252525]/70">
                 <div className="text-sm text-gray-600 dark:text-gray-200">For Sale</div>
                 <div className="text-3xl font-bold mt-1 text-gray-900 dark:text-white">{forSale}</div>
               </div>
-              <div className="rounded-xl border border-gray-200 dark:border-gray-800 p-5 bg-white/70 dark:bg-[#121426]/70">
+              <div className="rounded-xl border border-gray-200 dark:border-gray-800 p-5 bg-white/70 dark:bg-[#252525]/70">
                 <div className="text-sm text-gray-600 dark:text-gray-200">For Rent</div>
                 <div className="text-3xl font-bold mt-1 text-gray-900 dark:text-white">{forRent}</div>
               </div>
@@ -353,7 +344,7 @@ export default function AgentDashboard() {
                     return (
                       <div
                         key={id}
-                        className="rounded-xl overflow-hidden border border-gray-200 dark:border-gray-800 bg-white/70 dark:bg-[#121426]/70 flex flex-col"
+                        className="rounded-xl overflow-hidden border border-gray-200 dark:border-gray-800 bg-white/70 dark:bg-[#252525]/70 flex flex-col"
                       >
                         <div className="relative h-40 sm:h-44 bg-gray-100 dark:bg-gray-800 overflow-hidden">
                           {p.main_image || p.images?.[0]?.url ? (
@@ -388,8 +379,8 @@ export default function AgentDashboard() {
                                 disabled={approvingId === id}
                                 className={clsx(
                                   "px-2 py-1 rounded-md text-[11px] font-medium border transition-colors",
-                                  "bg-indigo-50 text-indigo-700 border-indigo-200 hover:bg-indigo-100",
-                                  "dark:bg-indigo-900 dark:text-indigo-300 dark:border-indigo-800 dark:hover:bg-indigo-900/50 cursor-pointer",
+                                  "bg-indigo-50 text-green-700 border-indigo-200 hover:bg-indigo-100",
+                                  "dark:bg-green-900 dark:text-indigo-300 dark:border-indigo-800 dark:hover:bg-indigo-900/50 cursor-pointer",
                                   approvingId === id && "opacity-60 cursor-not-allowed"
                                 )}
                                 title="Approve this property"
@@ -416,7 +407,7 @@ export default function AgentDashboard() {
                           <div className="mt-auto grid grid-cols-2 gap-2">
                             <button
                               onClick={() => navigate(`/details/${id}`)}
-                              className="text-center px-3 py-2 rounded-lg text-sm font-medium border border-indigo-200 dark:border-indigo-800 hover:bg-indigo-50 dark:hover:bg-indigo-900/30 transition-colors text-gray-900 dark:text-gray-100"
+                              className="text-center px-3 py-2 rounded-lg text-sm font-medium dark:bg-[#1e1e1e] hover:bg-indigo-50 dark:hover:bg-[#161616] transition-colors text-gray-900 dark:text-gray-100"
                             >
                               View
                             </button>
@@ -443,8 +434,8 @@ export default function AgentDashboard() {
                                 disabled={approvingId === id}
                                 className={clsx(
                                   "text-center px-3 py-2 rounded-lg text-sm font-medium border transition-colors",
-                                  "bg-indigo-50 text-indigo-700 border-indigo-200 hover:bg-indigo-100",
-                                  "dark:bg-indigo-900/30 dark:text-indigo-300 dark:border-indigo-800 dark:hover:bg-indigo-900/50",
+                                  "bg-indigo-50 text-green-700 border-indigo-200 hover:bg-indigo-100",
+                                  "dark:bg-transparent dark:text-green-300 dark:hover:bg-green-900/50",
                                   approvingId === id && "opacity-60 cursor-not-allowed"
                                 )}
                                 title="Approve this property"
@@ -465,21 +456,21 @@ export default function AgentDashboard() {
           <section
             id="performance"
             ref={performanceRef}
-            className="mb-12 rounded-2xl border border-gray-200 dark:border-gray-800 bg-white/80 dark:bg-[#151826]/80 shadow-sm backdrop-blur scroll-mt-6"
+            className="mb-12 rounded-2xl border border-gray-200 dark:border-gray-800 bg-white/80 dark:bg-[#252525]/80 shadow-sm backdrop-blur scroll-mt-6"
             style={{ minHeight: "60vh" }}
           >
-            <div className="sticky top-0 z-10 px-4 sm:px-6 py-4 rounded-t-2xl bg-white/80 dark:bg-[#151826]/80 border-b border-gray-100 dark:border-gray-800 backdrop-blur">
+            <div className="sticky top-0 z-10 px-4 sm:px-6 py-4 rounded-t-2xl bg-white/80 dark:bg-[#1e1e1e]/80 border-b border-gray-100 dark:border-gray-800 backdrop-blur">
               <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">Performance</h2>
               <p className="text-sm text-gray-500 dark:text-gray-300">Quick stats and activity trends</p>
             </div>
 
             <div className="p-4 sm:p-6 grid grid-cols-1 lg:grid-cols-3 gap-4">
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-4">
-                <div className="rounded-xl border border-gray-200 dark:border-gray-800 p-5 bg-white/70 dark:bg-[#121426]/70">
+                <div className="rounded-xl border border-gray-200 dark:border-gray-800 p-5 bg-white/70 dark:bg-[#252525]/70">
                   <div className="text-sm text-gray-600 dark:text-gray-200">Active Listings</div>
                   <div className="text-3xl font-bold mt-1 text-gray-900 dark:text-white">{filteredProperties.length}</div>
                 </div>
-                <div className="rounded-xl border border-gray-200 dark:border-gray-800 p-5 bg-white/70 dark:bg-[#121426]/70">
+                <div className="rounded-xl border border-gray-200 dark:border-gray-800 p-5 bg-white/70 dark:bg-[#252525]/70">
                   <div className="text-sm text-gray-600 dark:text-gray-200">Avg. Days on Market</div>
                   <div className="text-3xl font-bold mt-1 text-gray-900 dark:text-white">
                     {filteredProperties.length ? Math.max(7, Math.min(45, 12 + filteredProperties.length)) : 0}
@@ -488,7 +479,7 @@ export default function AgentDashboard() {
               </div>
 
               <div className="lg:col-span-2 grid grid-cols-1 xl:grid-cols-2 gap-4">
-                <div className="rounded-xl border border-gray-200 dark:border-gray-800 p-5 bg-white/70 dark:bg-[#121426]/70">
+                <div className="rounded-xl border border-gray-200 dark:border-gray-800 p-5 bg-white/70 dark:bg-[#252525]/70">
                   <div className="flex items-center justify-between mb-4">
                     <div className="text-sm text-gray-600 dark:text-gray-200">Monthly Activity</div>
                     <div className="text-xs text-gray-500 dark:text-gray-300">Listings updated / month</div>
@@ -504,13 +495,13 @@ export default function AgentDashboard() {
                           labelStyle={{ color: tooltipText }}
                           itemStyle={{ color: tooltipText }}
                         />
-                        <Bar dataKey="v" name="Updates" fill="#6366F1" radius={[6, 6, 0, 0]} />
+                        <Bar dataKey="v" name="Updates" fill="#4CAF50" radius={[6, 6, 0, 0]} />
                       </BarChart>
                     </ResponsiveContainer>
                   </div>
                 </div>
 
-                <div className="rounded-xl border border-gray-200 dark:border-gray-800 p-5 bg-white/70 dark:bg-[#121426]/70">
+                <div className="rounded-xl border border-gray-200 dark:border-gray-800 p-5 bg-white/70 dark:bg-[#252525]/70">
                   <div className="flex items-center justify-between mb-4">
                     <div className="text-sm text-gray-600 dark:text-gray-200">Listing Mix</div>
                     <div className="text-xs text-gray-500 dark:text-gray-300">By status</div>
@@ -557,7 +548,7 @@ export default function AgentDashboard() {
             onClick={(e) => { if (e.target === e.currentTarget) closeModal(); }}
           >
             <div className="absolute inset-0 bg-black/50 backdrop-blur-sm" />
-            <div className="relative w-full max-w-lg rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-[#121426] shadow-lg">
+            <div className="relative w-full max-w-lg rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-[#252525] shadow-lg">
               <div className="flex items-center justify-between p-4 sm:p-5 border-b border-gray-200 dark:border-gray-800">
                 <div>
                   <h3 className="text-base sm:text-lg font-semibold text-gray-900 dark:text-gray-100">Suggest Release of Agency</h3>

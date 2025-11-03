@@ -1,4 +1,3 @@
-// src/components/RequireAdmin.jsx
 import React from "react";
 import { useAuth } from "../contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
@@ -11,7 +10,6 @@ export default function RequireAdmin({ children }) {
     const isAdmin = /admin/i.test(String(role || ""));
 
     if (!user) {
-        // Not logged in
         return (
             <div className="min-h-[50vh] grid place-items-center text-center p-6">
                 <div>

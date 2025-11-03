@@ -1,4 +1,3 @@
-// src/components/PropertyQuickAdd.jsx
 import React, { useMemo, useRef, useState } from "react";
 import { useAdmin } from "../contexts/AdminContext";
 import { AgentComboBox } from "./AgentCombox";
@@ -12,7 +11,6 @@ function FieldError({ msg }) {
     return <p className="text-xs text-red-500">{msg}</p>;
 }
 
-/* ---------- Multi-upload helper you provided (kept) ---------- */
 export async function uploadImagesToServer(files, endpoint = "/api/uploads/images") {
     const fd = new FormData();
     [...files].forEach((f) => fd.append("files", f));
@@ -26,7 +24,7 @@ export async function uploadImagesToServer(files, endpoint = "/api/uploads/image
     const data = await res.json().catch(() => ({}));
     if (!res.ok) throw new Error(data?.message || "Upload failed");
 
-    return data.files || []; // [{url, public_id, ...}]
+    return data.files || [];
 }
 
 function InlineMultiUpload({ value = [], onChange, disabled }) {
@@ -164,7 +162,6 @@ export default function PropertyQuickAdd({ onCreated }) {
         });
     };
 
-    // keep images setter to also auto-fill main_image (first image) if empty
     const setImages = (imgs) => {
         setForm((f) => {
             const next = { ...f, images: imgs };
@@ -274,13 +271,13 @@ export default function PropertyQuickAdd({ onCreated }) {
                 } else {
                     const currentYear = new Date().getFullYear();
                     if (yb > currentYear) {
-                        alert(`Year built can’t be in the future (>${currentYear} `);
+                        toast.error(`Year built can’t be in the future (>${currentYear} `)
                         stepErrors.year_built = `Year built can’t be in the future (>${currentYear}).`;
                     }
-                    // Optional: basic lower bound
-                    // else if (yb < 1800) {
-                    //   stepErrors.year_built = "Year built looks too old. Please check.";
-                    // }
+                    else if (yb < 1800) {
+                        toast.error(`Year built looks too old. Please check.`);
+                        stepErrors.year_built = `Year built looks too old. Please check.`;
+                    }
                 }
             }
 
@@ -423,7 +420,7 @@ export default function PropertyQuickAdd({ onCreated }) {
                 }
             }}
             onKeyDown={onFormKeyDown}
-            className="w-full max-w-4xl mx-auto rounded-2xl p-8 md:p-10 shadow-xl bg-transparent backdrop-blur border dark:border-white/10"
+            className="w-full max-w-4xl mx-auto mb-30 rounded-2xl p-8 md:p-10 shadow-xl bg-transparent backdrop-blur border dark:border-white/10"
             id="addForm"
         >
             <header className="mb-10 text-center">

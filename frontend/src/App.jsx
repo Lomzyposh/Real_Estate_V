@@ -34,7 +34,8 @@ const App = () => {
         logo="/images/homeLogo.png"
       />
       <Navbar />
-      <Toaster position="top-center" reverseOrder={false} />
+      <Toaster position="bottom-center" reverseOrder={false} />
+
       <Routes>
         <Route path="/" element={<Home />} />
         <Route element={<AuthLayout />}>

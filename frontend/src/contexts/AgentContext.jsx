@@ -1,4 +1,3 @@
-// src/contexts/AgentContext.jsx
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { useAuth } from './AuthContext';
 

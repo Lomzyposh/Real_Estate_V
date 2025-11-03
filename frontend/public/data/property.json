@@ -1,15 +1,15 @@
 [
     {
-        "agentId": "agent001",
+        "agentId": "agent002",
         "basic": {
-            "id": 10,
+            "id": 15,
             "propertyType": "House",
             "homeType": "SingleFamily",
             "status": "For Sale",
-            "yearBuilt": 2005,
-            "price": 580000,
-            "sqrFt": 2950,
-            "acres": 0.28,
+            "yearBuilt": 2003,
+            "price": 720000,
+            "sqrFt": 2800,
+            "acres": 0.27,
             "floorCount": 2,
             "floorLevel": 0,
             "bedroom": 4,
@@ -17,165 +17,57 @@
             "parkingSpaces": 2
         },
         "location": {
-            "latitude": 41.8073,
-            "longitude": -87.6298,
-            "city": "Oak Lawn",
-            "state": "IL",
-            "ZipCode": "60453",
-            "street": "10320 S Kenton Ave"
+            "latitude": 34.0522,
+            "longitude": -118.2437,
+            "city": "Los Angeles",
+            "state": "CA",
+            "ZipCode": "90012",
+            "street": "1420 W 3rd St"
         },
         "media": {
-            "mainImage": "https://photos.zillowstatic.com/fp/8e1590d1d04900844a7c9d0033ee1419-cc_ft_1152.webp",
+            "mainImage": "https://photos.zillowstatic.com/fp/1a66e12af844880745dc157548bcd154-cc_ft_1152.webp",
             "galleryImages": [
-                "https://photos.zillowstatic.com/fp/a348543174af9f53f50d96af93deda2b-cc_ft_576.webp",
-                "https://photos.zillowstatic.com/fp/582d5823c99123be9391425845dfe9be-cc_ft_576.webp",
-                "https://photos.zillowstatic.com/fp/64165e16b25a222b3c75e0134b5adc46-cc_ft_576.webp",
-                "https://photos.zillowstatic.com/fp/4a426d60e2e1b506d7820d3c0f2376d6-cc_ft_1152.webp",
-                "https://photos.zillowstatic.com/fp/5afc1f763eb15cb050de8641a082f347-cc_ft_576.webp",
-                "https://photos.zillowstatic.com/fp/a66bcffe65ec374ff3745da197e76b7c-cc_ft_1152.webp"
+                "https://photos.zillowstatic.com/fp/b341208556cba26474a06f9ce1f1ce4e-cc_ft_576.webp",
+                "https://photos.zillowstatic.com/fp/b341208556cba26474a06f9ce1f1ce4e-cc_ft_576.webp",
+                "https://photos.zillowstatic.com/fp/debf2c8a86df09556d64b25772eb4cbd-cc_ft_1152.webp",
+                "https://photos.zillowstatic.com/fp/5d6b9e71fc4e7179cd7a786e0f78a793-cc_ft_576.webp",
+                "https://photos.zillowstatic.com/fp/4d38b0a0c4fbde2bc39ba4392336d1e6-cc_ft_1152.webp",
+                "https://photos.zillowstatic.com/fp/24e175737e9c58d8d0689a9be9cf5b2a-cc_ft_576.webp"
             ],
-            "moreTextAboutThePlace": "Spacious two-story family home with hardwood floors, modern kitchen, and a large backyard for entertaining."
+            "moreTextAboutThePlace": "Contemporary single-family home in the heart of Los Angeles, close to downtown and amenities."
         },
         "company": {
-            "name": "Midwest Homes Realty",
+            "name": "Sunstate Realty",
             "logoImg": null,
-            "address": "Oak Lawn, IL"
+            "address": "Los Angeles, CA"
         },
         "features": {
             "hasGarage": true,
             "parkFeatures": [
                 "Attached",
-                "Heated",
-                "Concrete"
+                "Driveway"
             ],
-            "hasPool": false,
+            "hasPool": true,
             "hasGarden": true
         },
         "special": [
-            "Hardwood flooring",
-            "Granite countertops",
-            "Spacious backyard"
+            "Open floor plan",
+            "Smart home system",
+            "City skyline view"
         ],
         "interior": {
             "furnished": false,
             "rooms": [
                 "Living Room",
                 "Dining Room",
-                "Family Room",
-                "Office"
+                "Kitchen",
+                "Bedroom"
             ],
             "fireplace": true,
             "kitchen": {
                 "features": [
-                    "Island",
-                    "Updated Cabinets",
-                    "Tile Flooring"
-                ]
-            }
-        },
-        "community": {
-            "hoa": {
-                "hasHOA": false,
-                "fee": 0
-            },
-            "features": [
-                "Sidewalks",
-                "Street Lights"
-            ]
-        },
-        "climateFactors": {
-            "floodFactor": 2,
-            "fireFactor": 1,
-            "windFactor": 3,
-            "airFactor": 4,
-            "heatFactor": 3
-        },
-        "nearbySchools": [
-            {
-                "name": "Covington Elementary",
-                "distance": "0.5",
-                "rating": 9
-            },
-            {
-                "name": "Oak Lawn High",
-                "distance": "1.2",
-                "rating": 8
-            }
-        ],
-        "utility": {
-            "electric": "Circuit Breakers",
-            "sewer": "Public",
-            "water": "Public"
-        }
-    },
-    {
-        "agentId": "agent001005",
-        "basic": {
-            "id": 11,
-            "propertyType": "Townhouse",
-            "homeType": "Townhouse",
-            "status": "For Sale",
-            "yearBuilt": 2012,
-            "price": 420000,
-            "sqrFt": 1870,
-            "acres": 0.05,
-            "floorCount": 2,
-            "floorLevel": 0,
-            "bedroom": 3,
-            "bathroom": 3,
-            "parkingSpaces": 1
-        },
-        "location": {
-            "latitude": 41.843,
-            "longitude": -87.6534,
-            "city": "Bridgeport",
-            "state": "IL",
-            "ZipCode": "60609",
-            "street": "320 W 35th St"
-        },
-        "media": {
-            "mainImage": "https://photos.zillowstatic.com/fp/4395fd2143758df00ca8987ccb0da709-cc_ft_1152.webp",
-            "galleryImages": [
-                "https://photos.zillowstatic.com/fp/106a1d4dab40bb7709473f937ae426ff-cc_ft_576.webp",
-                "https://photos.zillowstatic.com/fp/5cff135efda11f872e8c17d755e02a9e-cc_ft_576.webp",
-                "https://photos.zillowstatic.com/fp/dd81467c0e59cd8a18ec6761f54a4f85-cc_ft_576.webp",
-                "https://photos.zillowstatic.com/fp/36c5c1a84374111e90f8add4d9e44089-cc_ft_576.webp",
-                "https://photos.zillowstatic.com/fp/a0e583bc8a8b0ca5760783a7d2d29f39-cc_ft_576.webp",
-                "https://photos.zillowstatic.com/fp/e8b4822b9a1d27ab60514c1029396900-cc_ft_1152.webp",
-                "https://photos.zillowstatic.com/fp/5539af38089f1142f4a2841dc8ce56f6-cc_ft_1152.webp"
-            ],
-            "moreTextAboutThePlace": "Contemporary townhouse in Bridgeport with rooftop deck and city skyline views."
-        },
-        "company": {
-            "name": "Urban Edge Realty",
-            "logoImg": null,
-            "address": "Chicago, IL"
-        },
-        "features": {
-            "hasGarage": true,
-            "parkFeatures": [
-                "Attached"
-            ],
-            "hasPool": false,
-            "hasGarden": false
-        },
-        "special": [
-            "Rooftop deck",
-            "Open concept",
-            "City views"
-        ],
-        "interior": {
-            "furnished": false,
-            "rooms": [
-                "Living Room",
-                "Kitchen",
-                "Primary Bedroom"
-            ],
-            "fireplace": false,
-            "kitchen": {
-                "features": [
-                    "Quartz Countertops",
-                    "Breakfast Bar"
+                    "Granite Countertops",
+                    "Island"
                 ]
             }
         },
@@ -186,21 +78,21 @@
             },
             "features": [
                 "Sidewalks",
-                "Street Paved"
+                "Street Lights"
             ]
         },
         "climateFactors": {
-            "floodFactor": 3,
-            "fireFactor": 1,
+            "floodFactor": 2,
+            "fireFactor": 3,
             "windFactor": 2,
             "airFactor": 4,
             "heatFactor": 3
         },
         "nearbySchools": [
             {
-                "name": "Healy Elementary",
-                "distance": "0.6",
-                "rating": 9
+                "name": "Belmont High School",
+                "distance": "0.9",
+                "rating": 8
             }
         ],
         "utility": {
@@ -210,147 +102,50 @@
         }
     },
     {
-        "agentId": "agent001006",
+        "agentId": "agent001007",
         "basic": {
-            "id": 12,
-            "propertyType": "Condo",
-            "homeType": "Condominium",
+            "id": 16,
+            "propertyType": "Apartment",
+            "homeType": "Loft",
             "status": "For Rent",
-            "yearBuilt": 2018,
-            "price": 3200,
-            "sqrFt": 1020,
+            "yearBuilt": 2015,
+            "price": 2800,
+            "sqrFt": 950,
             "acres": 0,
             "floorCount": 1,
-            "floorLevel": 15,
+            "floorLevel": 6,
             "bedroom": 2,
             "bathroom": 2,
             "parkingSpaces": 1
         },
         "location": {
-            "latitude": 41.892,
-            "longitude": -87.6202,
-            "city": "Chicago",
-            "state": "IL",
-            "ZipCode": "60611",
-            "street": "530 N Lake Shore Dr, Apt 1504"
+            "latitude": 29.7604,
+            "longitude": -95.3698,
+            "city": "Houston",
+            "state": "TX",
+            "ZipCode": "77002",
+            "street": "912 Prairie St Apt 602"
         },
         "media": {
-            "mainImage": "https://photos.zillowstatic.com/fp/0a56c4ca826f73583da81c18676b1871-cc_ft_1152.webp",
+            "mainImage": "https://photos.zillowstatic.com/fp/40ae34f5162b4e56511f2bd114b69d06-cc_ft_1152.webp",
             "galleryImages": [
-                "https://photos.zillowstatic.com/fp/4417c5e0a988c1d22a82ef6afbb44af4-cc_ft_576.webp",
-                "https://photos.zillowstatic.com/fp/bd49ebc75439718369dfa73baf226d08-cc_ft_576.webp",
-                "https://photos.zillowstatic.com/fp/7861c794af78c299cf368b9f34981ef2-cc_ft_1152.webp",
-                "https://photos.zillowstatic.com/fp/85fb9df6834613721beda3fa5fcb794d-cc_ft_1152.webp",
-                "https://photos.zillowstatic.com/fp/d9408e709b32c13781d6e93559a3cbd7-cc_ft_1152.webp",
-                "https://photos.zillowstatic.com/fp/277d4d53a0aa927b53c65f3dcc5c4073-cc_ft_1152.webp"
+                "https://photos.zillowstatic.com/fp/17b8153f31e7831bcaaa77201d952270-cc_ft_576.webp",
+                "https://photos.zillowstatic.com/fp/03506607847d183649190712fa1a4698-cc_ft_576.webp",
+                "https://photos.zillowstatic.com/fp/b9c823b9868835eb8964e723e35fa8be-cc_ft_576.webp",
+                "https://photos.zillowstatic.com/fp/b9c823b9868835eb8964e723e35fa8be-cc_ft_576.webp",
+                "https://photos.zillowstatic.com/fp/31a4c3606deec1510de216fd39288098-cc_ft_576.webp",
+                "https://photos.zillowstatic.com/fp/5aacfde0792afc55c7a0dcaf6a603a76-cc_ft_1152.webp",
+                "https://photos.zillowstatic.com/fp/1203047eb4d6604156142052d1ad81c2-cc_ft_576.webp",
+                "https://photos.zillowstatic.com/fp/71feb3280f26e883503b24d2e2b702dc-cc_ft_1152.webp",
+                "https://photos.zillowstatic.com/fp/2f2a1b1793d932b4deecfe5c589e81d0-cc_ft_576.webp",
+                "https://photos.zillowstatic.com/fp/7d72c6a5983094e44783f83e29e7bd0f-cc_ft_576.webp"
             ],
-            "moreTextAboutThePlace": "Luxury lakefront condo with balcony and skyline views in the heart of Chicago."
+            "moreTextAboutThePlace": "Modern downtown loft in Houston with rooftop access and panoramic city views."
         },
         "company": {
-            "name": "Lakeside Rentals",
+            "name": "MetroLiving Realty",
             "logoImg": null,
-            "address": "Chicago, IL"
-        },
-        "features": {
-            "hasGarage": true,
-            "parkFeatures": [
-                "Assigned"
-            ],
-            "hasPool": true,
-            "hasGarden": false
-        },
-        "special": [
-            "Balcony with view",
-            "Gym access",
-            "Pet friendly"
-        ],
-        "interior": {
-            "furnished": true,
-            "rooms": [
-                "Living Room",
-                "Bedroom",
-                "Kitchen"
-            ],
-            "fireplace": false,
-            "kitchen": {
-                "features": [
-                    "Stainless Appliances",
-                    "Open Plan"
-                ]
-            }
-        },
-        "community": {
-            "hoa": {
-                "hasHOA": true,
-                "fee": 400
-            },
-            "features": [
-                "Pool",
-                "Gym",
-                "Doorman"
-            ]
-        },
-        "climateFactors": {
-            "floodFactor": 1,
-            "fireFactor": 1,
-            "windFactor": 2,
-            "airFactor": 4,
-            "heatFactor": 3
-        },
-        "nearbySchools": [
-            {
-                "name": "Ogden Elementary",
-                "distance": "0.7",
-                "rating": 9
-            }
-        ],
-        "utility": {
-            "electric": "Breakers",
-            "sewer": "Public",
-            "water": "Public"
-        }
-    },
-    {
-        "agentId": "agent001007",
-        "basic": {
-            "id": 13,
-            "propertyType": "Apartment",
-            "homeType": "Loft",
-            "status": "For Rent",
-            "yearBuilt": 2010,
-            "price": 2400,
-            "sqrFt": 880,
-            "acres": 0,
-            "floorCount": 1,
-            "floorLevel": 5,
-            "bedroom": 1,
-            "bathroom": 1,
-            "parkingSpaces": 0
-        },
-        "location": {
-            "latitude": 41.881,
-            "longitude": -87.644,
-            "city": "West Loop",
-            "state": "IL",
-            "ZipCode": "60607",
-            "street": "939 W Madison St, Apt 503"
-        },
-        "media": {
-            "mainImage": "https://photos.zillowstatic.com/fp/d3f18328fcdc845c43ccbd41ff84bcee-cc_ft_1152.webp",
-            "galleryImages": [
-                "https://photos.zillowstatic.com/fp/05004bf078cb14d22341beebd3aecfd1-cc_ft_576.webp",
-                "https://photos.zillowstatic.com/fp/3561563a5c619291aeaf40f9ce059e7d-cc_ft_576.webp",
-                "https://photos.zillowstatic.com/fp/4662db37bbcb013f65a6c399a1b02dba-cc_ft_1152.webp",
-                "https://photos.zillowstatic.com/fp/d367b2a5726ce9131d2bf8bd6ef4ac38-cc_ft_576.webp",
-                "https://photos.zillowstatic.com/fp/77b22366e0b0182b4b5aa9c84fbf7f19-cc_ft_1152.webp",
-                "https://photos.zillowstatic.com/fp/64cdac438a83be08d282d6c8e30661f0-cc_ft_1152.webp"
-            ],
-            "moreTextAboutThePlace": "Industrial-style loft apartment in trendy West Loop area close to restaurants and nightlife."
-        },
-        "company": {
-            "name": "Metro Leasing",
-            "logoImg": null,
-            "address": "Chicago, IL"
+            "address": "Houston, TX"
         },
         "features": {
             "hasGarage": false,
@@ -359,19 +154,22 @@
             "hasGarden": false
         },
         "special": [
-            "Exposed brick",
-            "Downtown location"
+            "Rooftop lounge",
+            "Gym access",
+            "Pet friendly"
         ],
         "interior": {
             "furnished": true,
             "rooms": [
-                "Studio",
+                "Living Area",
+                "Bedroom",
                 "Kitchen"
             ],
             "fireplace": false,
             "kitchen": {
                 "features": [
-                    "Modern Cabinets"
+                    "Quartz Countertops",
+                    "Breakfast Bar"
                 ]
             }
         },
@@ -386,15 +184,317 @@
             ]
         },
         "climateFactors": {
-            "floodFactor": 2,
+            "floodFactor": 3,
+            "fireFactor": 1,
+            "windFactor": 2,
+            "airFactor": 4,
+            "heatFactor": 4
+        },
+        "nearbySchools": [
+            {
+                "name": "Gregory Lincoln Elementary",
+                "distance": "0.7",
+                "rating": 8
+            }
+        ],
+        "utility": {
+            "electric": "Breakers",
+            "sewer": "Public",
+            "water": "Public"
+        }
+    },
+    {
+        "agentId": "agent001",
+        "basic": {
+            "id": 17,
+            "propertyType": "Townhouse",
+            "homeType": "Townhouse",
+            "status": "For Sale",
+            "yearBuilt": 2010,
+            "price": 520000,
+            "sqrFt": 2100,
+            "acres": 0.12,
+            "floorCount": 2,
+            "floorLevel": 0,
+            "bedroom": 3,
+            "bathroom": 3,
+            "parkingSpaces": 1
+        },
+        "location": {
+            "latitude": 33.4484,
+            "longitude": -112.074,
+            "city": "Phoenix",
+            "state": "AZ",
+            "ZipCode": "85004",
+            "street": "210 W Washington St"
+        },
+        "media": {
+            "mainImage": "https://photos.zillowstatic.com/fp/bb7aa5d23ae30f0521291c880809563c-cc_ft_1152.webp",
+            "galleryImages": [
+                "https://photos.zillowstatic.com/fp/80ddd552d087b624681f732d18eea7d6-cc_ft_576.webp",
+                "https://photos.zillowstatic.com/fp/80ddd552d087b624681f732d18eea7d6-cc_ft_576.webp",
+                "https://photos.zillowstatic.com/fp/ca80feba33d1721dec33f64a5a63ebe0-cc_ft_576.webp",
+                "https://photos.zillowstatic.com/fp/316c8c1d75859dcf813df9fe991bbae7-cc_ft_576.webp",
+                "https://photos.zillowstatic.com/fp/89e734c91b8b75c0c5b8a28486737636-cc_ft_1152.webp",
+                "https://photos.zillowstatic.com/fp/c9a77c7fe94fefd601c3eb0ee62eb759-cc_ft_1152.webp"
+            ],
+            "moreTextAboutThePlace": "Beautiful townhouse in downtown Phoenix featuring desert landscaping and modern interiors."
+        },
+        "company": {
+            "name": "Desert Oasis Realty",
+            "logoImg": null,
+            "address": "Phoenix, AZ"
+        },
+        "features": {
+            "hasGarage": true,
+            "parkFeatures": [
+                "Attached"
+            ],
+            "hasPool": false,
+            "hasGarden": true
+        },
+        "special": [
+            "Rooftop terrace",
+            "Energy efficient windows",
+            "Mountain view"
+        ],
+        "interior": {
+            "furnished": false,
+            "rooms": [
+                "Living Room",
+                "Kitchen",
+                "Bedroom"
+            ],
+            "fireplace": false,
+            "kitchen": {
+                "features": [
+                    "Tile Flooring",
+                    "Island"
+                ]
+            }
+        },
+        "community": {
+            "hoa": {
+                "hasHOA": true,
+                "fee": 150
+            },
+            "features": [
+                "Community Garden",
+                "Walking Trail"
+            ]
+        },
+        "climateFactors": {
+            "floodFactor": 1,
+            "fireFactor": 2,
+            "windFactor": 2,
+            "airFactor": 5,
+            "heatFactor": 5
+        },
+        "nearbySchools": [
+            {
+                "name": "Kenilworth School",
+                "distance": "1.0",
+                "rating": 8
+            }
+        ],
+        "utility": {
+            "electric": "Circuit Breakers",
+            "sewer": "Public",
+            "water": "City"
+        }
+    },
+    {
+        "agentId": "agent001005",
+        "basic": {
+            "id": 18,
+            "propertyType": "Condo",
+            "homeType": "Condominium",
+            "status": "For Rent",
+            "yearBuilt": 2019,
+            "price": 3400,
+            "sqrFt": 1150,
+            "acres": 0,
+            "floorCount": 1,
+            "floorLevel": 9,
+            "bedroom": 2,
+            "bathroom": 2,
+            "parkingSpaces": 1
+        },
+        "location": {
+            "latitude": 25.7617,
+            "longitude": -80.1918,
+            "city": "Miami",
+            "state": "FL",
+            "ZipCode": "33130",
+            "street": "50 SW 10th St Apt 901"
+        },
+        "media": {
+            "mainImage": "https://photos.zillowstatic.com/fp/94ae10adbc3727d737dbd31ed0d6b22f-cc_ft_1152.webp",
+            "galleryImages": [
+                "https://photos.zillowstatic.com/fp/3462e3bc0cf8cf3640e56e8eb35aa1a3-cc_ft_576.webp",
+                "https://photos.zillowstatic.com/fp/7c942e0483b5cae79f2c3b2a439b5baa-cc_ft_576.webp",
+                "https://photos.zillowstatic.com/fp/7707a0d48beca90069a79dc1a1fbf591-cc_ft_576.webp",
+                "https://photos.zillowstatic.com/fp/8333ff01d56129b22d8a4b427a99231b-cc_ft_1152.webp",
+                "https://photos.zillowstatic.com/fp/8333ff01d56129b22d8a4b427a99231b-cc_ft_1152.webp",
+                "https://photos.zillowstatic.com/fp/02dec36c83080f20e9aeeca6891a2ea4-cc_ft_1152.webp"
+            ],
+            "moreTextAboutThePlace": "High-rise luxury condo in downtown Miami with pool and gym amenities."
+        },
+        "company": {
+            "name": "Oceanview Properties",
+            "logoImg": null,
+            "address": "Miami, FL"
+        },
+        "features": {
+            "hasGarage": true,
+            "parkFeatures": [
+                "Assigned"
+            ],
+            "hasPool": true,
+            "hasGarden": false
+        },
+        "special": [
+            "Balcony view",
+            "Gym access",
+            "Concierge service"
+        ],
+        "interior": {
+            "furnished": true,
+            "rooms": [
+                "Living Room",
+                "Kitchen",
+                "Bedroom"
+            ],
+            "fireplace": false,
+            "kitchen": {
+                "features": [
+                    "Stainless Appliances",
+                    "Modern Lighting"
+                ]
+            }
+        },
+        "community": {
+            "hoa": {
+                "hasHOA": true,
+                "fee": 420
+            },
+            "features": [
+                "Pool",
+                "Gym",
+                "Doorman"
+            ]
+        },
+        "climateFactors": {
+            "floodFactor": 4,
             "fireFactor": 1,
             "windFactor": 3,
             "airFactor": 4,
+            "heatFactor": 4
+        },
+        "nearbySchools": [
+            {
+                "name": "Southside Elementary",
+                "distance": "0.6",
+                "rating": 9
+            }
+        ],
+        "utility": {
+            "electric": "Breakers",
+            "sewer": "Public",
+            "water": "Public"
+        }
+    },
+    {
+        "agentId": "agent001",
+        "basic": {
+            "id": 19,
+            "propertyType": "House",
+            "homeType": "SingleFamily",
+            "status": "For Sale",
+            "yearBuilt": 1998,
+            "price": 890000,
+            "sqrFt": 3050,
+            "acres": 0.4,
+            "floorCount": 2,
+            "floorLevel": 0,
+            "bedroom": 5,
+            "bathroom": 4,
+            "parkingSpaces": 2
+        },
+        "location": {
+            "latitude": 47.6062,
+            "longitude": -122.3321,
+            "city": "Seattle",
+            "state": "WA",
+            "ZipCode": "98109",
+            "street": "2149 6th Ave"
+        },
+        "media": {
+            "mainImage": "https://photos.zillowstatic.com/fp/efddae7aaad807e5ca7af6fdd2f810d2-cc_ft_1152.webp",
+            "galleryImages": [
+                "https://photos.zillowstatic.com/fp/efddae7aaad807e5ca7af6fdd2f810d2-cc_ft_1152.webp",
+                "https://photos.zillowstatic.com/fp/347a63f5699e342badeed4244d6dca91-cc_ft_576.webp",
+                "https://photos.zillowstatic.com/fp/a8c3f8323ea4dee55d597901f8b4b522-cc_ft_576.webp",
+                "https://photos.zillowstatic.com/fp/a8c3f8323ea4dee55d597901f8b4b522-cc_ft_576.webp",
+                "https://photos.zillowstatic.com/fp/a8c3f8323ea4dee55d597901f8b4b522-cc_ft_576.webp",
+                "https://photos.zillowstatic.com/fp/07cb42bcd235322afba30236f3d0a580-cc_ft_1152.webp",
+                "https://photos.zillowstatic.com/fp/40ba71031592eafbcfd2dd1aa352dad7-cc_ft_576.webp"
+            ],
+            "moreTextAboutThePlace": "Charming family home in Seattle with a private garden and open kitchen."
+        },
+        "company": {
+            "name": "Evergreen Homes Realty",
+            "logoImg": null,
+            "address": "Seattle, WA"
+        },
+        "features": {
+            "hasGarage": true,
+            "parkFeatures": [
+                "Attached"
+            ],
+            "hasPool": false,
+            "hasGarden": true
+        },
+        "special": [
+            "Large backyard",
+            "Hardwood floors",
+            "Fireplace"
+        ],
+        "interior": {
+            "furnished": false,
+            "rooms": [
+                "Living Room",
+                "Dining",
+                "Bedroom"
+            ],
+            "fireplace": true,
+            "kitchen": {
+                "features": [
+                    "Granite Countertops",
+                    "Updated Appliances"
+                ]
+            }
+        },
+        "community": {
+            "hoa": {
+                "hasHOA": false,
+                "fee": 0
+            },
+            "features": [
+                "Sidewalks",
+                "Playground"
+            ]
+        },
+        "climateFactors": {
+            "floodFactor": 2,
+            "fireFactor": 1,
+            "windFactor": 3,
+            "airFactor": 5,
             "heatFactor": 2
         },
         "nearbySchools": [
             {
-                "name": "Skinner Elementary",
+                "name": "Queen Anne Elementary",
                 "distance": "0.8",
                 "rating": 9
             }
@@ -406,16 +506,311 @@
         }
     },
     {
-        "agentId": "agent002",
+        "agentId": "agent001006",
         "basic": {
-            "id": 14,
+            "id": 20,
+            "propertyType": "Apartment",
+            "homeType": "Loft",
+            "status": "For Rent",
+            "yearBuilt": 2016,
+            "price": 2600,
+            "sqrFt": 920,
+            "acres": 0,
+            "floorCount": 1,
+            "floorLevel": 4,
+            "bedroom": 1,
+            "bathroom": 1,
+            "parkingSpaces": 0
+        },
+        "location": {
+            "latitude": 39.9526,
+            "longitude": -75.1652,
+            "city": "Philadelphia",
+            "state": "PA",
+            "ZipCode": "19103",
+            "street": "1818 Market St Apt 402"
+        },
+        "media": {
+            "mainImage": "https://photos.zillowstatic.com/fp/fbac6165bb9a31bfcd591b8dca25d94c-cc_ft_1152.webp",
+            "galleryImages": [
+                "https://photos.zillowstatic.com/fp/d16e4b16f0c5c9219122db3925facc08-cc_ft_576.webp",
+                "https://photos.zillowstatic.com/fp/d16e4b16f0c5c9219122db3925facc08-cc_ft_576.webp",
+                "https://photos.zillowstatic.com/fp/37560eacfe7f6a22ff02db774bbbb638-cc_ft_576.webp",
+                "https://photos.zillowstatic.com/fp/eaf83627fba210685ceb79b71b1466d6-cc_ft_1152.webp",
+                "https://photos.zillowstatic.com/fp/6783807bc02086c80bddb31015b31309-cc_ft_576.webp",
+                "https://photos.zillowstatic.com/fp/8cb4196acf82f8cd1d5cb8f92a723edd-cc_ft_1152.webp"
+            ],
+            "moreTextAboutThePlace": "Modern loft apartment located in Center City Philadelphia with high ceilings and skyline view."
+        },
+        "company": {
+            "name": "Liberty Realty",
+            "logoImg": null,
+            "address": "Philadelphia, PA"
+        },
+        "features": {
+            "hasGarage": false,
+            "parkFeatures": [],
+            "hasPool": false,
+            "hasGarden": false
+        },
+        "special": [
+            "City view",
+            "Pet friendly"
+        ],
+        "interior": {
+            "furnished": true,
+            "rooms": [
+                "Studio",
+                "Kitchen"
+            ],
+            "fireplace": false,
+            "kitchen": {
+                "features": [
+                    "Quartz Countertops"
+                ]
+            }
+        },
+        "community": {
+            "hoa": {
+                "hasHOA": false,
+                "fee": 0
+            },
+            "features": [
+                "Elevator",
+                "Security Access"
+            ]
+        },
+        "climateFactors": {
+            "floodFactor": 1,
+            "fireFactor": 1,
+            "windFactor": 2,
+            "airFactor": 4,
+            "heatFactor": 3
+        },
+        "nearbySchools": [
+            {
+                "name": "Greenfield School",
+                "distance": "0.5",
+                "rating": 9
+            }
+        ],
+        "utility": {
+            "electric": "Breakers",
+            "sewer": "Public",
+            "water": "Public"
+        }
+    },
+    {
+        "agentId": "agent001007",
+        "basic": {
+            "id": 21,
             "propertyType": "House",
             "homeType": "SingleFamily",
             "status": "For Sale",
-            "yearBuilt": 1995,
-            "price": 1750000,
-            "sqrFt": 3250,
-            "acres": 0.35,
+            "yearBuilt": 1989,
+            "price": 640000,
+            "sqrFt": 2500,
+            "acres": 0.25,
+            "floorCount": 2,
+            "floorLevel": 0,
+            "bedroom": 4,
+            "bathroom": 3,
+            "parkingSpaces": 2
+        },
+        "location": {
+            "latitude": 35.2271,
+            "longitude": -80.8431,
+            "city": "Charlotte",
+            "state": "NC",
+            "ZipCode": "28202",
+            "street": "1237 Magnolia Ave"
+        },
+        "media": {
+            "mainImage": "https://photos.zillowstatic.com/fp/3235a543716f3b913af8a3485e67c75a-cc_ft_1152.webp",
+            "galleryImages": [
+                "https://photos.zillowstatic.com/fp/34cf821a4f3af1325d6691b350fadecf-cc_ft_576.webp",
+                "https://photos.zillowstatic.com/fp/2282c4a5270737e242973c1edfd47737-cc_ft_576.webp",
+                "https://photos.zillowstatic.com/fp/68af099a6b200f053206f70ea76ff80f-cc_ft_576.webp",
+                "https://photos.zillowstatic.com/fp/0c830e8650a5312f916f90833a6bb9da-cc_ft_576.webp",
+                "https://photos.zillowstatic.com/fp/0c830e8650a5312f916f90833a6bb9da-cc_ft_576.webp",
+                "https://photos.zillowstatic.com/fp/0c830e8650a5312f916f90833a6bb9da-cc_ft_576.webp",
+                "https://photos.zillowstatic.com/fp/e519e6c752a909bd1a7643c99e852c69-cc_ft_576.webp"
+            ],
+            "moreTextAboutThePlace": "Lovely suburban home in Charlotte with spacious interior and updated kitchen."
+        },
+        "company": {
+            "name": "Queen City Realty",
+            "logoImg": null,
+            "address": "Charlotte, NC"
+        },
+        "features": {
+            "hasGarage": true,
+            "parkFeatures": [
+                "Detached"
+            ],
+            "hasPool": false,
+            "hasGarden": true
+        },
+        "special": [
+            "Large porch",
+            "Fenced yard",
+            "Wood floors"
+        ],
+        "interior": {
+            "furnished": false,
+            "rooms": [
+                "Living Room",
+                "Bedroom",
+                "Kitchen"
+            ],
+            "fireplace": true,
+            "kitchen": {
+                "features": [
+                    "Island",
+                    "Tile Flooring"
+                ]
+            }
+        },
+        "community": {
+            "hoa": {
+                "hasHOA": true,
+                "fee": 200
+            },
+            "features": [
+                "Playground",
+                "Trail"
+            ]
+        },
+        "climateFactors": {
+            "floodFactor": 2,
+            "fireFactor": 1,
+            "windFactor": 3,
+            "airFactor": 4,
+            "heatFactor": 3
+        },
+        "nearbySchools": [
+            {
+                "name": "Dilworth Elementary",
+                "distance": "0.6",
+                "rating": 9
+            }
+        ],
+        "utility": {
+            "electric": "Circuit Breakers",
+            "sewer": "Public",
+            "water": "Public"
+        }
+    },
+    {
+        "agentId": "agent001005",
+        "basic": {
+            "id": 22,
+            "propertyType": "Condo",
+            "homeType": "Condominium",
+            "status": "For Sale",
+            "yearBuilt": 2020,
+            "price": 480000,
+            "sqrFt": 1300,
+            "acres": 0,
+            "floorCount": 1,
+            "floorLevel": 8,
+            "bedroom": 2,
+            "bathroom": 2,
+            "parkingSpaces": 1
+        },
+        "location": {
+            "latitude": 32.7157,
+            "longitude": -117.1611,
+            "city": "San Diego",
+            "state": "CA",
+            "ZipCode": "92101",
+            "street": "700 Front St Apt 801"
+        },
+        "media": {
+            "mainImage": "https://photos.zillowstatic.com/fp/a0fe0067584768e80c31d4dd77eae174-cc_ft_1152.webp",
+            "galleryImages": [
+                "https://photos.zillowstatic.com/fp/83c05d7cdd60936b7bd86325bcae349b-cc_ft_576.webp",
+                "https://photos.zillowstatic.com/fp/83c05d7cdd60936b7bd86325bcae349b-cc_ft_576.webp",
+                "https://photos.zillowstatic.com/fp/8d78b8955598f0a5432e59741058b6c2-cc_ft_576.webp",
+                "https://photos.zillowstatic.com/fp/3bab91d4eab43855e28cea1a98ad9529-cc_ft_576.webp",
+                "https://photos.zillowstatic.com/fp/3bab91d4eab43855e28cea1a98ad9529-cc_ft_576.webp",
+                "https://photos.zillowstatic.com/fp/c035b8800fda6a7ea299e43be70361f8-cc_ft_1152.webp"
+            ],
+            "moreTextAboutThePlace": "Modern high-rise condo with ocean view and luxury amenities in San Diego."
+        },
+        "company": {
+            "name": "Pacific Realty Group",
+            "logoImg": null,
+            "address": "San Diego, CA"
+        },
+        "features": {
+            "hasGarage": true,
+            "parkFeatures": [
+                "Assigned"
+            ],
+            "hasPool": true,
+            "hasGarden": false
+        },
+        "special": [
+            "Balcony view",
+            "Gym access"
+        ],
+        "interior": {
+            "furnished": true,
+            "rooms": [
+                "Living Room",
+                "Kitchen",
+                "Bedroom"
+            ],
+            "fireplace": false,
+            "kitchen": {
+                "features": [
+                    "Stainless Appliances"
+                ]
+            }
+        },
+        "community": {
+            "hoa": {
+                "hasHOA": true,
+                "fee": 350
+            },
+            "features": [
+                "Pool",
+                "Gym",
+                "Concierge"
+            ]
+        },
+        "climateFactors": {
+            "floodFactor": 2,
+            "fireFactor": 2,
+            "windFactor": 3,
+            "airFactor": 5,
+            "heatFactor": 3
+        },
+        "nearbySchools": [
+            {
+                "name": "Washington Elementary",
+                "distance": "0.7",
+                "rating": 8
+            }
+        ],
+        "utility": {
+            "electric": "Breakers",
+            "sewer": "Public",
+            "water": "Public"
+        }
+    },
+    {
+        "agentId": "agent001",
+        "basic": {
+            "id": 23,
+            "propertyType": "House",
+            "homeType": "SingleFamily",
+            "status": "For Sale",
+            "yearBuilt": 2007,
+            "price": 950000,
+            "sqrFt": 3400,
+            "acres": 0.32,
             "floorCount": 2,
             "floorLevel": 0,
             "bedroom": 5,
@@ -423,92 +818,184 @@
             "parkingSpaces": 2
         },
         "location": {
-            "latitude": 42.011,
-            "longitude": -87.806,
-            "city": "Glenview",
-            "state": "IL",
-            "ZipCode": "60025",
-            "street": "1720 Magnolia Ln"
+            "latitude": 37.7749,
+            "longitude": -122.4194,
+            "city": "San Francisco",
+            "state": "CA",
+            "ZipCode": "94109",
+            "street": "1020 Lombard St"
         },
         "media": {
-            "mainImage": "https://photos.zillowstatic.com/fp/e3e585a7dfd15580e15f3ddb97ea8016-cc_ft_1152.webp",
+            "mainImage": "https://photos.zillowstatic.com/fp/bb1b2a3a566a60e590ed31039e46ffee-cc_ft_1152.webp",
             "galleryImages": [
-                "https://photos.zillowstatic.com/fp/e983c681c1822b99b436bc793e88e726-cc_ft_576.webp",
-                "https://photos.zillowstatic.com/fp/6682a40ccb42a07b29660eb9e5b6b32a-cc_ft_576.webp",
-                "https://photos.zillowstatic.com/fp/4c37aa7e3d3e8b568fec54ab67cc9194-cc_ft_1152.webp",
-                "https://photos.zillowstatic.com/fp/44f345bad973f1ba706bed4bdbe68a37-cc_ft_576.webp",
-                "https://photos.zillowstatic.com/fp/44f345bad973f1ba706bed4bdbe68a37-cc_ft_576.webp",
-                "https://photos.zillowstatic.com/fp/5a7ed11fa28bf37fa7359020ada200d5-cc_ft_1152.webp",
-                "https://photos.zillowstatic.com/fp/c0a2a0ce63ba952c4ac654b4f5db8a16-cc_ft_1152.webp"
+                "https://photos.zillowstatic.com/fp/dc40c1cceb34080551e90630d6834a0e-cc_ft_576.webp",
+                "https://photos.zillowstatic.com/fp/440d31c40d369f8549722d5aacca8238-cc_ft_576.webp",
+                "https://photos.zillowstatic.com/fp/440d31c40d369f8549722d5aacca8238-cc_ft_576.webp",
+                "https://photos.zillowstatic.com/fp/e2ab31dd350d680d0f20f8638db0e13a-cc_ft_576.webp",
+                "https://photos.zillowstatic.com/fp/e2ab31dd350d680d0f20f8638db0e13a-cc_ft_576.webp",
+                "https://photos.zillowstatic.com/fp/15160a4bf71f503f12a857bd01998b5a-cc_ft_576.webp"
             ],
-            "moreTextAboutThePlace": "Elegant 5-bedroom home on a quiet cul-de-sac with remodeled interiors and a spacious patio."
+            "moreTextAboutThePlace": "Elegant single-family home in San Francisco with modern architecture and city views."
         },
         "company": {
-            "name": "Suburban Estates Realty",
+            "name": "Golden Gate Realty",
             "logoImg": null,
-            "address": "Glenview, IL"
+            "address": "San Francisco, CA"
         },
         "features": {
             "hasGarage": true,
             "parkFeatures": [
-                "Detached"
+                "Attached"
             ],
-            "hasPool": true,
+            "hasPool": false,
             "hasGarden": true
         },
         "special": [
-            "Fireplace",
-            "Home office",
-            "Finished basement"
+            "City view",
+            "Modern design",
+            "Rooftop terrace"
         ],
         "interior": {
             "furnished": false,
             "rooms": [
                 "Living Room",
-                "Dining Room",
                 "Office",
                 "Bedroom"
             ],
             "fireplace": true,
             "kitchen": {
                 "features": [
-                    "Pantry",
-                    "Updated Appliances"
+                    "Island",
+                    "Custom Cabinets"
+                ]
+            }
+        },
+        "community": {
+            "hoa": {
+                "hasHOA": false,
+                "fee": 0
+            },
+            "features": [
+                "Trail",
+                "Park Nearby"
+            ]
+        },
+        "climateFactors": {
+            "floodFactor": 1,
+            "fireFactor": 2,
+            "windFactor": 3,
+            "airFactor": 5,
+            "heatFactor": 2
+        },
+        "nearbySchools": [
+            {
+                "name": "Spring Valley Elementary",
+                "distance": "0.5",
+                "rating": 9
+            }
+        ],
+        "utility": {
+            "electric": "Circuit Breakers",
+            "sewer": "Public",
+            "water": "Public"
+        }
+    },
+    {
+        "agentId": "agent001",
+        "basic": {
+            "id": 24,
+            "propertyType": "House",
+            "homeType": "SingleFamily",
+            "status": "For Rent",
+            "yearBuilt": 2013,
+            "price": 4200,
+            "sqrFt": 2400,
+            "acres": 0.2,
+            "floorCount": 2,
+            "floorLevel": 0,
+            "bedroom": 4,
+            "bathroom": 3,
+            "parkingSpaces": 2
+        },
+        "location": {
+            "latitude": 36.1699,
+            "longitude": -115.1398,
+            "city": "Las Vegas",
+            "state": "NV",
+            "ZipCode": "89109",
+            "street": "3400 Paradise Rd"
+        },
+        "media": {
+            "mainImage": "https://photos.zillowstatic.com/fp/22aff74cbe946be0fb320510f4d96fc7-cc_ft_1152.webp",
+            "galleryImages": [
+                "https://photos.zillowstatic.com/fp/175d9838c24ef6e598d4758746fd765a-cc_ft_576.webp",
+                "https://photos.zillowstatic.com/fp/501e5bbf882fcb7068b08be7082c23e3-cc_ft_576.webp",
+                "https://photos.zillowstatic.com/fp/501e5bbf882fcb7068b08be7082c23e3-cc_ft_576.webp",
+                "https://photos.zillowstatic.com/fp/782ee7907927ff6ec9075c6a82ff759f-cc_ft_1152.webp",
+                "https://photos.zillowstatic.com/fp/a9ecf67e1320abcfdffa4a6aa4f34ba3-cc_ft_576.webp",
+                "https://photos.zillowstatic.com/fp/739b92e76f4dcabec16528f5092ed0ca-cc_ft_1152.webp"
+            ],
+            "moreTextAboutThePlace": "Stylish rental home in Las Vegas close to The Strip, with modern interior and pool."
+        },
+        "company": {
+            "name": "Silver Sands Realty",
+            "logoImg": null,
+            "address": "Las Vegas, NV"
+        },
+        "features": {
+            "hasGarage": true,
+            "parkFeatures": [
+                "Attached"
+            ],
+            "hasPool": true,
+            "hasGarden": true
+        },
+        "special": [
+            "Private pool",
+            "Near entertainment",
+            "Spacious patio"
+        ],
+        "interior": {
+            "furnished": true,
+            "rooms": [
+                "Living Room",
+                "Kitchen",
+                "Bedroom"
+            ],
+            "fireplace": false,
+            "kitchen": {
+                "features": [
+                    "Modern Appliances"
                 ]
             }
         },
         "community": {
             "hoa": {
                 "hasHOA": true,
-                "fee": 250
+                "fee": 150
             },
             "features": [
-                "Playground",
-                "Walking Trail"
+                "Sidewalks",
+                "Playground"
             ]
         },
         "climateFactors": {
-            "floodFactor": 2,
-            "fireFactor": 1,
+            "floodFactor": 1,
+            "fireFactor": 2,
             "windFactor": 2,
-            "airFactor": 5,
-            "heatFactor": 3
+            "airFactor": 4,
+            "heatFactor": 5
         },
         "nearbySchools": [
             {
-                "name": "Glen Grove Elementary",
-                "distance": "0.5",
-                "rating": 9
-            },
-            {
-                "name": "Glenbrook South High",
-                "distance": "1.5",
-                "rating": 9
+                "name": "Paradise Elementary",
+                "distance": "0.8",
+                "rating": 8
             }
         ],
         "utility": {
             "electric": "Circuit Breakers",
-            "sewer": "Public Sewer",
+            "sewer": "Public",
             "water": "Public"
         }
     }

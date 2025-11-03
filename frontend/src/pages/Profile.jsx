@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useAuth } from "../contexts/AuthContext";
-import UnauthorizedOverlay from "../components/unAuth";
 import { toast } from "react-toastify";
 import { useLoader } from "../contexts/LoaderContext";
 
@@ -48,7 +47,6 @@ export default function CustomerSettings() {
         setDirty(true);
     }, [avatarUrl, fullName, phone, city, pwd, selectedFile]);
 
-    // If you want to block when not logged in:
     // if (!user) return <UnauthorizedOverlay seconds={5} />;
 
     const tabs = ["Profile", "Security"];

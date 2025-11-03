@@ -13,7 +13,6 @@ const faq = [
     { q: "What is an MLS?", a: "The Multiple Listing Service (MLS) is the database agents use to share listings with other agents and buyer websites." },
 ];
 
-/* ====== motion variants ====== */
 const fadeUp = {
     hidden: { opacity: 0, y: 24 },
     visible: (i = 0) => ({
@@ -64,7 +63,7 @@ const Sell = () => {
                     <motion.div className="text-gray-200 md:w-1/2 space-y-5" variants={fadeUp}>
                         <h1 className="text-4xl md:text-4xl font-bold font-[prata] first-letter:text-6xl leading-tight">
                             Sell Your House For <br />
-                            <span className="text-orange-400 font-[lora]">Cash Fast</span> — Get Offer In Minutes!
+                            <span className="text-gray-400 font-[lora]">Cash Fast</span> — Get Offer In Minutes!
                         </h1>
                         <p className="max-w-md">
                             Eliminate the stress of selling your house the traditional way and save thousands by
@@ -94,7 +93,7 @@ const Sell = () => {
                         className="text-3xl md:text-4xl font-[lora] font-bold text-gray-900 dark:text-white"
                         variants={fadeUp}
                     >
-                        Sell Your House Fast in <span className="text-orange-500 font-[prata]">5 Simple Steps</span>
+                        Sell Your House Fast in <span className="text-[var(--primary)] font-[prata]">5 Simple Steps</span>
                     </motion.h2>
                     <motion.p
                         className="mt-3 text-gray-600 dark:text-gray-300 max-w-2xl mx-auto"
@@ -114,7 +113,7 @@ const Sell = () => {
                     variants={stagger}
                 >
                     <motion.div className="flex items-center gap-6" variants={card}>
-                        <div className="text-6xl font-extrabold text-orange-400 opacity-100 dark:opacity-20">01</div>
+                        <div className="text-6xl font-extrabold text-[var(--dark-primary)] opacity-100 dark:opacity-20">01</div>
                         <div>
                             <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">Quick Cash Offer</h3>
                             <p className="text-gray-600 dark:text-gray-300">
@@ -124,7 +123,7 @@ const Sell = () => {
                     </motion.div>
 
                     <motion.div className="flex items-center gap-6" variants={card}>
-                        <div className="text-6xl font-extrabold text-orange-400 opacity-100 dark:opacity-20">02</div>
+                        <div className="text-6xl font-extrabold text-[var(--dark-primary)] opacity-100 dark:opacity-20">02</div>
                         <div>
                             <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">Schedule a Visit</h3>
                             <p className="text-gray-600 dark:text-gray-300">
@@ -134,7 +133,7 @@ const Sell = () => {
                     </motion.div>
 
                     <motion.div className="flex items-center gap-6" variants={card}>
-                        <div className="text-6xl font-extrabold text-orange-400 opacity-100 dark:opacity-20">03</div>
+                        <div className="text-6xl font-extrabold text-[var(--dark-primary)] opacity-100 dark:opacity-20">03</div>
                         <div>
                             <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">Receive Your Offer</h3>
                             <p className="text-gray-600 dark:text-gray-300">
@@ -144,7 +143,7 @@ const Sell = () => {
                     </motion.div>
 
                     <motion.div className="flex items-center gap-6" variants={card}>
-                        <div className="text-6xl font-extrabold text-orange-400 opacity-100 dark:opacity-20">04</div>
+                        <div className="text-6xl font-extrabold text-[var(--dark-primary)] opacity-100 dark:opacity-20">04</div>
                         <div>
                             <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">Fast Closing</h3>
                             <p className="text-gray-600 dark:text-gray-300">
@@ -154,7 +153,7 @@ const Sell = () => {
                     </motion.div>
 
                     <motion.div className="flex items-center gap-6" variants={card}>
-                        <div className="text-6xl font-extrabold text-orange-400 opacity-100 dark:opacity-20">05</div>
+                        <div className="text-6xl font-extrabold text-[var(--dark-primary)] opacity-100 dark:opacity-20">05</div>
                         <div>
                             <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">Get Paid Instantly</h3>
                             <p className="text-gray-600 dark:text-gray-300">
@@ -165,7 +164,7 @@ const Sell = () => {
                 </motion.div>
             </section>
 
-            <section className="flex flex-col justify-center items-center p-10 bg-[#4caf4f5c] dark:bg-[#25252577]">
+            <section className="flex flex-col justify-center items-center p-10 bg-[#e7fae5] dark:bg-[#25252577]">
                 <motion.div
                     initial="hidden"
                     whileInView="visible"
@@ -255,7 +254,7 @@ function ResourceCard({ img, href, read, title }) {
                     {read}
                 </span>
                 <h3 className="text-[18px]">{title}</h3>
-                <p className="text-blue-600 font-extrabold">Read Article</p>
+                <p className="text-[var(--dark-primary)] font-extrabold">Read Article</p>
             </div>
         </motion.a>
     );

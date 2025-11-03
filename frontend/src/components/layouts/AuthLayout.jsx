@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
 import '../../styles/auth.css'
-import { Outlet } from 'react-router-dom';
+import { Outlet, useNavigate } from 'react-router-dom';
 import Login from '../../pages/Auth/Login';
 import SignUp from '../../pages/Auth/SignUp';
 import { ThemeContext } from '../../contexts/ThemeContext';
@@ -10,6 +10,7 @@ import clsx from 'clsx'
 const AuthLayout = () => {
 
     const [isSignUpActive, setIsSignUpActive] = useState(false);
+    const navigate = useNavigate();
 
     const sliderStyle = {
         left: isSignUpActive ? '50%' : '0%                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    ',
@@ -25,7 +26,7 @@ const AuthLayout = () => {
                 <div className="flex items-center justify-center gap-2 cursor-pointer"
                     onClick={() => navigate("/")}>
                     <img src="/images/homeLogo.png" alt="Logo" className='w-12 h-12' />
-                    <h2 className="text-xl text-[var(--text)] dark:text-[var(--primary)] font-bold font-[Montserrat] tracking-wide">NestNova</h2>
+                    <h2 className="text-xl text-[var(--text)] dark:text-[var(--primary)] font-extrabold font-[Prata] tracking-wide">NestNova</h2>
                 </div>
 
                 <button className="w-10 h-10 bg-[var(--background)] rounded-full text-[var(--text)] cursor-pointer z-20 shadow-[inset_0px_2px_4px_rgba(255,255,255,0.3),inset_0px_-2px_4px_rgba(0,0,0,0.5),0_6px_10px_rgba(0,0,0,0.3)]" title="Toggle Dark Mode" onClick={toggleTheme}>

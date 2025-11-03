@@ -5,15 +5,36 @@ import { useLoader } from "../contexts/LoaderContext";
 import { useSaved } from "../contexts/SavedContext";
 import AllGallery from "../components/AllGallery";
 import { BsAspectRatio, BsHouseDoor, BsDropletHalf } from "react-icons/bs";
+import toast from "react-hot-toast";
 
 export default function HomeDetails() {
     const { id } = useParams();
     const { setShowLoader } = useLoader();
     const [property, setProperty] = useState(null);
     const [showGallery, setShowGallery] = useState(false);
+    const [localNote, setLocalNote] = useState('');
+
 
     const { isSaved, toggleSaved } = useSaved();
     const saved = isSaved(property ? property.property_id : null);
+
+    useEffect(() => {
+        if (property) {
+            const city = property.city || property.location?.city || "";
+            const street = property.street || property.location?.street || "";
+            const zip = property.zip_code || property.location?.ZipCode || "";
+            const price = property.price ? `$${Number(property.price).toLocaleString()}` : "";
+
+            const descParts = [
+                street && `${street}`,
+                city && `${city}`,
+                zip && `(${zip})`,
+            ].filter(Boolean).join(", ");
+
+            setLocalNote(`Hello, I would like to enquire about the property at ${descParts}${price ? ` listed for ${price}` : ""}. Please share more details.`);
+        }
+    }, [property]);
+
 
     useEffect(() => {
         const fetchDetails = async () => {
@@ -47,7 +68,6 @@ export default function HomeDetails() {
         );
     }
 
-    // --- fallback agent object ---
     const fallbackAgent = {
         email: "alameenolomo@gmail.com",
         name: "Lomzy",
@@ -56,7 +76,6 @@ export default function HomeDetails() {
         userId: "user000001",
     };
 
-    // --- normalize ---
     const {
         street = "—",
         home_type = "Home",
@@ -216,12 +235,17 @@ export default function HomeDetails() {
 
                             <div className="flex items-center gap-4 mt-6">
                                 {agent?.profileUrl ? (
-                                    <img src={agent.profileUrl} alt="agent" className="w-10 h-10 rounded-full object-cover" />
+                                    <img
+                                        src={agent.profileUrl}
+                                        alt="agent"
+                                        className="w-10 h-10 rounded-full object-cover"
+                                    />
                                 ) : (
                                     <div className="w-10 h-10 rounded-full bg-gray-200 dark:bg-neutral-700 grid place-items-center text-xs font-semibold text-gray-700 dark:text-gray-200">
                                         {initials}
                                     </div>
                                 )}
+
                                 <div>
                                     <p className="font-semibold">{agent?.agentName || "Agent"}</p>
                                     {property.agentApproved == 1 ? (
@@ -229,11 +253,33 @@ export default function HomeDetails() {
                                     ) : (
                                         <p className="text-sm text-yellow-600">Pending Approval</p>
                                     )}
-
                                 </div>
                             </div>
 
+                            <div className="mt-5">
+                                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                                    Reference Note (local only)
+                                </label>
+                                <textarea
+                                    value={localNote}
+                                    onChange={(e) => setLocalNote(e.target.value)}
+                                    rows={3}
+                                    placeholder="Add your enquiry or note about this property..."
+                                    className="w-full resize-none px-3 py-2 rounded-md border border-gray-300 dark:border-gray-600
+             bg-white dark:bg-neutral-800 text-gray-700 dark:text-gray-200
+             focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none
+             transition-all duration-200 font-[inter] leading-relaxed shadow-sm"
+                                />
+
+                            </div>
+
+
                             <button
+                                onClick={() => {
+                                    setLocalNote("");
+                                    toast.success("Enquiry sent");
+
+                                }}
                                 className={`mt-6 bg-black text-white px-6 py-3 rounded-lg hover:bg-gray-900 ${!isPublished || !(property.agentApproved == 1) && "cursor-not-allowed opacity-70"}`}
                                 disabled={!isPublished || !(property.agentApproved == 1)}
                             >

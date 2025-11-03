@@ -46,7 +46,9 @@ export const AuthProvider = ({ children }) => {
             });
             if (response.ok) {
                 const data = await response.json();
-                setUser(data.user);
+                console.log("Data", data)
+                // setUser(data.user);
+
                 return true;
             }
         } catch (error) {
@@ -56,16 +58,20 @@ export const AuthProvider = ({ children }) => {
     };
 
     const signup = async (email, password) => {
-        const response = await fetch('/api/signup', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ email, password }),
-            credentials: 'include',
-        });
-        if (response.ok) {
-            const data = await response.json();
-            setUser(data.user);
-            return true;
+        try {
+            const response = await fetch('/api/register', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email, password }),
+                credentials: 'include',
+            });
+            if (response.ok) {
+                const data = await response.json();
+                // setUser(data.user);
+                return true;
+            }
+        } catch (error) {
+            console.error('Error during login:', error);
         }
         return false;
     };

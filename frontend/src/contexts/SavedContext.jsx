@@ -1,4 +1,3 @@
-// src/contexts/SavedContext.jsx
 import { createContext, useContext, useEffect, useMemo, useRef, useState } from "react";
 import { useAuth } from "./AuthContext";
 
@@ -6,18 +5,16 @@ const SavedContext = createContext(null);
 export { SavedContext };
 
 function toIdStr(id) {
-    // normalize everything to string to avoid includes() mismatch
     if (id == null) return "";
     return String(id);
 }
 
 export function SavedProvider({ children }) {
-    const { user } = useAuth(); // expects { userId, token? }
+    const { user } = useAuth();
     const [savedSet, setSavedSet] = useState(() => new Set());
     const [loading, setLoading] = useState(false);
-    const pending = useRef(new Set()); // prevent double-click races
+    const pending = useRef(new Set());
 
-    // --- API helpers
     async function fetchSaved() {
         try {
             setLoading(true);

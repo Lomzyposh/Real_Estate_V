@@ -11,7 +11,7 @@ import React, {
 import { createPortal } from "react-dom";
 import { useProperties } from "../contexts/PropertiesContext";
 import { useLoader } from "../contexts/LoaderContext";
-import { useSaved } from "../contexts/SavedContext"; // ⬅️ NEW
+import { useSaved } from "../contexts/SavedContext";
 import LocationSearch from "../components/LocationSearch";
 import Toggle from "../components/Toggle";
 import MapView from "../components/MapView";
@@ -19,7 +19,6 @@ import { PropertyList } from "../components/PropertyCard";
 import clsx from "clsx";
 import { useSearchParams } from "react-router-dom";
 
-/* ---------- utils ---------- */
 function uniqueFrom(arr = [], key) {
   const out = new Set();
   for (const it of arr) {
@@ -47,7 +46,7 @@ function getNum(p, key) {
   return num(p?.[key]);
 }
 function getId(p) {
-  return p?.property_id ?? p?.id ?? p?._id; // ⬅️ helper for Saved check
+  return p?.property_id ?? p?.id ?? p?._id;
 }
 
 const MemoMapPane = memo(function MemoMapPane({ headerTop, markers }) {
@@ -70,7 +69,7 @@ function normalizeStatus(s) {
   const v = String(s ?? "").trim().toLowerCase();
   if (["rent", "for rent", "rental", "lease", "for-lease", "to let", "to-let"].includes(v)) return RENT;
   if (["sale", "for sale", "sell", "buy", "for-sale"].includes(v)) return SALE;
-  return null; // unknown
+  return null;
 }
 
 function statusOf(p) {
@@ -85,7 +84,7 @@ function statusOf(p) {
 export default function AllProperties() {
   const { properties = [], propertiesLoading } = useProperties();
   const { setShowLoader } = useLoader();
-  const { isSaved } = useSaved(); // ⬅️ NEW
+  const { isSaved } = useSaved();
 
   const [locations, setLocations] = useState([]);
   const [showMap, setShowMap] = useState(true);
@@ -108,10 +107,8 @@ export default function AllProperties() {
     const onResize = () => requestAnimationFrame(measure);
     window.addEventListener("resize", onResize);
     return () => window.removeEventListener("resize", onResize);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // click-away to close menus
   useEffect(() => {
     const onDocClick = (e) => {
       if (!barRef.current?.contains(e.target)) setOpenMenu(null);
@@ -132,7 +129,7 @@ export default function AllProperties() {
     sqftMin: null,
     parkingMin: null,
     hoaHas: null,
-    favOnly: false, // ⬅️ NEW
+    favOnly: false,
   });
 
   useEffect(() => {
@@ -165,7 +162,7 @@ export default function AllProperties() {
         priceMax: priceMax ?? f.priceMax,
         bedsMin: bedsMin ?? f.bedsMin,
         city: city || f.city,
-        favOnly, // ⬅️ NEW
+        favOnly,
       };
     });
   }, [searchParams]);
@@ -191,13 +188,11 @@ export default function AllProperties() {
       const okListing = !filters?.listing || pListing === filters.listing;
       const okType = !filters?.type || p?.home_type === filters.type;
 
-      // city/state contains
       const wantCity = norm(filters?.city);
       const pCity = norm(p?.city);
       const pState = norm(p?.state);
       const okCity = !wantCity || pCity.includes(wantCity) || pState.includes(wantCity);
 
-      // numeric
       const pBeds = getNum(p, "bedrooms");
       const pBaths = getNum(p, "bathrooms");
       const pPrice = getNum(p, "price");
@@ -217,8 +212,8 @@ export default function AllProperties() {
         typeof rawHoa === "boolean"
           ? rawHoa
           : rawHoa == null
-          ? null
-          : rawHoa === 1 ||
+            ? null
+            : rawHoa === 1 ||
             rawHoa === "1" ||
             String(rawHoa).toLowerCase() === "yes" ||
             String(rawHoa).toLowerCase() === "true";
@@ -231,7 +226,6 @@ export default function AllProperties() {
         return okListing && okType && okCity && okBeds && okBaths && okPriceMin && okPriceMax && okSqft && okParking && okHoa && okFav;
       }
 
-      // location (zip/street chips)
       const zip = getZip(p);
       const street = getStreet(p);
       const zipOk = zipWanted.size ? zipWanted.has(zip) : false;
@@ -265,8 +259,8 @@ export default function AllProperties() {
     filters?.sqftMin,
     filters?.parkingMin,
     filters?.hoaHas,
-    filters?.favOnly, // ⬅️ NEW
-    isSaved, // ⬅️ NEW
+    filters?.favOnly,
+    isSaved,
     hasFilters,
     zipWanted,
     streetWanted,
@@ -280,6 +274,7 @@ export default function AllProperties() {
         id: getId(p),
         lat: p.latitude,
         lng: p.longitude,
+        main_image: p.main_image,
         title: p.title ?? p.street ?? "",
         price: p.price,
         status: statusOf(p),
@@ -306,7 +301,7 @@ export default function AllProperties() {
       sqftMin: null,
       parkingMin: null,
       hoaHas: null,
-      favOnly: false, // ⬅️ reset
+      favOnly: false,
     });
     setLocations([]);
     setOpenMenu(null);
@@ -320,10 +315,9 @@ export default function AllProperties() {
 
       <div
         ref={barRef}
-        className={clsx("sticky top-20 z-40 w-full bg-white/70 backdrop-blur", "dark:bg-slate-900/60")}
+        className={clsx("sticky top-20 z-40 w-full bg-white/70 backdrop-blur", "dark:bg-[#252525]")}
       >
         <div className="mx-auto max-w-7xl px-3 sm:px-6">
-          {/* mobile top bar */}
           <div className="flex items-center justify-between py-2 lg:hidden">
             <button
               onClick={() => setDrawerOpen(true)}
@@ -346,15 +340,13 @@ export default function AllProperties() {
             </div>
           </div>
 
-          {/* desktop bar */}
           <div
             className={clsx(
               "hidden lg:flex items-center gap-3 rounded-2xl px-3 py-2",
               "bg-white/60 shadow-sm",
-              "dark:bg-slate-900/50"
+              "dark:bg-[#252525]"
             )}
           >
-            {/* Listing */}
             <div className="relative">
               <DropdownButton
                 label={filters.listing || "For Sale"}
@@ -420,7 +412,6 @@ export default function AllProperties() {
               )}
             </div>
 
-            {/* location input */}
             <div className="flex-1">
               <div className="h-11">
                 <LocationSearch
@@ -432,7 +423,6 @@ export default function AllProperties() {
               </div>
             </div>
 
-            {/* More Filters */}
             <div className="relative">
               <button
                 onClick={(e) => {
@@ -631,7 +621,6 @@ export default function AllProperties() {
         </div>
       </div>
 
-      {/* Mobile drawer */}
       <FilterDrawer open={drawerOpen} onClose={() => setDrawerOpen(false)} title="Filters">
         <div className="space-y-4">
           <div className="grid grid-cols-2 gap-2">
@@ -741,7 +730,6 @@ export default function AllProperties() {
               placeholder="e.g. 1"
             />
 
-            {/* HOA */}
             <div className="col-span-2">
               <label className="mb-1 block text-xs font-medium text-slate-600 dark:text-slate-300">HOA</label>
               <div className="flex gap-2">
@@ -781,7 +769,6 @@ export default function AllProperties() {
               </div>
             </div>
 
-            {/* ⭐ Favourites only (mobile) */}
             <div className="col-span-2">
               <label className="flex items-center gap-2 text-sm text-slate-700 dark:text-slate-200">
                 <input

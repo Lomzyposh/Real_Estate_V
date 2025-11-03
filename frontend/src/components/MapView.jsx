@@ -76,6 +76,8 @@ export default function MapView({
     const popupHtml = (p) => {
       const img = p.main_image || p.images?.[0]?.url;
       const addr = p.street || p.address || "";
+
+
       return `
         <div class="w-64 p-2 rounded-xl bg-zinc-900/90 text-zinc-100 border border-zinc-700 shadow-lg pointer-events-auto">
         <button id="popup-close-btn" class="absolute top-2 right-2 text-sm font-bold bg-emerald-600 text-white rounded-full w-5 h-5 cursor-pointer">&times;</button>
@@ -93,8 +95,7 @@ export default function MapView({
         )}</div>
           </div>
           <div class="mt-2 flex gap-2">
-            <button class="px-3 py-1.5 rounded-md bg-emerald-500 text-white text-xs">View</button>
-            <button class="px-3 py-1.5 rounded-md bg-zinc-800 text-zinc-200 text-xs border border-zinc-700">Save</button>
+            <button class="px-3 py-1.5 rounded-md bg-emerald-500 text-white text-xs" id="popup-view-btn">View</button>
           </div>
         </div>
       `;
@@ -121,9 +122,7 @@ export default function MapView({
 
       badgePopup.setContent(priceBadgeHtml(p.price ?? 0));
 
-      // clicking the marker opens the interactive detail box
       marker.on("click", () => {
-        // hide this marker's badge while detail is open (to avoid overlap)
         if (map.hasLayer(badgePopup)) map.closePopup(badgePopup);
 
         const detailPopup = L.popup({
@@ -140,6 +139,16 @@ export default function MapView({
 
         setTimeout(() => {
           const closeBtn = document.getElementById("popup-close-btn");
+          const viewBtn = document.getElementById("popup-view-btn");
+          const saveBtn = document.getElementById("popup-save-btn");
+
+          if (viewBtn) {
+            viewBtn.addEventListener("click", () => {
+              navigate(`/details/${p.id}`);
+              map.closePopup();
+            });
+          }
+
           if (closeBtn) {
             closeBtn.addEventListener("click", () => {
               map.closePopup(detailPopup);

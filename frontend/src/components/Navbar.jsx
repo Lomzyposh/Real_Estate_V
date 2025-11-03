@@ -1,4 +1,3 @@
-// src/components/Navbar.jsx
 import React, { useContext, useState, useEffect } from "react";
 import { ThemeContext } from "../contexts/ThemeContext";
 import clsx from "clsx";
@@ -11,7 +10,7 @@ const navLinks = [
   { to: "/", label: "Home" },
   { to: "/allProperties", label: "Buy" },
   { to: "/sell", label: "Sell" },
-  { to: "/allProperties?status=rent", label: "Rent" },
+  // { to: "/allProperties?status=rent", label: "Rent" },
   { to: "/contact", label: "Contact" },
 ];
 
@@ -104,12 +103,12 @@ export default function Navbar() {
                     "relative font-[Quicksand] transition-colors duration-300",
                     "text-[var(--dark-text)] dark:text-white",
                     "before:content-[''] before:absolute before:left-1/2 before:-translate-x-1/2 before:-bottom-1 before:h-[2px] before:w-0 before:bg-[var(--dark-primary)] dark:before:bg-[var(--primary)] before:transition-all before:duration-300 hover:before:w-full",
-                    
+
                   )}
                 >
-                  <Link to={link.to} className={clsx("py-2",isActive(link.to)
-                      ? "text-orange-400"
-                      : "hover:text-[var(--dark-primary)] dark:hover:text-[var(--primary)]")} aria-current={isActive(link.to) ? "page" : undefined}>
+                  <Link to={link.to} className={clsx("py-2", isActive(link.to)
+                    ? "text-gray-800 dark:text-gray-400 "
+                    : "hover:text-[var(--dark-primary)] dark:hover:text-[var(--primary)]")} aria-current={isActive(link.to) ? "page" : undefined}>
                     {link.label}
                   </Link>
                 </li>
@@ -128,7 +127,7 @@ export default function Navbar() {
               )}
               onClick={() => navigate('/allproperties?favorite=true')}
             >
-              <i className="bi bi-bookmark-fill text-amber-400 text-xl"></i>
+              <i className="bi bi-bookmark text-green-500 text-xl" />
             </button>
             <button
               onClick={toggleTheme}

@@ -15,7 +15,6 @@ const bedsBathsSqft = (b, ba, s) =>
 
 const addrLine = (p) => [p?.street, p?.city, p?.state, p?.zip_code].filter(Boolean).join(", ");
 const isFeatured = (p) => p?.featured === true || p?.featured === 1 || p?.tag === "featured";
-
 function SaveButton({ id }) {
     const { isSaved, toggleSaved } = useSaved();
     const saved = isSaved(id);
@@ -34,7 +33,7 @@ function SaveButton({ id }) {
             )}
         >
             {saved ? (
-                <i className="bi bi-bookmark-fill text-amber-400 text-xl" />
+                <i className="bi bi-bookmark text-green-500 text-xl" />
             ) : (
                 <i className="bi bi-bookmark text-gray-600 dark:text-gray-200 text-xl" />
             )}
@@ -52,7 +51,7 @@ const HomeCard = ({ p, idx }) => {
 
     return (
         <motion.div
-            className="relative w-[320px] shrink-0 rounded-2xl overflow-hidden border border-gray-200 dark:border-gray-800 bg-white dark:bg-[#121426]"
+            className="relative w-[320px] shrink-0 rounded-2xl overflow-hidden border border-gray-200 dark:border-gray-800 bg-white dark:bg-[#252525]"
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: idx * 0.1 }}
@@ -118,14 +117,14 @@ export default function FeaturedHomes({
                 <div className="hidden sm:flex gap-2">
                     <button
                         onClick={() => scrollBy(-340)}
-                        className="h-10 w-10 rounded-full border border-gray-200 dark:border-gray-800 bg-white dark:bg-[#0f1222] text-gray-700 dark:text-gray-200 grid place-items-center active:opacity-60"
+                        className="h-10 w-10 rounded-full border border-gray-200 dark:border-gray-800 bg-white dark:bg-[#252525] text-gray-700 dark:text-gray-200 grid place-items-center active:opacity-60"
                         aria-label="Scroll left"
                     >
                         <i className="bi bi-arrow-left-short text-2xl" />
                     </button>
                     <button
                         onClick={() => scrollBy(340)}
-                        className="h-10 w-10 rounded-full border border-gray-200 dark:border-gray-800 bg-white dark:bg-[#0f1222] text-gray-700 dark:text-gray-200 grid place-items-center active:opacity-60"
+                        className="h-10 w-10 rounded-full border border-gray-200 dark:border-gray-800 bg-white dark:bg-[#252525] text-gray-700 dark:text-gray-200 grid place-items-center active:opacity-60"
                         aria-label="Scroll right"
                     >
                         <i className="bi bi-arrow-right-short text-2xl" />

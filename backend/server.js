@@ -116,7 +116,6 @@ app.get("/", (req, res) => {
     res.send("Backend is running 🚀 | Try GET /api/healthz");
 });
 
-// ✅ Health check route
 app.get("/api/healthz", (req, res) => res.json({ ok: true }));
 
 
@@ -280,18 +279,6 @@ app.post("/api/compareAndSetPassword", async (req, res) => {
 });
 
 
-// app.post('/api/', async (req, res) => {
-//     try {
-//         const { email } = req.body;
-
-//         const pool = await poolPromise;
-
-//     } catch (err) {
-//         console.error(err);
-//         res.status(500).json({ messagee: "Somethign wen wrong" })
-//     }
-// })
-
 
 app.post('/api/register', async (req, res) => {
     const { email, password } = req.body;
@@ -306,11 +293,6 @@ app.post('/api/register', async (req, res) => {
 
     const userResult = await getUserByEmail(email, password);
 
-    if (result.success) {
-        res.status(201).json({ message: 'User registered successfully', });
-    } else {
-        res.status(500).json({ message: result.message || 'Failed to register user' });
-    }
 
     if (!userResult || !userResult.success) {
         return res.status(401).json({ message: userResult.message || 'Invalid email or password' });
@@ -323,6 +305,13 @@ app.post('/api/register', async (req, res) => {
         secure: process.env.NODE_ENV === 'production',
         sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax'
     });
+
+
+    if (result.success) {
+        res.status(200).json({ message: 'User registered successfully', });
+    } else {
+        res.status(500).json({ message: result.message || 'Failed to register user' });
+    }
 
 
 });
@@ -508,7 +497,7 @@ app.get("/api/properties/:id", async (req, res) => {
         const home = await findPropertyById(id);
         if (!home) return res.status(404).json({ message: "Property not found." });
 
-        const images = safeParseJson(home.images, []); 
+        const images = safeParseJson(home.images, []);
         const agent = safeParseJson(home.agent, null);
 
         const { images: _img, agent: _ag, ...rest } = home;
@@ -519,7 +508,6 @@ app.get("/api/properties/:id", async (req, res) => {
             agent: agent && typeof agent === "object" ? agent : null,
         };
 
-        // Optional: cache lightly (private since agent info is embedded)
         res.set("Cache-Control", "private, max-age=60");
 
         return res.json({ property });
@@ -776,7 +764,6 @@ app.post("/api/add/properties", requireAuth(), async (req, res) => {
 
         is_demo,
 
-        // NEW: array of { url, public_id? } from the client
         images = [],
     } = req.body || {};
 
@@ -799,7 +786,6 @@ app.post("/api/add/properties", requireAuth(), async (req, res) => {
         street, zip_code,
         latitude, longitude,
         year_built, acres, parking_spaces,
-        // fallback: if no main_image sent, use first image url (if any)
         main_image: main_image || (Array.isArray(images) && images[0]?.url) || null,
         hoa_has: !!hoa_has,
         hoa_fee,
@@ -807,7 +793,6 @@ app.post("/api/add/properties", requireAuth(), async (req, res) => {
         is_demo: !!is_demo,
     };
 
-    // just URLs for DB insert
     const galleryUrls = (Array.isArray(images) ? images : [])
         .map((x) => (typeof x === "string" ? x : x?.url))
         .filter(Boolean);
