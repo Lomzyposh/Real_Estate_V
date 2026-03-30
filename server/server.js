@@ -385,7 +385,7 @@ app.post("/api/login", async (req, res) => {
   }
 });
 
-app.get("/api/checkStatus", requireAuth(), async (req, res) => {
+app.get("/api/checkStatus", async (req, res) => {
   try {
     if (!req.session?.id) {
       return res.json({ user: null });
