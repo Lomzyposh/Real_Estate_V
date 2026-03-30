@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useLoader } from "../contexts/LoaderContext";
-import { toast } from "react-toastify";
 import FeaturedHomes from "../components/FeaturedHomes";
 import { motion } from "framer-motion";
 import GetStartedCards from "../components/GetStartedCard";
