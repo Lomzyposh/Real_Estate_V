@@ -1,10 +1,12 @@
+import { apiFetch } from "./api";
+
 export async function uploadImageToServer(file) {
     const formData = new FormData();
     formData.append("file", file);
 
-    const res = await fetch("/api/profile/upload", {
+    const res = await apiFetch("/api/profile/upload", {
         method: "POST",
-        body: formData,
+        body: { formData },
     });
 
     if (!res.ok) throw new Error("Failed to upload image");

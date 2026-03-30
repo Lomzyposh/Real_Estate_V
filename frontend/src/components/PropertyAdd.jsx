@@ -2,6 +2,7 @@ import React, { useMemo, useRef, useState } from "react";
 import { useAdmin } from "../contexts/AdminContext";
 import { AgentComboBox } from "./AgentCombox";
 import { toast } from "react-toastify";
+import { apiFetch } from "../../utils/api";
 
 const PROPERTY_TYPES = ["House", "Townhouse", "Condo", "Apartment", "Duplex"];
 const HOME_TYPES = ["SingleFamily", "Townhouse", "Condominium", "Loft"];
@@ -15,10 +16,9 @@ export async function uploadImagesToServer(files, endpoint = "/api/uploads/image
     const fd = new FormData();
     [...files].forEach((f) => fd.append("files", f));
 
-    const res = await fetch(endpoint, {
+    const res = await apiFetch(endpoint, {
         method: "POST",
-        body: fd,
-        credentials: "include",
+        body: { fd },
     });
 
     const data = await res.json().catch(() => ({}));
@@ -368,11 +368,9 @@ export default function PropertyQuickAdd({ onCreated }) {
         };
 
         try {
-            const res = await fetch("/api/add/properties", {
+            const res = await apiFetch("/api/add/properties", {
                 method: "POST",
-                headers: { "Content-Type": "application/json" },
-                credentials: "include",
-                body: JSON.stringify(payload),
+                body: payload,
             });
             if (!res.ok) {
                 const txt = await res.text().catch(() => "");

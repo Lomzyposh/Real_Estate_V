@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { apiFetch } from "../../utils/api";
 
 const chunk = (arr, size) => {
     const out = [];
@@ -19,7 +20,7 @@ export default function ImportPropertiesButton({ fileUrl = "/data/property.json"
         setProgress({ total: 0, done: 0 });
 
         try {
-            const resp = await fetch(fileUrl, { cache: "no-store" });
+            const resp = await apiFetch(fileUrl, { cache: "no-store" });
             if (!resp.ok) throw new Error(`Failed to fetch ${fileUrl}: ${resp.status}`);
             const data = await resp.json();
 
@@ -35,10 +36,9 @@ export default function ImportPropertiesButton({ fileUrl = "/data/property.json"
             for (let i = 0; i < batches.length; i++) {
                 setMessage(`Posting batch ${i + 1} of ${batches.length}…`);
 
-                const res = await fetch("/api/import/properties", {
+                const res = await apiFetch("/api/import/properties", {
                     method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify(batches[i]),
+                    body: batches[i],
                 });
 
                 const out = await res.json();

@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { useAuth } from './AuthContext';
+import { apiFetch } from '../../utils/api';
 
 export const AgentContext = createContext();
 
@@ -25,9 +26,7 @@ export const AgentProvider = ({ children }) => {
       setAgentInfoLoading(true);
       setAgentInfoError(null);
       try {
-        const res = await fetch('/api/agentDetails', {
-          method: 'GET',
-          credentials: 'include',
+        const res = await apiFetch('/api/agentDetails', {
           signal: ac.signal,
         });
 

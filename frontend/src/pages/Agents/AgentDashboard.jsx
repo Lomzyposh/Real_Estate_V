@@ -13,13 +13,12 @@ import RequireAgent from "../../components/RequireAgent";
 import { useAgent } from "../../contexts/AgentContext";
 import ConfirmDialog from "../../components/ConfirmDialog";
 import toast from "react-hot-toast";
+import { apiFetch } from "../../../utils/api";
 
 async function approvePropertyRequest(propertyId, approved = true) {
-  const res = await fetch(`/api/properties/${propertyId}/approve`, {
+  const res = await apiFetch(`/api/properties/${propertyId}/approve`, {
     method: "PATCH",
-    headers: { "Content-Type": "application/json" },
-    credentials: "include",
-    body: JSON.stringify({ approved }),
+    body: { approved },
   });
   const data = await res.json().catch(() => ({}));
   if (!res.ok) throw new Error(data?.message || "Failed to update approval");

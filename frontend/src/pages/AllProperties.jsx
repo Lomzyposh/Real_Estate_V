@@ -206,7 +206,6 @@ export default function AllProperties() {
       const okSqft = filters.sqftMin == null || (pSqft != null && pSqft >= Number(filters.sqftMin));
       const okParking = filters.parkingMin == null || (pParking != null && pParking >= Number(filters.parkingMin));
 
-      // boolean HOA
       const rawHoa = p?.hoa_has;
       const pHoa =
         typeof rawHoa === "boolean"
@@ -219,7 +218,6 @@ export default function AllProperties() {
             String(rawHoa).toLowerCase() === "true";
       const okHoa = filters.hoaHas == null || pHoa === filters.hoaHas;
 
-      // favourites-only
       const okFav = !filters.favOnly || isSaved(getId(p)) === true;
 
       if (!hasFilters) {

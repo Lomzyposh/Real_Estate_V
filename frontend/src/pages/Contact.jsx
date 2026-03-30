@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { useAuth } from "../contexts/AuthContext";
 import toast from "react-hot-toast";
+import { apiFetch } from "../../utils/api";
 
 const INIT = {
     purpose: "",
@@ -46,11 +47,9 @@ export default function Contact() {
         if (!validate()) return;
         try {
             setLoading(true);
-            const res = await fetch("/api/contact", {
+            const res = await apiFetch("/api/contact", {
                 method: "POST",
-                headers: { "Content-Type": "application/json" },
-                credentials: "include",
-                body: JSON.stringify(form),
+                body: form,
             });
             if (!res.ok) throw new Error(await res.text());
             setOk(true);

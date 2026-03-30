@@ -1,5 +1,6 @@
 import { createContext, useContext, useEffect, useMemo, useRef, useState } from "react";
 import { useAuth } from "./AuthContext";
+import { apiFetch } from "../../utils/api";
 
 const SavedContext = createContext(null);
 export { SavedContext };
@@ -21,9 +22,8 @@ export function SavedProvider({ children }) {
             const headers = { "Content-Type": "application/json" };
             if (user?.token) headers.Authorization = `Bearer ${user.token}`;
 
-            const res = await fetch("/api/getSaved", {
+            const res = await apiFetch("/api/getSaved", {
                 method: "GET",
-                credentials: "include",
                 headers,
             });
 
@@ -81,11 +81,10 @@ export function SavedProvider({ children }) {
                 const headers = { "Content-Type": "application/json" };
                 if (user?.token) headers.Authorization = `Bearer ${user.token}`;
 
-                const res = await fetch("/api/saved", {
+                const res = await apiFetch("/api/saved", {
                     method: "POST",
-                    credentials: "include",
                     headers,
-                    body: JSON.stringify({ propertyId: id }),
+                    body: { propertyId: id },
                 });
                 if (!res.ok) throw new Error(`toggleSaved ${res.status}`);
                 const data = await res.json();

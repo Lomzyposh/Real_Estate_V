@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import NewPasswordForm from "./NewPassword";
 import { useLoader } from "../../contexts/LoaderContext";
+import { apiFetch } from "../../../utils/api";
 
 const OTP_LENGTH = 6;
 const RESEND_SECONDS = 40;
@@ -26,12 +27,9 @@ const OtpForm = ({ setShowOtpForm, email }) => {
     setShowLoader(true);
     await delay(1000);
     try {
-      const res = await fetch('/api/verify-otp', {
+      const res = await apiFetch('/api/verify-otp', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ email, otp: code })
+        body: { email, otp: code }
       });
 
       const data = await res.json();
@@ -115,12 +113,9 @@ const OtpForm = ({ setShowOtpForm, email }) => {
     // TODO: trigger resend API here
     // await verifyCode(code);
 
-    const res = await fetch('/api/forgot-password', {
+    const res = await apiFetch('/api/forgot-password', {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ email })
+      body: { email }
     });
 
     const data = await res.json();

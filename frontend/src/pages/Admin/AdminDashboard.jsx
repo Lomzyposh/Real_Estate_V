@@ -14,11 +14,9 @@ import ConfirmDialog from "../../components/ConfirmDialog";
 import toast from "react-hot-toast";
 
 async function togglePublishedRequest(propertyId, published) {
-  const res = await fetch(`/api/admin/properties/${propertyId}/published`, {
+  const res = await apiFetch(`/api/admin/properties/${propertyId}/published`, {
     method: "PATCH",
-    headers: { "Content-Type": "application/json" },
-    credentials: "include",
-    body: JSON.stringify({ published }),
+    body: { published },
   });
   const data = await res.json().catch(() => ({}));
   if (!res.ok) throw new Error(data?.error || "Failed to update publish state");

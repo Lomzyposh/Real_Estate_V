@@ -6,6 +6,7 @@ import { useSaved } from "../contexts/SavedContext";
 import AllGallery from "../components/AllGallery";
 import { BsAspectRatio, BsHouseDoor, BsDropletHalf } from "react-icons/bs";
 import toast from "react-hot-toast";
+import { apiFetch } from "../../utils/api";
 
 export default function HomeDetails() {
     const { id } = useParams();
@@ -40,7 +41,7 @@ export default function HomeDetails() {
         const fetchDetails = async () => {
             setShowLoader(true);
             try {
-                const response = await fetch(`/api/properties/${id}?t=${Date.now()}`);
+                const response = await apiFetch(`/api/properties/${id}?t=${Date.now()}`);
                 const data = await response.json();
                 setProperty(data.property);
                 console.log("Prop refreshed:", data.property);

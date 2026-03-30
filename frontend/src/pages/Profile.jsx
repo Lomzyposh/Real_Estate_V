@@ -2,12 +2,13 @@ import React, { useEffect, useRef, useState } from "react";
 import { useAuth } from "../contexts/AuthContext";
 import { toast } from "react-toastify";
 import { useLoader } from "../contexts/LoaderContext";
+import { apiFetch } from "../../utils/api";
 
 
 async function uploadImageToServer(file, endpoint = "/api/profile/upload") {
     const fd = new FormData();
     fd.append("file", file);
-    const res = await fetch(endpoint, { method: "POST", body: fd });
+    const res = await apiFetch(endpoint, { method: "POST", body: { fd } });
     const data = await res.json();
     if (!res.ok) throw new Error(data?.message || "Upload failed");
     return data.url;
@@ -88,11 +89,10 @@ export default function CustomerSettings() {
             const headers = { "Content-Type": "application/json" };
             if (user?.token) headers.Authorization = `Bearer ${user.token}`;
 
-            const res = await fetch("/api/me", {
+            const res = await apiFetch("/api/me", {
                 method: "PATCH",
                 headers,
-                body: JSON.stringify(payload),
-                credentials: "include",
+                body: payload
             });
 
             const data = await res.json();
@@ -141,10 +141,10 @@ export default function CustomerSettings() {
             const headers = { "Content-Type": "application/json" };
             if (user?.token) headers.Authorization = `Bearer ${user.token}`;
 
-            const res = await fetch("/api/compareAndSetPassword", {
+            const res = await apiFetch("/api/compareAndSetPassword", {
                 method: "POST",
                 headers,
-                body: JSON.stringify(payload),
+                body: payload,
             });
 
             const data = await res.json();

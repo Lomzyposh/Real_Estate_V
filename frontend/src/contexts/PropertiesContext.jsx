@@ -1,4 +1,5 @@
 import { createContext, useContext, useEffect, useMemo, useState } from "react";
+import { apiFetch } from "../../utils/api";
 
 export const PropertiesContext = createContext();
 
@@ -9,7 +10,7 @@ export const PropertiesProvider = ({ children }) => {
     useEffect(() => {
         const fetchProp = async () => {
             try {
-                const res = await fetch("/api/properties");
+                const res = await apiFetch("/api/properties");
                 const data = await res.json();
 
                 if (!res.ok) {

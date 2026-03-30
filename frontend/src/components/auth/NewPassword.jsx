@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import RedStar from '../RedStar';
 import { useNavigate } from 'react-router-dom';
 import { useLoader } from '../../contexts/LoaderContext';
+import { apiFetch } from '../../../utils/api';
 
 const NewPasswordForm = ({ setShowForm, email }) => {
     const [newPassword, setNewPassword] = useState('');
@@ -50,13 +51,10 @@ const NewPasswordForm = ({ setShowForm, email }) => {
         await delay(1000);
 
         try {
-            const res = await fetch('/api/setPassword', {
+            const res = await apiFetch('/api/setPassword', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ email, password: newPassword })
-            })
+                body: { email, password: newPassword }
+            });
             const data = await res.json();
             if (!res.ok) {
                 setErrorMsg(data.message || 'Password change Failed. Try Again Later')
