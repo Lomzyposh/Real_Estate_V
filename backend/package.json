@@ -5,7 +5,7 @@
   "main": "server.js",
   "type": "module",
   "scripts": {
-    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "dev": "nodemon server.js",
     "server": "nodemon server.js",
     "client": "npm run dev --prefix ../frontend"
   },
@@ -18,10 +18,10 @@
     "express": "^5.1.0",
     "mssql": "^11.0.1",
     "multer": "^2.0.2",
-    "nodemailer": "^7.0.5"
+    "nodemailer": "^7.0.5",
+    "pg": "^8.20.0"
   },
   "devDependencies": {
-    "concurrently": "^9.2.0",
     "nodemon": "^3.1.10"
   },
   "keywords": [],
